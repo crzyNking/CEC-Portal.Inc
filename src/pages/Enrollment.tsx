@@ -22,10 +22,10 @@ interface EnrollmentSettings {
 }
 
 const defaultK12 = [
-  { title: 'Kindergarten', description: 'Ages 3-5 • Foundational learning through play-based curriculum', path: '/enrollment/kindergarten' },
-  { title: 'Elementary', description: 'Grades 1-6 • Building strong academic foundations', path: '/enrollment/elementary' },
-  { title: 'Junior High', description: 'Grades 7-10 • Comprehensive secondary education', path: '/enrollment/junior-high' },
-  { title: 'Senior High', description: 'Grades 11-12 • Specialized tracks and strands', path: '/enrollment/senior-high' },
+  { title: 'Kindergarten', description: 'Ages 3-5 • Foundational learning through play-based curriculum', path: '/enrollment/kindergarten', img: 'https://scontent.fceb6-1.fna.fbcdn.net/v/t1.15752-9/788689037_1455447903084514_7381586454221175542_n.jpg?stp=dst-jpg_tt6&cstp=mx864x1236&ctp=s864x1236&_nc_cat=107&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeFdViM662zFYjm5PjuWzWfc6LENnQr6XjbosQ2dCvpeNgqXP6488TFcyVpZA-BaCJqCjIxZkFVPO3YB90mo1rAa&_nc_ohc=2u8pGS0Xpz4Q7kNvwFown25&_nc_oc=Adqgw0fuDDqzQ-p9kE0QwXSb4LCA-8VGlfd1V-tLSBhsjgitAes1zEVCZrFMsMdu6io&_nc_zt=23&_nc_ht=scontent.fceb6-1.fna&_nc_ss=7b2a8&oh=03_Q7cD6QGZCNaRoDfP-HLc-xnFjLS5Y8YDloXl2XZRqMLVE3-D-g&oe=6ACE3D42' },
+  { title: 'Elementary', description: 'Grades 1-6 • Building strong academic foundations', path: '/enrollment/elementary', img: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=600&q=80' },
+  { title: 'Junior High', description: 'Grades 7-10 • Comprehensive secondary education', path: '/enrollment/junior-high', img: 'https://scontent.fceb6-4.fna.fbcdn.net/v/t1.15752-9/789580025_1069022505495421_4084908666977232936_n.jpg?stp=dst-jpg_tt6&cstp=mx864x1222&ctp=s864x1222&_nc_cat=106&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeFGm3ry_xgh91Fns0SIWYfI5GI0lmGnXvfkYjSWYade96_v-jWtWObEyGS_exA6x2nM6YY-pjhwWEEDK-6NLc3W&_nc_ohc=lhLOgRlVNQ4Q7kNvwELbWrC&_nc_oc=AdomgskGqRUjkht2rC8aom-ejjHaXnFGntfoOvFruCUbCGaANnqJGVI42VSCQZxykv4&_nc_zt=23&_nc_ht=scontent.fceb6-4.fna&_nc_ss=7b2a8&oh=03_Q7cD6QHRcFHSo-IHWl1OVgA2cs6DqbD-H5kbAgHvdVz1ezcnQQ&oe=6ACE307F' },
+  { title: 'Senior High', description: 'Grades 11-12 • Specialized tracks and strands', path: '/enrollment/senior-high', img: 'https://scontent.fceb6-1.fna.fbcdn.net/v/t1.15752-9/784424814_2154589371937860_1313611218039530401_n.jpg?stp=dst-jpg_tt6&cstp=mx864x1222&ctp=s864x1222&_nc_cat=110&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeGxr_es-xiyPJ_j2G3RWw8WRE40jjPwUepETjSOM_BR6rbOs8Gr_D0lRf-FBtVrtYazHCmng0dA1fCAExuEl-AH&_nc_ohc=1uI3xYpWA00Q7kNvwFOv_v2&_nc_oc=AdqAjA4firQxIS3GWvP29284WF-tFn2yzJ6OfC1E_-XKwbTRK3r3UwALH0OuudBrcpw&_nc_zt=23&_nc_ht=scontent.fceb6-1.fna&_nc_ss=7b2a8&oh=03_Q7cD6QHQkl2NPGQ5uACPiiGg4xFsRlMNeNKKnjlOx0Ccl7YNjA&oe=6ACE2C35' },
 ]
 
 export default function Enrollment() {
@@ -89,15 +89,22 @@ export default function Enrollment() {
                 <Link
                   key={level.title}
                   to={level.path}
-                  className="group block bg-white border border-gray-200 rounded-xl p-5 hover:border-[#002366]/30 hover:shadow-lg transition-all duration-300"
+                  className="group block bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-[#002366]/30 hover:shadow-lg transition-all duration-300"
                 >
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-base font-bold text-[#0a1628] group-hover:text-[#002366] transition-colors">{level.title}</h3>
-                    <svg className="w-5 h-5 text-gray-400 group-hover:text-[#002366] group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                    </svg>
+                  <div className="relative h-[140px] overflow-hidden">
+                    <img src={level.img} alt={level.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                    <h3 className="absolute bottom-3 left-4 text-base font-bold text-white">{level.title}</h3>
                   </div>
-                  <p className="text-xs text-gray-500 leading-relaxed">{level.description}</p>
+                  <div className="p-4">
+                    <p className="text-xs text-gray-500 leading-relaxed">{level.description}</p>
+                    <div className="mt-3 flex items-center gap-1 text-[11px] font-bold text-[#002366] group-hover:text-[#1d4ed8]">
+                      Enroll Now
+                      <svg className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                      </svg>
+                    </div>
+                  </div>
                 </Link>
               ))}
             </div>
@@ -114,15 +121,17 @@ export default function Enrollment() {
             </div>
             <Link
               to="/enrollment/college"
-              className="group block bg-gradient-to-br from-[#0b1f40] to-[#002366] text-white rounded-xl p-5 hover:shadow-xl transition-all duration-300"
+              className="group block bg-gradient-to-br from-[#0b1f40] to-[#002366] text-white rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300"
             >
-              <div className="flex items-start justify-between mb-4">
-                <h3 className="text-base font-bold">Enroll in College</h3>
-                <svg className="w-5 h-5 opacity-70 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                </svg>
+              <div className="relative h-[140px] overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=80" alt="College" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-60" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0b1f40] via-[#0b1f40]/60 to-transparent" />
+                <div className="absolute bottom-3 left-4 right-4">
+                  <h3 className="text-base font-bold">Enroll in College</h3>
+                </div>
               </div>
-              <ul className="space-y-1.5">
+              <div className="p-4">
+                <ul className="space-y-1.5">
                 {(collegePrograms.length > 0 ? collegePrograms : [
                   'Bachelor of Elementary Education',
                   'Bachelor of Secondary Education',
@@ -137,6 +146,7 @@ export default function Enrollment() {
                   </li>
                 ))}
               </ul>
+              </div>
             </Link>
           </div>
         </div>
