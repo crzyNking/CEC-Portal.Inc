@@ -124,7 +124,7 @@ export default function Enrollment() {
               className="group block bg-gradient-to-br from-[#0b1f40] to-[#002366] text-white rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300"
             >
               <div className="relative h-[140px] overflow-hidden">
-                <img src="https://www.facebook.com/75d1380b-8e3d-47bf-ac28-da6aefa7bf04" alt="College" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-60" />
+                <img src="https://chatgpt.com/backend-api/estuary/content?id=file_000000007bcc82089b09b6ce634da3ba&ts=497031&p=fs&cid=1&sig=cc0cdbe93c1a91ef41124894e7e480e8a9fb5abb80909a8a6f44f747ecaea7c7&v=0" alt="College" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-60" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0b1f40] via-[#0b1f40]/60 to-transparent" />
                 <div className="absolute bottom-3 left-4 right-4">
                   <h3 className="text-base font-bold">Enroll in College</h3>
