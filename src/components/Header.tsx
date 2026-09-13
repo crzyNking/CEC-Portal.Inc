@@ -147,7 +147,7 @@ export default function Header() {
   return (
     <>
       <AnnouncementBar />
-      <header ref={navRef} className="fixed top-0 left-0 right-0 z-50 bg-[#0b1f40] text-white border-b border-white/30">
+      <header ref={navRef} className="sticky top-0 left-0 right-0 z-50 bg-[#0b1f40] text-white border-b border-white/30">
       <div className="flex items-center justify-between px-4 py-3 md:px-10 md:py-3.5">
         {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 shrink-0 z-10">
