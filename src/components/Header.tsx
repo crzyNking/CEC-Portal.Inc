@@ -24,10 +24,10 @@ const collegeData = [
 ]
 
 const enrollK12 = [
-  { title: 'KINDERGARTEN', desc: 'Ages 3-5', path: '/enrollment/kindergarten' },
-  { title: 'ELEMENTARY', desc: 'Grades 1-6', path: '/enrollment/elementary' },
-  { title: 'JUNIOR HIGH', desc: 'Grades 7-10', path: '/enrollment/junior-high' },
-  { title: 'SENIOR HIGH', desc: 'Grades 11-12', path: '/enrollment/senior-high' },
+  { title: 'KINDERGARTEN', desc: 'Ages 3-5', path: '/enrollment/kindergarten', img: 'https://images.unsplash.com/photo-1587654780291-39c9404d7dd0?auto=format&fit=crop&w=400&q=80' },
+  { title: 'ELEMENTARY', desc: 'Grades 1-6', path: '/enrollment/elementary', img: 'https://cdn.vectorstock.com/i/500p/82/33/faceless-woman-placeholder-vector-24138233.jpg' },
+  { title: 'JUNIOR HIGH', desc: 'Grades 7-10', path: '/enrollment/junior-high', img: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=400&q=80' },
+  { title: 'SENIOR HIGH', desc: 'Grades 11-12', path: '/enrollment/senior-high', img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80' },
 ]
 
 const servicesData = [
@@ -297,13 +297,14 @@ export default function Header() {
                             onClick={() => navigateAndClose(card.path)}
                             className="group relative bg-gradient-to-b from-[#5b72cd] to-[#3a4b9c] rounded-xl h-[120px] border border-white/20 overflow-hidden shadow-[inset_0_0_15px_rgba(0,0,0,0.15)] hover:-translate-y-0.5 hover:border-white/50 hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] transition-all duration-200 flex flex-col justify-between items-start p-3 cursor-pointer"
                           >
+                            <img src={card.img} alt={card.title} className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:opacity-50 transition-opacity duration-200" />
                             <span className="text-white text-[12px] font-extrabold tracking-wide uppercase leading-tight z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
                               {card.title}
                             </span>
                             <span className="text-white/50 text-[10px] font-medium z-10 relative">
                               {card.desc}
                             </span>
-                            <svg className="absolute bottom-3 right-3 w-3.5 h-3.5 text-white/0 group-hover:text-white/70 transition-all duration-200 translate-x-1 group-hover:translate-x-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                            <svg className="absolute bottom-3 right-3 w-3.5 h-3.5 text-white/0 group-hover:text-white/70 transition-all duration-200 translate-x-1 group-hover:translate-x-0 z-10" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                             </svg>
                           </button>
@@ -323,13 +324,14 @@ export default function Header() {
                         onClick={() => navigateAndClose('/enrollment/college')}
                         className="group w-full bg-gradient-to-b from-[#8496db] to-[#4f61b3] rounded-xl h-full min-h-[260px] border border-white/20 overflow-hidden relative flex flex-col justify-between p-4 cursor-pointer hover:-translate-y-0.5 hover:border-white/50 hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] transition-all duration-200"
                       >
+                        <img src="https://cdn.vectorstock.com/i/500p/82/33/faceless-woman-placeholder-vector-24138233.jpg" alt="College" className="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 transition-opacity duration-200" />
                         <span className="text-[#fef08a] text-[20px] font-black tracking-wider uppercase z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                           COLLEGE
                         </span>
                         <span className="text-white/45 text-[11px] font-medium z-10 relative">
                           Bachelor's Degree Programs
                         </span>
-                        <svg className="absolute bottom-4 right-4 w-4 h-4 text-white/0 group-hover:text-white/70 transition-all duration-200 translate-x-1 group-hover:translate-x-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                        <svg className="absolute bottom-4 right-4 w-4 h-4 text-white/0 group-hover:text-white/70 transition-all duration-200 translate-x-1 group-hover:translate-x-0 z-10" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                         </svg>
                       </button>
@@ -620,6 +622,7 @@ export default function Header() {
                               onClick={() => navigateAndClose(card.path)}
                               className="group relative bg-gradient-to-b from-[#5b72cd] to-[#3a4b9c] rounded-xl border border-white/20 overflow-hidden flex flex-col justify-between items-start p-2.5 cursor-pointer min-h-[80px]"
                             >
+                              <img src={card.img} alt={card.title} className="absolute inset-0 w-full h-full object-cover opacity-25 group-hover:opacity-40 transition-opacity duration-200" />
                               <span className="text-white text-[11px] font-extrabold tracking-wide uppercase leading-tight z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
                                 {card.title}
                               </span>
@@ -636,6 +639,7 @@ export default function Header() {
                           onClick={() => navigateAndClose('/enrollment/college')}
                           className="group w-full bg-gradient-to-b from-[#8496db] to-[#4f61b3] rounded-xl border border-white/20 overflow-hidden relative flex flex-col justify-between p-3 cursor-pointer min-h-[80px]"
                         >
+                          <img src="https://cdn.vectorstock.com/i/500p/82/33/faceless-woman-placeholder-vector-24138233.jpg" alt="College" className="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 transition-opacity duration-200" />
                           <span className="text-[#fef08a] text-[16px] font-black tracking-wider uppercase z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                             COLLEGE
                           </span>
@@ -771,22 +775,23 @@ export default function Header() {
 
                 <div className="space-y-2">
                   {[
-                    { label: 'Kindergarten', desc: 'Ages 3-5', path: '/enrollment/kindergarten', color: 'from-blue-500 to-blue-700' },
-                    { label: 'Elementary', desc: 'Grades 1-6', path: '/enrollment/elementary', color: 'from-indigo-500 to-indigo-700' },
-                    { label: 'Junior High School', desc: 'Grades 7-10', path: '/enrollment/junior-high', color: 'from-violet-500 to-violet-700' },
-                    { label: 'Senior High School', desc: 'Grades 11-12', path: '/enrollment/senior-high', color: 'from-purple-500 to-purple-700' },
-                    { label: 'College', desc: "Bachelor's Degree Programs", path: '/enrollment/college', color: 'from-[#8496db] to-[#4f61b3]' },
+                    { label: 'Kindergarten', desc: 'Ages 3-5', path: '/enrollment/kindergarten', color: 'from-blue-500 to-blue-700', img: 'https://images.unsplash.com/photo-1587654780291-39c9404d7dd0?auto=format&fit=crop&w=400&q=80' },
+                    { label: 'Elementary', desc: 'Grades 1-6', path: '/enrollment/elementary', color: 'from-indigo-500 to-indigo-700', img: 'https://cdn.vectorstock.com/i/500p/82/33/faceless-woman-placeholder-vector-24138233.jpg' },
+                    { label: 'Junior High School', desc: 'Grades 7-10', path: '/enrollment/junior-high', color: 'from-violet-500 to-violet-700', img: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=400&q=80' },
+                    { label: 'Senior High School', desc: 'Grades 11-12', path: '/enrollment/senior-high', color: 'from-purple-500 to-purple-700', img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80' },
+                    { label: 'College', desc: "Bachelor's Degree Programs", path: '/enrollment/college', color: 'from-[#8496db] to-[#4f61b3]', img: 'https://cdn.vectorstock.com/i/500p/82/33/faceless-woman-placeholder-vector-24138233.jpg' },
                   ].map((item) => (
                     <button
                       key={item.label}
                       onClick={() => navigateAndClose(item.path)}
-                      className={`w-full flex items-center justify-between p-3.5 rounded-xl bg-gradient-to-r ${item.color} text-white hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200`}
+                      className={`w-full flex items-center justify-between p-3.5 rounded-xl bg-gradient-to-r ${item.color} text-white hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200 relative overflow-hidden`}
                     >
-                      <div className="text-left">
+                      <img src={item.img} alt={item.label} className="absolute inset-0 w-full h-full object-cover opacity-20 hover:opacity-35 transition-opacity duration-200" />
+                      <div className="text-left z-10 relative">
                         <div className="text-[13px] font-bold">{item.label}</div>
                         <div className="text-[11px] text-white/60">{item.desc}</div>
                       </div>
-                      <svg className="w-4 h-4 opacity-60" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                      <svg className="w-4 h-4 opacity-60 z-10 relative" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                       </svg>
                     </button>
