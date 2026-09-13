@@ -9,12 +9,10 @@ interface Announcement {
   button_url: string
   bg_color: string
   text_color: string
-  close_button: boolean
 }
 
 export default function AnnouncementBar() {
   const [announcement, setAnnouncement] = useState<Announcement | null>(null)
-  const [closed, setClosed] = useState(false)
 
   useEffect(() => {
     loadAnnouncement()
@@ -42,10 +40,9 @@ export default function AnnouncementBar() {
       .maybeSingle()
 
     setAnnouncement(data)
-    setClosed(false)
   }
 
-  if (!announcement || closed) return null
+  if (!announcement) return null
 
   return (
     <div
@@ -62,17 +59,6 @@ export default function AnnouncementBar() {
         >
           {announcement.button_text}
         </Link>
-      )}
-      {announcement.close_button && (
-        <button
-          onClick={() => setClosed(true)}
-          className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-white/10 rounded"
-          aria-label="Close"
-        >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
       )}
     </div>
   )
