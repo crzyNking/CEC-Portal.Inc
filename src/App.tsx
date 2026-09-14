@@ -7,6 +7,7 @@ import { Chatbot } from './components/Chatbot'
 import MaintenanceMode from './components/MaintenanceMode'
 import InstallPrompt from './components/InstallPrompt'
 import UpdateNotification from './components/UpdateNotification'
+import PWASplash from './components/PWASplash'
 import { Home } from './pages/Home'
 import AdminLayout from './pages/admin/AdminLayout'
 
@@ -57,6 +58,7 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <PWASplash />
         <ToastContainer />
         <Chatbot />
         <InstallPrompt />

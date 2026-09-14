@@ -9,7 +9,7 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'icons/*.png'],
+      includeAssets: ['favicon.ico', 'icons/icon.svg'],
       manifest: {
         name: 'CEC Portal',
         short_name: 'CEC Portal',
@@ -23,19 +23,19 @@ export default defineConfig({
         categories: ['education', 'school'],
         icons: [
           {
-            src: 'https://scontent.fmnl4-7.fna.fbcdn.net/v/t39.30808-6/302130535_582267347020947_5642845133722350033_n.jpg?stp=dst-jpg_tt6&cstp=mx2043x2048&ctp=s2043x2048&_nc_cat=100&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHQ-qulZKv6ih1XSQMneMJo0E3N8tptuK7QTc3y2m24rvOZF2gXoVReo42hSnhjrOVF3VaaiIacXYLr4V0tLBnV&_nc_ohc=DwgPGVR3NxAQ7kNvwHK2pVM&_nc_oc=AdoInhwFcJYyYSg0fa1Wpz-R1dFpwsMHl6mtfS7QQWRNvdszfV8gOVSeeWRJhBwsRSs&_nc_zt=23&_nc_ht=scontent.fmnl4-7.fna&_nc_gid=RqDzkeCt_v0gef-tKSvDhg&_nc_ss=7b2a8&oh=00_AQINJ7xEPsV6TffMVbW2gBUDNvKlNIW-johLvoePCsVJnQ&oe=6AADDDCC',
+            src: 'icons/icon.svg',
             sizes: '192x192',
-            type: 'image/jpeg'
+            type: 'image/svg+xml'
           },
           {
-            src: 'https://scontent.fmnl4-7.fna.fbcdn.net/v/t39.30808-6/302130535_582267347020947_5642845133722350033_n.jpg?stp=dst-jpg_tt6&cstp=mx2043x2048&ctp=s2043x2048&_nc_cat=100&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHQ-qulZKv6ih1XSQMneMJo0E3N8tptuK7QTc3y2m24rvOZF2gXoVReo42hSnhjrOVF3VaaiIacXYLr4V0tLBnV&_nc_ohc=DwgPGVR3NxAQ7kNvwHK2pVM&_nc_oc=AdoInhwFcJYyYSg0fa1Wpz-R1dFpwsMHl6mtfS7QQWRNvdszfV8gOVSeeWRJhBwsRSs&_nc_zt=23&_nc_ht=scontent.fmnl4-7.fna&_nc_gid=RqDzkeCt_v0gef-tKSvDhg&_nc_ss=7b2a8&oh=00_AQINJ7xEPsV6TffMVbW2gBUDNvKlNIW-johLvoePCsVJnQ&oe=6AADDDCC',
+            src: 'icons/icon.svg',
             sizes: '512x512',
-            type: 'image/jpeg'
+            type: 'image/svg+xml'
           },
           {
-            src: 'https://scontent.fmnl4-7.fna.fbcdn.net/v/t39.30808-6/302130535_582267347020947_5642845133722350033_n.jpg?stp=dst-jpg_tt6&cstp=mx2043x2048&ctp=s2043x2048&_nc_cat=100&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHQ-qulZKv6ih1XSQMneMJo0E3N8tptuK7QTc3y2m24rvOZF2gXoVReo42hSnhjrOVF3VaaiIacXYLr4V0tLBnV&_nc_ohc=DwgPGVR3NxAQ7kNvwHK2pVM&_nc_oc=AdoInhwFcJYyYSg0fa1Wpz-R1dFpwsMHl6mtfS7QQWRNvdszfV8gOVSeeWRJhBwsRSs&_nc_zt=23&_nc_ht=scontent.fmnl4-7.fna&_nc_gid=RqDzkeCt_v0gef-tKSvDhg&_nc_ss=7b2a8&oh=00_AQINJ7xEPsV6TffMVbW2gBUDNvKlNIW-johLvoePCsVJnQ&oe=6AADDDCC',
+            src: 'icons/icon.svg',
             sizes: '512x512',
-            type: 'image/jpeg',
+            type: 'image/svg+xml',
             purpose: 'maskable'
           }
         ]
