@@ -522,7 +522,7 @@ export default function Header() {
 
       {/* Mobile Menu - Full Screen */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-0 top-0 z-[70] bg-[#081a38] overflow-y-auto flex flex-col">
+        <div className="lg:hidden fixed inset-0 top-[57px] z-[60] bg-[#081a38] overflow-y-auto flex flex-col">
           <div className="flex-1 px-4 py-4 space-y-1">
             {/* Main Page */}
             {mobilePage === 'main' && (
