@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import { logAdminActivity } from '../../lib/activityLog'
+import { useNotificationStore } from '../../store/notificationStore'
 
 interface Announcement {
   id: string
@@ -37,43 +38,74 @@ export default function AdminAnnouncements() {
   const [loading, setLoading] = useState(true)
   const [editing, setEditing] = useState<Partial<Announcement> | null>(null)
   const [saving, setSaving] = useState(false)
+  const addNotification = useNotificationStore((s) => s.addNotification)
 
   useEffect(() => { load() }, [])
 
   async function load() {
     setLoading(true)
-    const { data } = await supabase.from('announcements').select('*').order('created_at', { ascending: false })
-    setItems(data || [])
-    setLoading(false)
+    try {
+      const { data, error } = await supabase.from('announcements').select('*').order('created_at', { ascending: false })
+      if (error) throw error
+      setItems(data || [])
+    } catch (err) {
+      addNotification({ type: 'error', title: 'Failed to load', message: err instanceof Error ? err.message : 'Unknown error' })
+    } finally {
+      setLoading(false)
+    }
   }
 
   async function save() {
     if (!editing) return
     setSaving(true)
-    if (editing.id) {
-      await supabase.from('announcements').update(editing).eq('id', editing.id)
-      await logAdminActivity('updated', 'announcement', editing.id, { title: editing.title })
-    } else {
-      const { data } = await supabase.from('announcements').insert([editing]).select().single()
-      if (data) await logAdminActivity('created', 'announcement', data.id, { title: data.title })
+    if (!editing.message?.trim()) {
+      addNotification({ type: 'warning', title: 'Message is required' })
+      setSaving(false)
+      return
     }
-    setEditing(null)
-    setSaving(false)
-    load()
+    try {
+      if (editing.id) {
+        const { error } = await supabase.from('announcements').update(editing).eq('id', editing.id)
+        if (error) throw error
+        await logAdminActivity('updated', 'announcement', editing.id, { title: editing.title })
+      } else {
+        const { data, error } = await supabase.from('announcements').insert([editing]).select().single()
+        if (error) throw error
+        if (data) await logAdminActivity('created', 'announcement', data.id, { title: data.title })
+      }
+      addNotification({ type: 'success', title: 'Saved successfully' })
+      setEditing(null)
+      load()
+    } catch (err) {
+      addNotification({ type: 'error', title: 'Failed to save', message: err instanceof Error ? err.message : 'Unknown error' })
+    } finally {
+      setSaving(false)
+    }
   }
 
   async function remove(id: string) {
     if (!confirm('Delete this announcement?')) return
-    const item = items.find((a) => a.id === id)
-    await supabase.from('announcements').delete().eq('id', id)
-    await logAdminActivity('deleted', 'announcement', id, { title: item?.title })
-    load()
+    try {
+      const item = items.find((a) => a.id === id)
+      const { error } = await supabase.from('announcements').delete().eq('id', id)
+      if (error) throw error
+      await logAdminActivity('deleted', 'announcement', id, { title: item?.title })
+      addNotification({ type: 'success', title: 'Deleted' })
+      load()
+    } catch (err) {
+      addNotification({ type: 'error', title: 'Failed to delete', message: err instanceof Error ? err.message : 'Unknown error' })
+    }
   }
 
   async function toggleActive(a: Announcement) {
-    await supabase.from('announcements').update({ is_active: !a.is_active }).eq('id', a.id)
-    await logAdminActivity('toggled', 'announcement', a.id, { title: a.title, is_active: !a.is_active })
-    load()
+    try {
+      const { error } = await supabase.from('announcements').update({ is_active: !a.is_active }).eq('id', a.id)
+      if (error) throw error
+      await logAdminActivity('toggled', 'announcement', a.id, { title: a.title, is_active: !a.is_active })
+      load()
+    } catch (err) {
+      addNotification({ type: 'error', title: 'Failed to update', message: err instanceof Error ? err.message : 'Unknown error' })
+    }
   }
 
   if (editing) {
@@ -93,7 +125,7 @@ export default function AdminAnnouncements() {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
-              <textarea value={editing.message || ''} onChange={(e) => setEditing({ ...editing, message: e.target.value })} rows={3} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#13275c] focus:border-transparent" />
+              <textarea value={editing.message || ''} onChange={(e) => setEditing({ ...editing, message: e.target.value })} rows={3} required className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#13275c] focus:border-transparent" />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>

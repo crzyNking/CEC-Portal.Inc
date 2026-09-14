@@ -4,10 +4,10 @@ import { useAuthStore } from '../store/authStore'
 import { useSettings } from '../hooks/useSettings'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import { supabase } from '../lib/supabase'
+import { CEC_LOGO } from '../lib/constants'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
-const CEC_LOGO_DEFAULT = 'https://scontent.fceb2-2.fna.fbcdn.net/v/t39.30808-6/302130535_582267347020947_5642845133722350033_n.jpg?stp=dst-jpg_tt6&cstp=mx2043x2048&ctp=s2043x2048&_nc_cat=100&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHQ-qulZKv6ih1XSQMneMJo0E3N8tptuK7QTc3y2m24rvOZF2gXoVReo42hSnhjrOVF3VaaiIacXYLr4V0tLBnV&_nc_ohc=DwgPGVR3NxAQ7kNvwFR2NBo&_nc_oc=Adreh--T4PfV9U_HcPloUzsaDtbCTCPnTYXdTfYv4vgf1ibrZTGv-uAFK42VYyiclj4&_nc_zt=23&_nc_ht=scontent.fceb2-2.fna&_nc_gid=Ge8fnC4M80hwPPz7BlFOeA&_nc_ss=7b2a8&oh=00_AQIW85BfPHZTjXJ2sYJARg750oi7OZJn5OeujyyzPYkDHA&oe=6AAD350C'
 const DEFAULT_HERO_BG = 'https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?q=80&w=1920&auto=format&fit=crop'
 
 const authModalBackdrop = { background: 'rgba(3, 8, 20, 0.75)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)' }
@@ -253,7 +253,7 @@ export function Home() {
         <div className="max-w-[1050px] mx-auto flex flex-col md:flex-row items-center gap-12 md:gap-[60px]">
           <div className={`flex-shrink-0 flex justify-center reveal-left ${heritageRef.isVisible ? 'visible' : ''}`}>
             <div className="logo-container shadow-lg">
-              <img src={school?.website_logo || CEC_LOGO_DEFAULT} alt="Cebu Eastern College Seal" className="hover:scale-[1.05] transition-transform duration-500" />
+              <img src={school?.website_logo || CEC_LOGO} alt="Cebu Eastern College Seal" className="hover:scale-[1.05] transition-transform duration-500" />
             </div>
           </div>
           <div className={`flex-1 text-center md:text-left reveal-right ${heritageRef.isVisible ? 'visible' : ''}`}>
@@ -364,7 +364,7 @@ export function Home() {
 
             <div className="p-[35px_30px]">
               <div className="text-center mb-6">
-                <img src={school?.website_logo || CEC_LOGO_DEFAULT} alt="CEC Seal" className="w-[65px] h-[65px] rounded-full mx-auto mb-3 shadow-[0_4px_10px_rgba(0,0,0,0.3)]" />
+                <img src={school?.website_logo || CEC_LOGO} alt="CEC Seal" className="w-[65px] h-[65px] rounded-full mx-auto mb-3 shadow-[0_4px_10px_rgba(0,0,0,0.3)]" />
                 <h3 className="text-[20px] font-semibold">{school?.school_name || 'Cebu Eastern College'}</h3>
               </div>
 

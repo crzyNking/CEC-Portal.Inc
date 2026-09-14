@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import { logAdminActivity } from '../../lib/activityLog'
+import { useNotificationStore } from '../../store/notificationStore'
 
 interface GalleryItem { id: string; title: string; caption: string; image_url: string; category: string; is_published: boolean; sort_order: number; created_at: string }
 
@@ -10,13 +11,21 @@ export default function AdminGallery() {
   const [uploading, setUploading] = useState(false)
   const [category, setCategory] = useState('general')
   const [caption, setCaption] = useState('')
+  const addNotification = useNotificationStore((s) => s.addNotification)
 
   useEffect(() => { load() }, [])
 
   async function load() {
     setLoading(true)
-    const { data } = await supabase.from('gallery').select('*').order('sort_order')
-    setItems(data || []); setLoading(false)
+    try {
+      const { data, error } = await supabase.from('gallery').select('*').order('sort_order')
+      if (error) throw error
+      setItems(data || [])
+    } catch (err) {
+      addNotification({ type: 'error', title: 'Failed to load', message: err instanceof Error ? err.message : 'Unknown error' })
+    } finally {
+      setLoading(false)
+    }
   }
 
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -36,23 +45,33 @@ export default function AdminGallery() {
 
   async function remove(item: GalleryItem) {
     if (!confirm('Delete this image?')) return
-    // Extract storage path from URL
-    const urlParts = item.image_url.split('/')
-    const bucketIndex = urlParts.indexOf('gallery')
-    if (bucketIndex >= 0) {
-      const path = urlParts.slice(bucketIndex + 1).join('/').split('?')[0]
-      await supabase.storage.from('gallery').remove([path])
+    try {
+      const urlParts = item.image_url.split('/')
+      const bucketIndex = urlParts.indexOf('gallery')
+      if (bucketIndex >= 0) {
+        const path = urlParts.slice(bucketIndex + 1).join('/').split('?')[0]
+        await supabase.storage.from('gallery').remove([path])
+      }
+      const { error } = await supabase.from('gallery').delete().eq('id', item.id)
+      if (error) throw error
+      await logAdminActivity('deleted', 'gallery', item.id, { title: item.caption, category: item.category })
+      addNotification({ type: 'success', title: 'Deleted' })
+      load()
+    } catch (err) {
+      addNotification({ type: 'error', title: 'Failed to delete', message: err instanceof Error ? err.message : 'Unknown error' })
     }
-    await supabase.from('gallery').delete().eq('id', item.id)
-    await logAdminActivity('deleted', 'gallery', item.id, { title: item.caption, category: item.category })
-    load()
   }
 
   async function togglePublish(item: GalleryItem) {
-    const newPublished = !item.is_published
-    await supabase.from('gallery').update({ is_published: newPublished }).eq('id', item.id)
-    await logAdminActivity(newPublished ? 'published' : 'unpublished', 'gallery', item.id, { title: item.caption, category: item.category })
-    load()
+    try {
+      const newPublished = !item.is_published
+      const { error } = await supabase.from('gallery').update({ is_published: newPublished }).eq('id', item.id)
+      if (error) throw error
+      await logAdminActivity(newPublished ? 'published' : 'unpublished', 'gallery', item.id, { title: item.caption, category: item.category })
+      load()
+    } catch (err) {
+      addNotification({ type: 'error', title: 'Failed to update', message: err instanceof Error ? err.message : 'Unknown error' })
+    }
   }
 
   const categories = ['general', 'campus', 'events', 'sports', 'graduation', 'students', 'faculty', 'activities']

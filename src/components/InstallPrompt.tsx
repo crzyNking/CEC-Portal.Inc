@@ -51,6 +51,7 @@ export default function InstallPrompt() {
   return (
     <button
       onClick={handleInstall}
+      aria-label="Install CEC Portal app"
       className="fixed bottom-20 right-4 z-50 bg-[#0b1f40] text-white px-4 py-3 rounded-xl shadow-lg hover:bg-[#13275c] transition-all duration-200 flex items-center gap-2 text-sm font-medium"
     >
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">

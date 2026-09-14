@@ -47,12 +47,14 @@ export default function UpdateNotification() {
       <div className="flex gap-2 mt-3">
         <button
           onClick={handleUpdate}
+          aria-label="Update to latest version"
           className="flex-1 bg-white text-[#0b1f40] py-2 rounded-lg text-sm font-semibold hover:bg-white/90 transition-colors"
         >
           Update Now
         </button>
         <button
           onClick={() => setShowUpdate(false)}
+          aria-label="Dismiss update notification"
           className="px-4 py-2 text-white/60 text-sm hover:text-white transition-colors"
         >
           Later

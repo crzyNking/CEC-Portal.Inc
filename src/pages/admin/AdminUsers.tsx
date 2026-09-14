@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import { logAdminActivity } from '../../lib/activityLog'
+import { useNotificationStore } from '../../store/notificationStore'
 
 interface UserProfile { id: string; email: string | null; full_name: string | null; avatar_url: string | null; role: string; created_at: string }
 
@@ -8,21 +9,35 @@ export default function AdminUsers() {
   const [users, setUsers] = useState<UserProfile[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
+  const addNotification = useNotificationStore((s) => s.addNotification)
 
   useEffect(() => { load() }, [])
 
   async function load() {
     setLoading(true)
-    const { data } = await supabase.from('profiles').select('*').order('created_at', { ascending: false })
-    setUsers(data || []); setLoading(false)
+    try {
+      const { data, error } = await supabase.from('profiles').select('*').order('created_at', { ascending: false })
+      if (error) throw error
+      setUsers(data || [])
+    } catch (err) {
+      addNotification({ type: 'error', title: 'Failed to load', message: err instanceof Error ? err.message : 'Unknown error' })
+    } finally {
+      setLoading(false)
+    }
   }
 
   async function toggleRole(user: UserProfile) {
     const newRole = user.role === 'admin' ? 'user' : 'admin'
     if (!confirm(`Change ${user.full_name || user.email} to ${newRole}?`)) return
-    await supabase.from('profiles').update({ role: newRole }).eq('id', user.id)
-    await logAdminActivity('toggled', 'user', user.id, { full_name: user.full_name, email: user.email, new_role: newRole })
-    load()
+    try {
+      const { error } = await supabase.from('profiles').update({ role: newRole }).eq('id', user.id)
+      if (error) throw error
+      await logAdminActivity('toggled', 'user', user.id, { full_name: user.full_name, email: user.email, new_role: newRole })
+      addNotification({ type: 'success', title: 'Role updated' })
+      load()
+    } catch (err) {
+      addNotification({ type: 'error', title: 'Failed to update', message: err instanceof Error ? err.message : 'Unknown error' })
+    }
   }
 
   const filtered = users.filter((u) => {

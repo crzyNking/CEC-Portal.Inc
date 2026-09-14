@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import { logAdminActivity } from '../../lib/activityLog'
+import { useNotificationStore } from '../../store/notificationStore'
 
 interface NewsItem { id: string; title: string; slug: string; summary: string; content: string; image_url: string; category: string; is_published: boolean; is_featured: boolean; published_at: string | null; created_at: string }
 
@@ -11,44 +12,77 @@ export default function AdminNews() {
   const [loading, setLoading] = useState(true)
   const [editing, setEditing] = useState<Partial<NewsItem> | null>(null)
   const [saving, setSaving] = useState(false)
+  const addNotification = useNotificationStore((s) => s.addNotification)
 
   useEffect(() => { load() }, [])
 
   async function load() {
     setLoading(true)
-    const { data } = await supabase.from('news').select('*').order('created_at', { ascending: false })
-    setItems(data || [])
-    setLoading(false)
+    try {
+      const { data, error } = await supabase.from('news').select('*').order('created_at', { ascending: false })
+      if (error) throw error
+      setItems(data || [])
+    } catch (err) {
+      addNotification({ type: 'error', title: 'Failed to load', message: err instanceof Error ? err.message : 'Unknown error' })
+    } finally {
+      setLoading(false)
+    }
   }
 
   async function save() {
     if (!editing) return
     setSaving(true)
-    const slug = editing.slug || editing.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || ''
-    const payload = { ...editing, slug }
-    if (editing.id) {
-      await supabase.from('news').update(payload).eq('id', editing.id)
-      await logAdminActivity('updated', 'news', editing.id, { title: editing.title })
-    } else {
-      const { data } = await supabase.from('news').insert([{ ...payload, published_at: payload.is_published ? new Date().toISOString() : null }]).select().single()
-      if (data) await logAdminActivity('created', 'news', data.id, { title: data.title })
+    if (!editing.title?.trim()) {
+      addNotification({ type: 'warning', title: 'Title is required' })
+      setSaving(false)
+      return
     }
-    setEditing(null); setSaving(false); load()
+    try {
+      const slug = editing.slug || editing.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || ''
+      const payload = { ...editing, slug }
+      if (editing.id) {
+        const { error } = await supabase.from('news').update(payload).eq('id', editing.id)
+        if (error) throw error
+        await logAdminActivity('updated', 'news', editing.id, { title: editing.title })
+      } else {
+        const { data, error } = await supabase.from('news').insert([{ ...payload, published_at: payload.is_published ? new Date().toISOString() : null }]).select().single()
+        if (error) throw error
+        if (data) await logAdminActivity('created', 'news', data.id, { title: data.title })
+      }
+      addNotification({ type: 'success', title: 'Saved successfully' })
+      setEditing(null)
+      load()
+    } catch (err) {
+      addNotification({ type: 'error', title: 'Failed to save', message: err instanceof Error ? err.message : 'Unknown error' })
+    } finally {
+      setSaving(false)
+    }
   }
 
   async function remove(id: string) {
     if (!confirm('Delete this news article?')) return
-    const item = items.find((n) => n.id === id)
-    await supabase.from('news').delete().eq('id', id)
-    await logAdminActivity('deleted', 'news', id, { title: item?.title })
-    load()
+    try {
+      const item = items.find((n) => n.id === id)
+      const { error } = await supabase.from('news').delete().eq('id', id)
+      if (error) throw error
+      await logAdminActivity('deleted', 'news', id, { title: item?.title })
+      addNotification({ type: 'success', title: 'Deleted' })
+      load()
+    } catch (err) {
+      addNotification({ type: 'error', title: 'Failed to delete', message: err instanceof Error ? err.message : 'Unknown error' })
+    }
   }
 
   async function togglePublish(n: NewsItem) {
-    const newPublished = !n.is_published
-    await supabase.from('news').update({ is_published: newPublished, published_at: newPublished ? new Date().toISOString() : null }).eq('id', n.id)
-    await logAdminActivity(newPublished ? 'published' : 'unpublished', 'news', n.id, { title: n.title })
-    load()
+    try {
+      const newPublished = !n.is_published
+      const { error } = await supabase.from('news').update({ is_published: newPublished, published_at: newPublished ? new Date().toISOString() : null }).eq('id', n.id)
+      if (error) throw error
+      await logAdminActivity(newPublished ? 'published' : 'unpublished', 'news', n.id, { title: n.title })
+      load()
+    } catch (err) {
+      addNotification({ type: 'error', title: 'Failed to update', message: err instanceof Error ? err.message : 'Unknown error' })
+    }
   }
 
   async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -67,7 +101,7 @@ export default function AdminNews() {
         </div>
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 max-w-3xl">
           <div className="space-y-4">
-            <div><label className="block text-sm font-medium text-gray-700 mb-1">Title</label><input value={editing.title || ''} onChange={(e) => setEditing({ ...editing, title: e.target.value })} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#13275c] focus:border-transparent" /></div>
+            <div><label className="block text-sm font-medium text-gray-700 mb-1">Title</label><input value={editing.title || ''} onChange={(e) => setEditing({ ...editing, title: e.target.value })} required className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#13275c] focus:border-transparent" /></div>
             <div className="grid grid-cols-2 gap-4">
               <div><label className="block text-sm font-medium text-gray-700 mb-1">Category</label><select value={editing.category || 'general'} onChange={(e) => setEditing({ ...editing, category: e.target.value })} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"><option value="general">General</option><option value="academic">Academic</option><option value="sports">Sports</option><option value="events">Events</option><option value="announcements">Announcements</option></select></div>
               <div><label className="block text-sm font-medium text-gray-700 mb-1">Image</label><input type="file" accept="image/*" onChange={handleImageUpload} className="w-full text-sm file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#13275c] file:text-white file:text-sm file:cursor-pointer" /></div>

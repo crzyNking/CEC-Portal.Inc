@@ -143,6 +143,8 @@ export function Chatbot() {
     <>
       <button
         onClick={handleToggle}
+        aria-label={isOpen ? 'Close chatbot' : 'Open chatbot'}
+        aria-expanded={isOpen}
         className={`fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl shadow-lg transition-all duration-300 flex items-center justify-center overflow-hidden ${
           isOpen
             ? 'bg-gray-800 dark:bg-gray-700 shadow-gray-800/25 dark:shadow-black/30 rotate-90'
@@ -159,7 +161,7 @@ export function Chatbot() {
       </button>
 
       {isOpen && (
-        <div className="fixed bottom-20 left-4 right-4 sm:bottom-24 sm:left-auto sm:right-6 z-50 w-auto sm:w-[380px] max-w-[400px]">
+        <div className="fixed bottom-20 left-4 right-4 sm:bottom-24 sm:left-auto sm:right-6 z-50 w-auto sm:w-[380px] max-w-[400px]" role="dialog" aria-label="Chatbot">
           <div className="rounded-[1.5rem] border border-gray-200/50 dark:border-white/[0.06] bg-white/95 dark:bg-[#0f0f1a]/95 backdrop-blur-xl shadow-2xl shadow-black/10 dark:shadow-black/40 overflow-hidden">
             <div className="relative px-5 py-4 bg-gradient-to-r from-purple-500 to-cyan-500">
               <div className="absolute inset-0 opacity-20" style={gridPattern} />

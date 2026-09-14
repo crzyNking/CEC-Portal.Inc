@@ -1,5 +1,27 @@
 @import "tailwindcss";
 
+/*
+ * Z-INDEX SCALE
+ * =============
+ * Use these values for consistent stacking:
+ *
+ * z-50    (50)      - Toast notifications, Install prompt, Update notification, Chatbot
+ * z-[60]  (60)      - Mobile navigation overlay
+ * z-[100] (100)     - Auth modal backdrop
+ * z-[200] (200)     - Auth modal content
+ * z-[9999](9999)    - PWA splash screen (temporary, on top of everything)
+ *
+ * Existing layers:
+ * - Header: sticky (no z-index needed, uses stacking context)
+ * - Mobile nav: z-[60]
+ * - Auth modal: z-[200]
+ * - Chatbot: z-50
+ * - Toast: z-50
+ * - Install prompt: z-50
+ * - Update notification: z-50
+ * - PWA splash: z-[9999]
+ */
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
