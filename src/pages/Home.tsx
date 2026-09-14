@@ -89,23 +89,23 @@ function CountUp({ target, suffix }: { target: number; suffix: string }) {
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting && !animated.current) {
         animated.current = true
-        const duration = 1800
+        const duration = 1600
         const start = performance.now()
         const update = (now: number) => {
           const progress = Math.min((now - start) / duration, 1)
-          const eased = 1 - Math.pow(1 - progress, 3)
+          const eased = 1 - Math.pow(1 - progress, 4)
           setCount(Math.floor(eased * target))
           if (progress < 1) requestAnimationFrame(update)
           else setCount(target)
         }
         requestAnimationFrame(update)
       }
-    }, { threshold: 0.4 })
+    }, { threshold: 0.2 })
     observer.observe(el)
     return () => observer.disconnect()
   }, [target])
 
-  return <div ref={ref} className="text-black text-[48px] font-bold leading-none mb-3" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>{count.toLocaleString()}{suffix}</div>
+  return <div ref={ref} className="text-black text-[36px] sm:text-[48px] font-bold leading-none mb-3" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>{count.toLocaleString()}{suffix}</div>
 }
 
 export function Home() {
@@ -262,12 +262,12 @@ export function Home() {
       </section>
 
       {/* Stats Bar */}
-      <section ref={statsRef.ref} className={`bg-white py-[40px] reveal ${statsRef.isVisible ? 'visible' : ''}`}>
+      <section ref={statsRef.ref} className={`bg-white py-[30px] sm:py-[40px] reveal ${statsRef.isVisible ? 'visible' : ''}`}>
         <div className={`max-w-[900px] mx-auto flex flex-wrap justify-center stagger-children ${statsRef.isVisible ? 'visible' : ''}`}>
           {stats.map((s) => (
-            <div key={s.label} className="flex flex-col items-center justify-center py-[15px] px-[50px] border-r border-black/10 last:border-r-0">
+            <div key={s.label} className="flex flex-col items-center justify-center py-[12px] sm:py-[15px] px-[30px] sm:px-[50px] border-r border-black/10 last:border-r-0">
               <CountUp target={s.target} suffix={s.suffix} />
-              <div className="text-[#333333] text-[12px] font-semibold tracking-[1px] uppercase text-center" style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}>{s.label}</div>
+              <div className="text-[#333333] text-[10px] sm:text-[12px] font-semibold tracking-[1px] uppercase text-center" style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}>{s.label}</div>
             </div>
           ))}
         </div>

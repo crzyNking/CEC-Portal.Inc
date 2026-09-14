@@ -146,7 +146,7 @@ export default function Header() {
 
   return (
     <>
-      <AnnouncementBar />
+      {!mobileOpen && <AnnouncementBar />}
       <header ref={navRef} className="sticky top-0 left-0 right-0 z-50 bg-[#0b1f40] text-white border-b border-white/30">
       <div className="flex items-center justify-between px-4 py-3 md:px-10 md:py-3.5">
         {/* Logo */}
@@ -522,7 +522,7 @@ export default function Header() {
 
       {/* Mobile Menu - Full Screen */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-0 top-[57px] z-50 bg-[#081a38] overflow-y-auto flex flex-col">
+        <div className="lg:hidden fixed inset-0 top-0 z-[70] bg-[#081a38] overflow-y-auto flex flex-col">
           <div className="flex-1 px-4 py-4 space-y-1">
             {/* Main Page */}
             {mobilePage === 'main' && (
