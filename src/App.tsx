@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './components/AuthProvider'
+import { ErrorBoundary } from './components/ErrorBoundary'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { ToastContainer } from './components/Toast'
 import { Chatbot } from './components/Chatbot'
@@ -64,6 +65,7 @@ function App() {
         <InstallPrompt />
         <UpdateNotification />
         <MaintenanceMode>
+        <ErrorBoundary>
         <Suspense fallback={<PageSpinner />}>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -228,6 +230,7 @@ function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Suspense>
+        </ErrorBoundary>
         </MaintenanceMode>
       </AuthProvider>
     </BrowserRouter>
