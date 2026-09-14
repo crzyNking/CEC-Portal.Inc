@@ -11,8 +11,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'icons/*.png'],
       manifest: {
-        name: 'Cebu Eastern College',
-        short_name: 'CEC',
+        name: 'CEC Portal',
+        short_name: 'CEC Portal',
         description: 'Cebu Eastern College - Excellence in Education since 1915',
         theme_color: '#0b1f40',
         background_color: '#0b1f40',
