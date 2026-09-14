@@ -235,7 +235,9 @@ export function Home() {
       <section ref={heritageRef.ref} className="py-[70px] px-4 sm:px-10 bg-[#f1f5f9]">
         <div className="max-w-[1050px] mx-auto flex flex-col md:flex-row items-center gap-12 md:gap-[60px]">
           <div className={`flex-shrink-0 flex justify-center reveal-left ${heritageRef.isVisible ? 'visible' : ''}`}>
-            <img src={school?.website_logo || CEC_LOGO_DEFAULT} alt="Cebu Eastern College Seal" className="w-full max-w-[240px] h-auto object-contain mix-blend-multiply hover:scale-[1.03] transition-transform" />
+            <div className="logo-container shadow-lg">
+              <img src={school?.website_logo || CEC_LOGO_DEFAULT} alt="Cebu Eastern College Seal" className="hover:scale-[1.05] transition-transform duration-500" />
+            </div>
           </div>
           <div className={`flex-1 text-center md:text-left reveal-right ${heritageRef.isVisible ? 'visible' : ''}`}>
             <h2 className="text-[22px] sm:text-[26px] font-extrabold text-[#002366] mb-4">Our Heritage &amp; Mission</h2>
