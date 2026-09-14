@@ -20,14 +20,19 @@ interface NewsItem {
 export default function News() {
   const [news, setNews] = useState<NewsItem[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
 
   useEffect(() => {
     const fetchNews = async () => {
-      const { data } = await supabase
+      const { data, error: err } = await supabase
         .from('news')
         .select('*')
         .eq('is_published', true)
         .order('published_at', { ascending: false })
+      if (err) {
+        console.error('News fetch error:', err)
+        setError('Failed to load news.')
+      }
       setNews(data || [])
       setLoading(false)
     }
@@ -54,6 +59,10 @@ export default function News() {
         {loading ? (
           <div className="flex justify-center py-20">
             <div className="w-8 h-8 border-3 border-[#0b2545] border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : error ? (
+          <div className="text-center py-20">
+            <p className="text-red-500 text-sm">{error}</p>
           </div>
         ) : news.length === 0 ? (
           <div className="text-center py-20">

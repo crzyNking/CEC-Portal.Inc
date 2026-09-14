@@ -4,7 +4,7 @@ import { logAdminActivity } from '../../lib/activityLog'
 
 interface Event { id: string; title: string; slug: string; description: string; image_url: string; event_date: string | null; event_time: string; location: string; organizer: string; is_published: boolean; is_featured: boolean; created_at: string }
 
-const empty: Partial<Event> = { title: '', slug: '', description: '', image_url: '', event_date: '', event_time: '', location: '', organizer: '', is_published: false, is_featured: false }
+const empty: Partial<Event> = { title: '', slug: '', description: '', image_url: '', event_date: '', event_time: '', location: '', organizer: '', is_published: true, is_featured: false }
 
 export default function AdminEvents() {
   const [items, setItems] = useState<Event[]>([])

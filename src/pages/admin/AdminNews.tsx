@@ -4,7 +4,7 @@ import { logAdminActivity } from '../../lib/activityLog'
 
 interface NewsItem { id: string; title: string; slug: string; summary: string; content: string; image_url: string; category: string; is_published: boolean; is_featured: boolean; published_at: string | null; created_at: string }
 
-const empty: Partial<NewsItem> = { title: '', slug: '', summary: '', content: '', image_url: '', category: 'general', is_published: false, is_featured: false }
+const empty: Partial<NewsItem> = { title: '', slug: '', summary: '', content: '', image_url: '', category: 'general', is_published: true, is_featured: false }
 
 export default function AdminNews() {
   const [items, setItems] = useState<NewsItem[]>([])
