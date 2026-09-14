@@ -148,13 +148,13 @@ export default function Header() {
     <>
       {!mobileOpen && <AnnouncementBar />}
       <header ref={navRef} className={`${mobileOpen ? 'fixed top-0 left-0 right-0' : 'sticky top-0'} z-50 bg-[#0b1f40] text-white border-b border-white/30`}>
-      <div className="flex items-center justify-between px-4 py-3 md:px-10 md:py-3.5">
+      <div className="flex items-center justify-between px-4 py-4 md:px-10 md:py-4">
         {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5 shrink-0 z-10">
-            <img src={school?.website_logo || CEC_LOGO_DEFAULT} alt="CEC Logo" className="w-9 h-9 md:w-[42px] md:h-[42px] rounded-full object-cover bg-white" />
+          <Link to="/" className="flex items-center gap-3 shrink-0 z-10">
+            <img src={school?.website_logo || CEC_LOGO_DEFAULT} alt="CEC Logo" className="w-10 h-10 md:w-[46px] md:h-[46px] rounded-full object-cover bg-white" />
             <div>
-              <div className="text-sm md:text-[15px] font-bold tracking-wide">{school?.school_name || 'Cebu Eastern College'}</div>
-              <div className="text-[9px] md:text-[10px] text-[#94a3b8]">{school?.address || 'Leon Kilat St., Cebu City'}</div>
+              <div className="text-[15px] md:text-[17px] font-bold tracking-wide">{school?.school_name || 'Cebu Eastern College'}</div>
+              <div className="text-[10px] md:text-[11px] text-[#94a3b8]">{school?.address || 'Leon Kilat St., Cebu City'}</div>
             </div>
           </Link>
 

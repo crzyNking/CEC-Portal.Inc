@@ -5,6 +5,8 @@ import { ProtectedRoute } from './components/ProtectedRoute'
 import { ToastContainer } from './components/Toast'
 import { Chatbot } from './components/Chatbot'
 import MaintenanceMode from './components/MaintenanceMode'
+import InstallPrompt from './components/InstallPrompt'
+import UpdateNotification from './components/UpdateNotification'
 import { Home } from './pages/Home'
 import AdminLayout from './pages/admin/AdminLayout'
 
@@ -57,6 +59,8 @@ function App() {
       <AuthProvider>
         <ToastContainer />
         <Chatbot />
+        <InstallPrompt />
+        <UpdateNotification />
         <MaintenanceMode>
         <Suspense fallback={<PageSpinner />}>
           <Routes>
