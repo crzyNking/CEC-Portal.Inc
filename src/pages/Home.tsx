@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
 import { useSettings } from '../hooks/useSettings'
 import { useScrollReveal } from '../hooks/useScrollReveal'
+import { supabase } from '../lib/supabase'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
@@ -167,6 +168,22 @@ export function Home() {
   const handleGoogleLogin = useCallback(async () => {
     await signInWithGoogle()
   }, [signInWithGoogle])
+
+  const handleForgotPassword = useCallback(async () => {
+    if (!email) {
+      setError('Please enter your email address first.')
+      return
+    }
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/settings`,
+    })
+    if (error) {
+      setError(error.message)
+    } else {
+      setError(null)
+      alert('Password reset link sent! Check your email.')
+    }
+  }, [email, setError])
 
   const heroBgImage = homepage?.hero_image || DEFAULT_HERO_BG
   const heroStyle = { background: `linear-gradient(rgba(11, 31, 64, 0.45), rgba(11, 31, 64, 0.45)), url(${heroBgImage}) center/cover no-repeat` }
@@ -373,7 +390,7 @@ export function Home() {
                   <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full bg-white/7 border border-white/20 rounded-lg px-3.5 py-3 pr-10 text-[13px] text-white placeholder-[#94a3b8] outline-none focus:border-[#3b82f6] transition-colors" placeholder="Password" required minLength={6} />
                   <svg className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94a3b8]" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" /></svg>
                 </div>
-                {authTab === 'login' && <div className="text-right"><a href="#" className="text-[11px] text-[#cbd5e1] hover:underline">Forgot Password?</a></div>}
+                {authTab === 'login' && <div className="text-right"><button type="button" onClick={handleForgotPassword} className="text-[11px] text-[#cbd5e1] hover:underline">Forgot Password?</button></div>}
                 <button type="submit" disabled={submitting} className="w-full py-3 bg-white text-[#0f172a] rounded-lg text-[13.5px] font-bold hover:bg-[#f1f5f9] transition-all disabled:opacity-50 mt-2.5">
                   {submitting ? 'Please wait...' : authTab === 'login' ? 'Log In' : 'Create Account'}
                 </button>

@@ -77,15 +77,15 @@ export default defineConfig({
             }
           },
           {
-            urlPattern: /^https:\/\/.*\.supabase\.\/.*/i,
+            urlPattern: /^https:\/\/.*\.supabase\.co\/.*/i,
             handler: 'NetworkFirst',
             options: {
               cacheName: 'supabase-cache',
               expiration: {
                 maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24
+                maxAgeSeconds: 60 * 60
               },
-              networkTimeoutSeconds: 10
+              networkTimeoutSeconds: 5
             }
           }
         ],

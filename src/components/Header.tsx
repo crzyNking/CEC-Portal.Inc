@@ -8,10 +8,10 @@ import AnnouncementBar from './AnnouncementBar'
 const CEC_LOGO_DEFAULT = 'https://scontent.fmnl4-7.fna.fbcdn.net/v/t39.30808-6/302130535_582267347020947_5642845133722350033_n.jpg?stp=dst-jpg_tt6&cstp=mx2043x2048&ctp=s2043x2048&_nc_cat=100&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHQ-qulZKv6ih1XSQMneMJo0E3N8tptuK7QTc3y2m24rvOZF2gXoVReo42hSnhjrOVF3VaaiIacXYLr4V0tLBnV&_nc_ohc=RA_aF6P5RwgQ7kNvwFu3Xg6&_nc_oc=AdqITaBrsXZ2_5mgT4X8oeaexeru1AH57khtFbcB-Y7ghPP8InlrVAu4Zn6tycPx_1g&_nc_zt=23&_nc_ht=scontent.fmnl4-7.fna&_nc_gid=L8FYEtP78WmxVwzWwW2ijg&_nc_ss=7b2a8&oh=00_AQKRNzwxtkCz0g_6DAaJNgj7bF9fKKDf6T1bSjvNHaSSGg&oe=6AA9B10C'
 
 const k12Data = [
-  { title: 'Kindergarten', desc: 'A supportive environment fostering early growth, creativity, and basic skills for young learners.', path: '/senior-high', img: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=600&auto=format&fit=crop' },
-  { title: 'Elementary', desc: 'Nurturing young minds with strong values, foundational academic skills, and lifelong learning habits.', path: '/senior-high', img: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=600&auto=format&fit=crop' },
-  { title: 'Junior High School', desc: 'Dynamic programs strengthening critical thinking, character, and personal development.', path: '/senior-high', img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=600&auto=format&fit=crop' },
-  { title: 'Senior High School', desc: 'Specialized academic tracks and practical training for college and future careers.', path: '/senior-high', img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=600&auto=format&fit=crop' },
+  { title: 'Kindergarten', desc: 'A supportive environment fostering early growth, creativity, and basic skills for young learners.', path: '/enrollment/kindergarten', img: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=600&auto=format&fit=crop' },
+  { title: 'Elementary', desc: 'Nurturing young minds with strong values, foundational academic skills, and lifelong learning habits.', path: '/enrollment/elementary', img: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=600&auto=format&fit=crop' },
+  { title: 'Junior High School', desc: 'Dynamic programs strengthening critical thinking, character, and personal development.', path: '/enrollment/junior-high', img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=600&auto=format&fit=crop' },
+  { title: 'Senior High School', desc: 'Specialized academic tracks and practical training for college and future careers.', path: '/enrollment/senior-high', img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=600&auto=format&fit=crop' },
 ]
 
 const collegeData = [

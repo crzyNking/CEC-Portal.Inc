@@ -49,9 +49,10 @@ interface SettingsState {
   website: WebsiteSettings | null
   homepage: HomepageContent | null
   loading: boolean
+  error: boolean
 }
 
-let globalSettings: SettingsState = { school: null, website: null, homepage: null, loading: true }
+let globalSettings: SettingsState = { school: null, website: null, homepage: null, loading: true, error: false }
 let listeners: Array<() => void> = []
 
 function notifyListeners() {
@@ -68,7 +69,7 @@ export function useSettings() {
   }, [])
 
   useEffect(() => {
-    if (globalSettings.school !== null) return
+    if (globalSettings.school !== null || globalSettings.error) return
     loadSettings()
   }, [])
 
@@ -76,23 +77,28 @@ export function useSettings() {
 }
 
 async function loadSettings() {
-  const [schoolRes, websiteRes, homepageRes] = await Promise.all([
-    supabase.from('school_settings').select('*').limit(1).maybeSingle(),
-    supabase.from('website_settings').select('*').limit(1).maybeSingle(),
-    supabase.from('homepage_content').select('*').limit(1).maybeSingle(),
-  ])
+  try {
+    const [schoolRes, websiteRes, homepageRes] = await Promise.all([
+      supabase.from('school_settings').select('*').limit(1).maybeSingle(),
+      supabase.from('website_settings').select('*').limit(1).maybeSingle(),
+      supabase.from('homepage_content').select('*').limit(1).maybeSingle(),
+    ])
 
-  globalSettings = {
-    school: schoolRes.data,
-    website: websiteRes.data,
-    homepage: homepageRes.data,
-    loading: false,
+    globalSettings = {
+      school: schoolRes.data,
+      website: websiteRes.data,
+      homepage: homepageRes.data,
+      loading: false,
+      error: false,
+    }
+  } catch {
+    globalSettings = { school: null, website: null, homepage: null, loading: false, error: true }
   }
   notifyListeners()
 }
 
 export async function refreshSettings() {
-  globalSettings = { school: null, website: null, homepage: null, loading: true }
+  globalSettings = { school: null, website: null, homepage: null, loading: true, error: false }
   notifyListeners()
   await loadSettings()
 }

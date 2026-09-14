@@ -30,4 +30,4 @@ DROP POLICY IF EXISTS "Users can insert own preferences" ON user_preferences;
 
 CREATE POLICY "Users can insert own preferences"
   ON user_preferences FOR INSERT
-  WITH CHECK (true);
+  WITH CHECK (auth.uid() = user_id);

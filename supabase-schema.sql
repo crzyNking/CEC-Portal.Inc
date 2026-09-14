@@ -1,6 +1,7 @@
 -- ============================================
--- SUPABASE DATABASE SETUP
--- Run this in your Supabase SQL Editor
+-- DEPRECATED: This file is outdated.
+-- Use the migration files in supabase/migrations/ instead.
+-- Do NOT run this against an already-migrated database.
 -- ============================================
 
 -- Enable UUID extension

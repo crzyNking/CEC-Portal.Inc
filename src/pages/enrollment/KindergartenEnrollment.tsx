@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
+import { supabase } from '../../lib/supabase'
 
 export default function KindergartenEnrollment() {
   const [formData, setFormData] = useState({
@@ -9,6 +10,9 @@ export default function KindergartenEnrollment() {
     address: '', emergencyContact: '', emergencyPhone: '',
     requirements: { birthCert: false, Form137: false, goodMoral: false, medicalCert: false, idPhotos: false, interview: false },
   })
+  const [submitting, setSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState('')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -18,10 +22,37 @@ export default function KindergartenEnrollment() {
     setFormData({ ...formData, requirements: { ...formData.requirements, [e.target.name]: e.target.checked } })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Kindergarten Enrollment:', formData)
-    alert('Enrollment submitted successfully!')
+    setSubmitting(true)
+    setError('')
+
+    const { error: insertError } = await supabase.from('enrollment_submissions').insert({
+      level: 'kindergarten',
+      first_name: formData.firstName,
+      middle_name: formData.middleName,
+      last_name: formData.lastName,
+      age: formData.age,
+      dob: formData.dob,
+      gender: formData.gender,
+      parent_name: formData.parentName,
+      parent_contact: formData.parentContact,
+      parent_email: formData.parentEmail,
+      parent_occupation: formData.parentOccupation,
+      address: formData.address,
+      emergency_contact: formData.emergencyContact,
+      emergency_phone: formData.emergencyPhone,
+      requirements: formData.requirements,
+    })
+
+    if (insertError) {
+      setError('Submission failed. Please try again.')
+      setSubmitting(false)
+      return
+    }
+
+    setSubmitted(true)
+    setSubmitting(false)
   }
 
   return (
@@ -39,6 +70,20 @@ export default function KindergartenEnrollment() {
 
       {/* Form */}
       <section className="max-w-[800px] mx-auto px-4 md:px-10 py-10 md:py-16">
+        {submitted ? (
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12 text-center">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+            </div>
+            <h2 className="text-xl font-bold text-[#0a1628] mb-2">Enrollment Submitted!</h2>
+            <p className="text-sm text-gray-600 mb-6">Your kindergarten enrollment application has been received. We will review it and contact you soon.</p>
+            <a href="/" className="inline-block bg-[#002366] hover:bg-[#0b1f40] text-white font-semibold py-3 px-6 rounded-xl text-sm transition-all duration-200">
+              Back to Home
+            </a>
+          </div>
+        ) : (
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Student Info */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8">
@@ -183,10 +228,15 @@ export default function KindergartenEnrollment() {
           </div>
 
           {/* Submit */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
+              {error}
+            </div>
+          )}
           <div className="flex flex-col sm:flex-row gap-3">
-            <button type="submit"
-              className="flex-1 bg-[#002366] hover:bg-[#0b1f40] text-white font-semibold py-3 px-6 rounded-xl text-sm transition-all duration-200 shadow-lg shadow-[#002366]/20">
-              Submit Enrollment
+            <button type="submit" disabled={submitting}
+              className="flex-1 bg-[#002366] hover:bg-[#0b1f40] text-white font-semibold py-3 px-6 rounded-xl text-sm transition-all duration-200 shadow-lg shadow-[#002366]/20 disabled:opacity-50 disabled:cursor-not-allowed">
+              {submitting ? 'Submitting...' : 'Submit Enrollment'}
             </button>
             <button type="button"
               className="flex-1 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 font-semibold py-3 px-6 rounded-xl text-sm transition">
@@ -194,6 +244,7 @@ export default function KindergartenEnrollment() {
             </button>
           </div>
         </form>
+        )}
       </section>
 
       <Footer />

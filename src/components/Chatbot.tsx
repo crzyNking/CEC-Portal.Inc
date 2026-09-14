@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import { useChatStore, getWelcomeMessages, getSystemPrompt } from '../store/chatStore'
 import { useAuthStore } from '../store/authStore'
 
-const OPENROUTER_API_KEY = ['sk-','or-v1-','430f','f79a','4b27','4f4d','7315','ca2f','10c2','7320','3f83','7f63','3157','1cc1','30e8','c286','255a','4a8e'].join('')
+const CHAT_API_URL = '/api/chat'
 
 const dotStyle1 = { animationDelay: '0ms' }
 const dotStyle2 = { animationDelay: '150ms' }
@@ -74,11 +74,6 @@ export function Chatbot() {
   const sendMessage = useCallback(async () => {
     if (!input.trim() || isLoading) return
 
-    if (!OPENROUTER_API_KEY) {
-      addMessage({ role: 'assistant', content: 'AI is not configured.' })
-      return
-    }
-
     const userMessage = input.trim()
     setInput('')
     addMessage({ role: 'user', content: userMessage })
@@ -98,14 +93,9 @@ export function Chatbot() {
         { role: 'user' as const, content: userMessage },
       ]
 
-      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      const response = await fetch(CHAT_API_URL, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-          'HTTP-Referer': window.location.origin,
-          'X-Title': 'KnowsMore AI',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           model: 'z-ai/glm-5.2:free',
           messages: conversationHistory,

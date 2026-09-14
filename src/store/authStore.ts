@@ -106,8 +106,6 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         },
       })
 
-      console.log('Supabase signUp response:', { data, error })
-
       if (error) throw error
 
       if (data.user) {
@@ -115,10 +113,6 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         if (data.user.identities?.length === 0) {
           return { success: false, message: 'An account with this email already exists.' }
         }
-
-        // Check how many identities - if only 1, this is a new user
-        const identityCount = data.user.identities?.length ?? 0
-        console.log('User identities count:', identityCount)
 
         if (data.session) {
           // Email confirmation is disabled, user is signed in immediately
