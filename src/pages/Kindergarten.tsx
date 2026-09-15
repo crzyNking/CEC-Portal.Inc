@@ -23,7 +23,7 @@ export default function Kindergarten() {
           </a>
         </div>
         <div className="w-full aspect-[4/3] rounded-lg overflow-hidden">
-          <img src="https://iili.io/nnFSHCX.jpg" alt="School Building" className="w-full h-full object-cover" loading="lazy" />
+          <img src="https://iili.io/nnFwKzu.png" alt="School Building" className="w-full h-full object-cover" loading="lazy" />
         </div>
       </section>
 
