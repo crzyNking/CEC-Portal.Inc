@@ -71,14 +71,6 @@ const testimonials = [
   { name: 'Ana Reyes', role: 'Parent', text: 'As a parent, I trust CEC with my children\'s education. The environment is nurturing and the academics are top-notch.' },
 ]
 
-const enrollmentLevels = [
-  { title: 'Kindergarten', ages: 'Ages 3-5', color: 'from-blue-500 to-blue-700', path: '/enrollment/kindergarten' },
-  { title: 'Elementary', ages: 'Grades 1-6', color: 'from-indigo-500 to-indigo-700', path: '/enrollment/elementary' },
-  { title: 'Junior High', ages: 'Grades 7-10', color: 'from-violet-500 to-violet-700', path: '/enrollment/junior-high' },
-  { title: 'Senior High', ages: 'Grades 11-12', color: 'from-purple-500 to-purple-700', path: '/enrollment/senior-high' },
-  { title: 'College', ages: "Bachelor's Degree", color: 'from-[#8496db] to-[#4f61b3]', path: '/enrollment/college' },
-]
-
 function CountUp({ target, suffix }: { target: number; suffix: string }) {
   const [count, setCount] = useState(0)
   const ref = useRef<HTMLDivElement>(null)
@@ -106,7 +98,7 @@ function CountUp({ target, suffix }: { target: number; suffix: string }) {
     return () => observer.disconnect()
   }, [target])
 
-  return <div ref={ref} className="text-black text-[36px] sm:text-[48px] font-bold leading-none mb-3" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>{count.toLocaleString()}{suffix}</div>
+  return <div ref={ref} className="text-black text-[36px] sm:text-[48px] font-bold leading-none mb-3" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>{count}{suffix}</div>
 }
 
 export function Home() {
@@ -197,7 +189,6 @@ export function Home() {
   const academicRef = useScrollReveal()
   const heritageRef = useScrollReveal()
   const statsRef = useScrollReveal()
-  const enrollRef = useScrollReveal()
   const whyRef = useScrollReveal()
   const testimonialRef = useScrollReveal()
   const ctaRef = useScrollReveal()
@@ -292,20 +283,6 @@ export function Home() {
               <CountUp target={s.target} suffix={s.suffix} />
               <div className="text-[#333333] text-[10px] sm:text-[12px] font-semibold tracking-[1px] uppercase text-center" style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}>{s.label}</div>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Quick Enrollment Links */}
-      <section ref={enrollRef.ref} className={`py-[60px] px-4 sm:px-10 bg-[#f8fafc] text-center reveal ${enrollRef.isVisible ? 'visible' : ''}`}>
-        <h2 className="text-[22px] sm:text-[26px] font-extrabold text-[#0B1F3A] mb-2">Start Your Enrollment</h2>
-        <p className="text-[12px] sm:text-[13px] text-[#64748b] mb-[45px]">Choose your level and begin your journey with CEC.</p>
-        <div className={`flex flex-wrap justify-center gap-3 max-w-[900px] mx-auto stagger-children ${enrollRef.isVisible ? 'visible' : ''}`}>
-          {enrollmentLevels.map((level) => (
-            <button key={level.title} onClick={() => navigate(level.path)} className={`bg-gradient-to-r ${level.color} text-white px-6 py-3 rounded-xl font-bold text-[13px] hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200 flex items-center gap-2`}>
-              {level.title}
-              <span className="text-white/60 text-[11px] font-normal">{level.ages}</span>
-            </button>
           ))}
         </div>
       </section>
