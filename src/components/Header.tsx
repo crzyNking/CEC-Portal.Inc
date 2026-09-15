@@ -14,12 +14,12 @@ const k12Data = [
 ]
 
 const collegeData = [
-  { name: 'BS in Information Technology' },
-  { name: 'BS in Hospitality Management' },
-  { name: 'BS in Criminology' },
-  { name: 'BS in Tourism Management' },
-  { name: 'BS in Secondary Education' },
-  { name: 'BS in Elementary Education' },
+  { name: 'BS in Information Technology', path: '/programs/bsit' },
+  { name: 'BS in Hospitality Management', path: '/programs/college' },
+  { name: 'BS in Criminology', path: '/programs/college' },
+  { name: 'BS in Tourism Management', path: '/programs/college' },
+  { name: 'BS in Secondary Education', path: '/programs/college' },
+  { name: 'BS in Elementary Education', path: '/programs/college' },
 ]
 
 const enrollK12 = [
@@ -238,7 +238,7 @@ export default function Header() {
                           {collegeData.map((prog) => (
                             <button
                               key={prog.name}
-                              onClick={() => navigateAndClose('/programs/college')}
+                              onClick={() => navigateAndClose(prog.path)}
                               className="group flex items-center gap-3 bg-[#dce4ed] rounded-lg py-1.5 pr-3 pl-3 hover:bg-[#d2dce8] transition-all duration-200 cursor-pointer"
                             >
                               <span className="text-[#0b2545] font-semibold text-[12px] leading-[1.3] flex-grow text-left">{prog.name}</span>
@@ -585,7 +585,7 @@ export default function Header() {
                           {collegeData.map((prog) => (
                             <button
                               key={prog.name}
-                              onClick={() => navigateAndClose('/programs/college')}
+                              onClick={() => navigateAndClose(prog.path)}
                               className="group flex items-center gap-2.5 bg-[#dce4ed] rounded-lg py-1.5 pr-2.5 pl-2.5 hover:bg-[#d2dce8] transition-all duration-200 cursor-pointer w-full"
                             >
                               <span className="text-[#0b2545] font-semibold text-[11px] leading-[1.2] flex-grow text-left">{prog.name}</span>
