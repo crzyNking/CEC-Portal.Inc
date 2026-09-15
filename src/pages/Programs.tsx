@@ -8,10 +8,10 @@ import Footer from '../components/Footer'
 type AuthMode = 'login' | 'signup'
 
 const k12Cards = [
-  { title: 'Kindergarten', desc: 'The Kindergarten Department of CEC provides a supportive environment that fosters early growth, creativity, and basic skills for young learners.', img: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=400&q=80', link: '/kindergarten' },
-  { title: 'Elementary', desc: 'The Elementary Department nurtures young minds with strong values, foundational academic skills, and lifelong learning habits.', img: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=400&q=80', link: '/elementary' },
-  { title: 'Junior High School', desc: 'Offering dynamic programs designed to strengthen critical thinking, character, and personal development in preparation for higher education.', img: 'https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=400&q=80', link: '/junior-high' },
-  { title: 'Senior High School', desc: 'Provides specialized academic tracks and practical training to effectively prepare students for college and future careers.', img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80', link: '/senior-high' },
+  { title: 'Kindergarten', desc: 'The Kindergarten Department of CEC provides a supportive environment that fosters early growth, creativity, and basic skills for young learners.', img: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=400&q=80' },
+  { title: 'Elementary', desc: 'The Elementary Department nurtures young minds with strong values, foundational academic skills, and lifelong learning habits.', img: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=400&q=80' },
+  { title: 'Junior High School', desc: 'Offering dynamic programs designed to strengthen critical thinking, character, and personal development in preparation for higher education.', img: 'https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=400&q=80' },
+  { title: 'Senior High School', desc: 'Provides specialized academic tracks and practical training to effectively prepare students for college and future careers.', img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80' },
 ]
 
 const collegePrograms = [
@@ -129,7 +129,7 @@ export default function Programs() {
                   </div>
                   <div className="p-2.5 flex flex-col flex-grow justify-between">
                     <p className="text-[10px] text-[#475569] leading-[1.3] mb-2.5">{item.desc}</p>
-                    <Link to={item.link} className="inline-flex items-center gap-1 text-[11px] font-bold text-[#1d4ed8] hover:underline">
+                    <Link to="/senior-high" className="inline-flex items-center gap-1 text-[11px] font-bold text-[#1d4ed8] hover:underline">
                       Learn More
                       <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
@@ -149,7 +149,7 @@ export default function Programs() {
             </div>
             <div className="flex flex-col gap-2 sm:gap-2.5">
               {collegePrograms.map((prog) => (
-                <Link to="/enrollment/college" key={prog.name} className="flex items-center justify-between rounded-lg px-3 py-2.5 transition-all hover:-translate-y-0.5 hover:shadow-md cursor-pointer bg-gradient-to-r from-[#dbe2ef] to-[#e2e8f0]">
+                <Link to="/senior-high" key={prog.name} className="flex items-center justify-between rounded-lg px-3 py-2.5 transition-all hover:-translate-y-0.5 hover:shadow-md cursor-pointer bg-gradient-to-r from-[#dbe2ef] to-[#e2e8f0]">
                   <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
                     <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-[#1E4E8C] text-white flex items-center justify-center shrink-0">
                       <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
