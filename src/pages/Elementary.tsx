@@ -3,127 +3,111 @@ import Footer from '../components/Footer'
 
 export default function Elementary() {
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] overflow-x-hidden">
+    <div className="min-h-screen bg-[#F8FAFC] text-[#334155] overflow-x-hidden">
       <Header />
 
-      {/* Breadcrumbs */}
-      <div className="bg-white border-b border-[#E2E8F0] py-2.5 px-6">
-        <div className="max-w-[1200px] mx-auto text-[12px] text-[#475569]">
-          <a href="/" className="hover:text-[#0B1F3A]">Home</a> &gt;{' '}
-          <a href="/programs" className="hover:text-[#0B1F3A]">Academic Programs</a> &gt;{' '}
-          <span className="text-[#0F172A] font-semibold">Elementary</span>
-        </div>
-      </div>
+      <main className="max-w-[1280px] mx-auto px-6 md:px-10 py-10">
 
-      <main className="max-w-[1200px] mx-auto px-6 py-8">
         {/* Hero */}
-        <section className="bg-[#071F43] rounded-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 text-white shadow-lg mb-8">
-          <div className="p-10 md:p-12 flex flex-col justify-between">
-            <div>
-              <span className="inline-flex items-center gap-1.5 bg-white/10 border border-white/20 px-3 py-1 rounded-full text-[11px] font-semibold tracking-wide uppercase mb-5">
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                Elementary
-              </span>
-              <h1 className="text-[28px] md:text-[32px] font-bold leading-[1.25] mb-4">
-                Building Strong Foundations for Lifelong Learning
-              </h1>
-              <p className="text-[#94A3B8] text-[14px] leading-[1.6] mb-10">
-                Nurturing young minds with strong values, foundational academic skills, and lifelong learning habits through a comprehensive curriculum.
+        <section className="bg-[#0B1F3A] rounded-[20px] overflow-hidden grid grid-cols-1 md:grid-cols-2 mb-[60px] shadow-[0_10px_25px_rgba(11,37,89,0.15)]">
+          <div className="px-8 py-12 md:px-12 flex flex-col justify-center">
+            <span className="inline-block bg-white/8 border border-[#FBBF24]/30 text-[#FBBF24] px-3.5 py-1.5 rounded-full text-[11px] font-bold tracking-wide uppercase w-fit mb-6">
+              ELEMENTARY DEPARTMENT
+            </span>
+            <h1 className="text-white text-3xl md:text-[38px] leading-[1.2] mb-6 font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
+              Nurturing Young Minds for a Bright and Inspired Future
+            </h1>
+            <p className="text-[#CBD5E1] text-sm leading-[1.6]">
+              Empowering young learners with essential literacy, foundational numeracy, holistic character building, and joyful discovery in an inclusive, supportive community.
+            </p>
+          </div>
+          <div className="relative min-h-[280px] md:min-h-[380px]">
+            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80" alt="Elementary Students" className="w-full h-full object-cover" loading="lazy" />
+          </div>
+        </section>
+
+        {/* Section Heading */}
+        <section className="text-center mb-10">
+          <h2 className="text-[#0F172A] text-[28px] md:text-[36px] mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>Academic Programs</h2>
+          <p className="text-[#64748B] text-base italic" style={{ fontFamily: "'Playfair Display', serif" }}>Comprehensive primary education programs designed to inspire curiosity, values, and strong academic foundations.</p>
+        </section>
+
+        {/* Programs Grid */}
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          {/* Card 1: Primary Division */}
+          <div className="bg-white rounded-2xl border border-[#E2E8F0] overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.02)] flex flex-col md:flex-row">
+            <div className="flex-1 p-8">
+              <div className="w-9 h-9 rounded-lg bg-[#EFF6FF] text-[#2563EB] flex items-center justify-center mb-5 text-base">🔖</div>
+              <h3 className="text-[#0F172A] text-[22px] font-bold mb-1.5 leading-[1.3]" style={{ fontFamily: "'Playfair Display', serif" }}>Primary Division</h3>
+              <p className="text-[#334155] text-xs font-bold mb-4">Grades 1 – 3: Literacy, Numeracy, & Discovery</p>
+              <p className="text-[#64748B] text-xs leading-[1.6]">
+                For young children building core mastery in reading, math fluency, and scientific inquiry. Emphasizes interactive learning tools, sensory discovery, and expressive communication.
               </p>
             </div>
-            <div className="flex gap-5 text-[12px] text-[#CBD5E1]">
-              <span className="flex items-center gap-1.5">
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                DepEd Aligned
+            <div className="md:w-[45%] min-h-[200px]">
+              <img src="https://images.unsplash.com/photo-1587654780291-39c9404d7dd0?auto=format&fit=crop&w=500&q=80" alt="Primary Division Students" className="w-full h-full object-cover" loading="lazy" />
+            </div>
+          </div>
+
+          {/* Card 2: Intermediate Division */}
+          <div className="bg-white rounded-2xl border border-[#E2E8F0] overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.02)] flex flex-col">
+            <div className="h-[220px]">
+              <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80" alt="Intermediate Division Student" className="w-full h-full object-cover" loading="lazy" />
+            </div>
+            <div className="px-8 py-7">
+              <span className="inline-block bg-[#FEF3C7] text-[#B45309] border border-[#FDE68A] px-3.5 py-1.5 rounded-full text-[11px] font-bold tracking-wide uppercase mb-5">
+                GRADES 4 TO 6
               </span>
-              <span className="flex items-center gap-1.5">
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>
-                Chinese Immersion
-              </span>
-            </div>
-          </div>
-          <div className="relative bg-[#1E293B] min-h-[300px]">
-            <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80" alt="Elementary" className="w-full h-full object-cover" loading="lazy" />
-          </div>
-        </section>
-
-        {/* Stats */}
-        <section className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-12">
-          {[
-            { icon: '📖', value: 'Grades 1-6', label: 'Complete Elementary' },
-            { icon: '🌐', value: '3 Languages', label: 'English, Filipino & Mandarin' },
-            { icon: '🔬', value: 'Hands-on Learning', label: 'Science & Math Labs' },
-            { icon: '📜', value: 'Since 1915', label: 'Over 100 Years' },
-          ].map((s) => (
-            <div key={s.label} className="bg-white border border-[#E2E8F0] rounded-xl p-5 flex items-start gap-4 shadow-sm">
-              <div className="w-10 h-10 bg-[#F1F5F9] rounded-lg flex items-center justify-center text-lg shrink-0">{s.icon}</div>
-              <div>
-                <h3 className="text-[16px] font-bold text-[#0F172A]">{s.value}</h3>
-                <p className="text-[12px] text-[#475569]">{s.label}</p>
-              </div>
-            </div>
-          ))}
-        </section>
-
-        {/* Programs */}
-        <section className="mb-12">
-          <div className="mb-8">
-            <div className="text-[12px] font-bold uppercase tracking-wide text-[#475569] flex items-center gap-2 mb-1.5">
-              <span className="w-4 h-0.5 bg-[#475569]" /> Our Curriculum
-            </div>
-            <h2 className="text-[26px] font-bold text-[#0F172A] mb-1.5">Elementary Programs</h2>
-            <p className="text-[14px] text-[#475569]">A comprehensive curriculum designed to build strong academic foundations and character.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { icon: '📐', title: 'Mathematics & Science', desc: 'Building analytical thinking through problem-solving, experiments, and critical thinking.' },
-              { icon: '🗣️', title: 'Language Arts & Chinese', desc: 'Developing communication skills in English, Filipino, and Mandarin Chinese.' },
-              { icon: '🎨', title: 'Values & Character', desc: 'Grounded in Confucian teachings, fostering discipline, respect, and leadership.' },
-            ].map((c) => (
-              <div key={c.title} className="bg-white border border-[#E2E8F0] rounded-xl p-6 shadow-sm">
-                <div className="w-10 h-10 bg-[#F1F5F9] rounded-lg flex items-center justify-center text-lg mb-4">{c.icon}</div>
-                <h3 className="text-[16px] font-bold text-[#0F172A] mb-2">{c.title}</h3>
-                <p className="text-[13px] text-[#475569] leading-[1.6]">{c.desc}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Facilities */}
-        <section className="mb-12">
-          <div className="bg-[#071F43] rounded-2xl p-8 md:p-10 text-white grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-[18px] font-bold mb-4">Exclusive Facilities</h3>
-              <p className="text-[13px] text-[#94A3B8] leading-[1.6] mb-5">
-                Air-conditioned, spacious classrooms designed to provide a safe and highly conductive environment for individual and group growth.
+              <h3 className="text-[#0F172A] text-[22px] font-bold mb-1.5 leading-[1.3]" style={{ fontFamily: "'Playfair Display', serif" }}>Intermediate Division</h3>
+              <h3 className="text-[#0F172A] text-[22px] font-bold mb-4 leading-[1.3] -mt-1" style={{ fontFamily: "'Playfair Display', serif" }}>Inquiry-Based Science, Logic & Creative Expression</h3>
+              <p className="text-[#64748B] text-xs leading-[1.6]">
+                Cultivating critical thinking, research proficiency, and leadership. Prepares students seamlessly for higher learning through integrated robotics, analytical math, and bilingual communication.
               </p>
-              <ul className="space-y-3">
-                {['Child-Safe Indoor Play Areas', 'Modern Computer Laboratory', 'Science Discovery Room', 'Library & Reading Corner'].map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-[13px] text-[#CBD5E1]">
-                    <svg className="w-4 h-4 text-[#F59E0B] shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" /></svg>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="relative rounded-xl overflow-hidden min-h-[250px]">
-              <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=600&q=80" alt="Facilities" className="w-full h-full object-cover" loading="lazy" />
             </div>
           </div>
+
+          {/* Card 3: Holistic & Values Formation */}
+          <div className="bg-white rounded-2xl border border-[#E2E8F0] overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.02)] flex flex-col justify-between">
+            <div className="p-8">
+              <div className="w-9 h-9 rounded-lg bg-[#FEF3C7] text-[#D97706] flex items-center justify-center mb-5 text-base">🎓</div>
+              <h3 className="text-[#0F172A] text-[22px] font-bold mb-1.5 leading-[1.3]" style={{ fontFamily: "'Playfair Display', serif" }}>Holistic & Values Formation</h3>
+              <p className="text-[#334155] text-xs font-bold mb-4">Filipino-Chinese Cultural Heritage & Character Ethics</p>
+              <p className="text-[#64748B] text-xs leading-[1.6] mt-10">
+                Rooted in our deep heritage of discipline, filial piety, mutual respect, and civic duty. Students develop integrity, emotional resilience, and cross-cultural appreciation through active community service and cultural celebrations.
+              </p>
+            </div>
+          </div>
+
+          {/* Card 4: Enriched Learning & Co-Curricular */}
+          <div className="bg-[#0B1F3A] rounded-2xl overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.02)] flex flex-col md:flex-row">
+            <div className="flex-1 p-8 text-white">
+              <span className="inline-block bg-white/8 border border-[#FBBF24]/30 text-[#FBBF24] px-3.5 py-1.5 rounded-full text-[11px] font-bold tracking-wide uppercase mb-5">
+                REAL-WORLD READY
+              </span>
+              <h3 className="text-[22px] font-bold mb-4 leading-[1.3]" style={{ fontFamily: "'Playfair Display', serif" }}>Enriched Learning & Co-Curricular</h3>
+              <p className="text-[#CBD5E1] text-xs leading-[1.6] mt-4">
+                100+ hours of speech fest, interactive science fairs, coding clubs, sports clinics, and artistic presentations designed to inspire self-confidence and teamwork from an early age.
+              </p>
+            </div>
+            <div className="md:w-[45%] min-h-[200px]">
+              <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=500&q=80" alt="Co-Curricular Activities" className="w-full h-full object-cover" loading="lazy" />
+            </div>
+          </div>
+
         </section>
 
         {/* CTA */}
-        <section className="bg-[#F8FAFC] border border-[#CBD5E1] rounded-2xl p-8 md:px-10 flex flex-col md:flex-row justify-between items-center gap-5">
+        <section className="mt-10 bg-white rounded-2xl border border-[#E2E8F0] shadow-[0_4px_15px_rgba(0,0,0,0.02)] p-8 flex flex-col md:flex-row items-center justify-between gap-5">
           <div>
-            <h3 className="text-[20px] font-bold text-[#071F43] mb-1.5">Ready to enroll your child?</h3>
-            <p className="text-[13px] text-[#475569]">Give your child the opportunity to learn, grow, and prepare for a brighter future at CEC.</p>
+            <h3 className="text-[#0B1F3A] text-[20px] font-bold mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>Ready to enroll your child?</h3>
+            <p className="text-[#64748B] text-[13px]">Enrollment for Grades 1 to 6 and transferees is now open. Be an Easternian today!</p>
           </div>
-          <div className="flex gap-3 shrink-0">
-            <a href="/enrollment/elementary" className="bg-[#071F43] text-white px-5 py-2.5 rounded-lg text-[13px] font-semibold hover:bg-[#0B1F3A] transition-colors">
-              Enroll Now
-            </a>
-          </div>
+          <a href="/enrollment/elementary" className="bg-[#0B1F3A] text-white px-6 py-2.5 rounded-lg text-[13px] font-semibold hover:bg-[#081633] transition-colors shrink-0">
+            Enroll Now
+          </a>
         </section>
+
       </main>
 
       <Footer />
