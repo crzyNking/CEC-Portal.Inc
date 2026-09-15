@@ -18,6 +18,9 @@ const ShareHandler = lazy(() => import('./pages/ShareHandler'))
 
 const SeniorHigh = lazy(() => import('./pages/SeniorHigh'))
 const JuniorHigh = lazy(() => import('./pages/JuniorHigh'))
+const Kindergarten = lazy(() => import('./pages/Kindergarten'))
+const Elementary = lazy(() => import('./pages/Elementary'))
+const College = lazy(() => import('./pages/College'))
 const KindergartenEnrollment = lazy(() => import('./pages/enrollment/KindergartenEnrollment'))
 const ElementaryEnrollment = lazy(() => import('./pages/enrollment/ElementaryEnrollment'))
 const JuniorHighEnrollment = lazy(() => import('./pages/enrollment/JuniorHighEnrollment'))
@@ -76,8 +79,11 @@ function App() {
         <Suspense fallback={<PageSpinner />}>
           <Routes>
             <Route path="/" element={<Home />} />
-<Route path="/senior-high" element={<SeniorHigh />} />
-<Route path="/junior-high" element={<JuniorHigh />} />
+<Route path="/programs/senior-high" element={<SeniorHigh />} />
+<Route path="/programs/junior-high" element={<JuniorHigh />} />
+<Route path="/programs/kindergarten" element={<Kindergarten />} />
+<Route path="/programs/elementary" element={<Elementary />} />
+<Route path="/programs/college" element={<College />} />
 <Route path="/campus/:campusId" element={<Campus />} />
             <Route path="/about" element={<About />} />
             <Route path="/news" element={<News />} />

@@ -7,10 +7,10 @@ import { CEC_LOGO } from '../lib/constants'
 import AnnouncementBar from './AnnouncementBar'
 
 const k12Data = [
-  { title: 'Kindergarten', desc: 'A supportive environment fostering early growth, creativity, and basic skills for young learners.', path: '/enrollment/kindergarten', img: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=600&auto=format&fit=crop' },
-  { title: 'Elementary', desc: 'Nurturing young minds with strong values, foundational academic skills, and lifelong learning habits.', path: '/enrollment/elementary', img: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=600&auto=format&fit=crop' },
-  { title: 'Junior High School', desc: 'Dynamic programs strengthening critical thinking, character, and personal development.', path: '/enrollment/junior-high', img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=600&auto=format&fit=crop' },
-  { title: 'Senior High School', desc: 'Specialized academic tracks and practical training for college and future careers.', path: '/enrollment/senior-high', img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=600&auto=format&fit=crop' },
+  { title: 'Kindergarten', desc: 'A supportive environment fostering early growth, creativity, and basic skills for young learners.', path: '/programs/kindergarten', img: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=600&auto=format&fit=crop' },
+  { title: 'Elementary', desc: 'Nurturing young minds with strong values, foundational academic skills, and lifelong learning habits.', path: '/programs/elementary', img: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=600&auto=format&fit=crop' },
+  { title: 'Junior High School', desc: 'Dynamic programs strengthening critical thinking, character, and personal development.', path: '/programs/junior-high', img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=600&auto=format&fit=crop' },
+  { title: 'Senior High School', desc: 'Specialized academic tracks and practical training for college and future careers.', path: '/programs/senior-high', img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=600&auto=format&fit=crop' },
 ]
 
 const collegeData = [
@@ -23,10 +23,10 @@ const collegeData = [
 ]
 
 const enrollK12 = [
-  { title: 'KINDERGARTEN', desc: 'Ages 3-5', path: '/enrollment/kindergarten', img: 'https://images.unsplash.com/photo-1587654780291-39c9404d7dd0?auto=format&fit=crop&w=400&q=80' },
-  { title: 'ELEMENTARY', desc: 'Grades 1-6', path: '/enrollment/elementary', img: 'https://cdn.vectorstock.com/i/500p/82/33/faceless-woman-placeholder-vector-24138233.jpg' },
-  { title: 'JUNIOR HIGH', desc: 'Grades 7-10', path: '/enrollment/junior-high', img: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=400&q=80' },
-  { title: 'SENIOR HIGH', desc: 'Grades 11-12', path: '/enrollment/senior-high', img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80' },
+  { title: 'KINDERGARTEN', desc: 'Ages 3-5', path: '/programs/kindergarten', img: 'https://images.unsplash.com/photo-1587654780291-39c9404d7dd0?auto=format&fit=crop&w=400&q=80' },
+  { title: 'ELEMENTARY', desc: 'Grades 1-6', path: '/programs/elementary', img: 'https://cdn.vectorstock.com/i/500p/82/33/faceless-woman-placeholder-vector-24138233.jpg' },
+  { title: 'JUNIOR HIGH', desc: 'Grades 7-10', path: '/programs/junior-high', img: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=400&q=80' },
+  { title: 'SENIOR HIGH', desc: 'Grades 11-12', path: '/programs/senior-high', img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80' },
 ]
 
 const servicesData = [
@@ -174,7 +174,7 @@ export default function Header() {
           >
             <button
               onClick={() => setActiveDropdown(activeDropdown === 'programs' ? null : 'programs')}
-              className={navItemClass(isActive('/senior-high'))}
+              className={navItemClass(isActive('/programs/'))}
               aria-expanded={activeDropdown === 'programs'}
               aria-haspopup="true"
             >
@@ -238,7 +238,7 @@ export default function Header() {
                           {collegeData.map((prog) => (
                             <button
                               key={prog.name}
-                              onClick={() => navigateAndClose('/senior-high')}
+                              onClick={() => navigateAndClose('/programs/college')}
                               className="group flex items-center gap-3 bg-[#dce4ed] rounded-lg py-1.5 pr-3 pl-3 hover:bg-[#d2dce8] transition-all duration-200 cursor-pointer"
                             >
                               <span className="text-[#0b2545] font-semibold text-[12px] leading-[1.3] flex-grow text-left">{prog.name}</span>
@@ -585,7 +585,7 @@ export default function Header() {
                           {collegeData.map((prog) => (
                             <button
                               key={prog.name}
-                              onClick={() => navigateAndClose('/senior-high')}
+                              onClick={() => navigateAndClose('/programs/college')}
                               className="group flex items-center gap-2.5 bg-[#dce4ed] rounded-lg py-1.5 pr-2.5 pl-2.5 hover:bg-[#d2dce8] transition-all duration-200 cursor-pointer w-full"
                             >
                               <span className="text-[#0b2545] font-semibold text-[11px] leading-[1.2] flex-grow text-left">{prog.name}</span>
@@ -776,10 +776,10 @@ export default function Header() {
 
                 <div className="space-y-2">
                   {[
-                    { label: 'Kindergarten', desc: 'Ages 3-5', path: '/enrollment/kindergarten', color: 'from-blue-500 to-blue-700', img: 'https://images.unsplash.com/photo-1587654780291-39c9404d7dd0?auto=format&fit=crop&w=400&q=80' },
-                    { label: 'Elementary', desc: 'Grades 1-6', path: '/enrollment/elementary', color: 'from-indigo-500 to-indigo-700', img: 'https://cdn.vectorstock.com/i/500p/82/33/faceless-woman-placeholder-vector-24138233.jpg' },
-                    { label: 'Junior High School', desc: 'Grades 7-10', path: '/enrollment/junior-high', color: 'from-violet-500 to-violet-700', img: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=400&q=80' },
-                    { label: 'Senior High School', desc: 'Grades 11-12', path: '/enrollment/senior-high', color: 'from-purple-500 to-purple-700', img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80' },
+                    { label: 'Kindergarten', desc: 'Ages 3-5', path: '/programs/kindergarten', color: 'from-blue-500 to-blue-700', img: 'https://images.unsplash.com/photo-1587654780291-39c9404d7dd0?auto=format&fit=crop&w=400&q=80' },
+                    { label: 'Elementary', desc: 'Grades 1-6', path: '/programs/elementary', color: 'from-indigo-500 to-indigo-700', img: 'https://cdn.vectorstock.com/i/500p/82/33/faceless-woman-placeholder-vector-24138233.jpg' },
+                    { label: 'Junior High School', desc: 'Grades 7-10', path: '/programs/junior-high', color: 'from-violet-500 to-violet-700', img: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=400&q=80' },
+                    { label: 'Senior High School', desc: 'Grades 11-12', path: '/programs/senior-high', color: 'from-purple-500 to-purple-700', img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80' },
                     { label: 'College', desc: "Bachelor's Degree Programs", path: '/enrollment/college', color: 'from-[#8496db] to-[#4f61b3]', img: 'https://cdn.vectorstock.com/i/500p/82/33/faceless-woman-placeholder-vector-24138233.jpg' },
                   ].map((item) => (
                     <button
