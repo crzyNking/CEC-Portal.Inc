@@ -14,9 +14,10 @@ export default defineConfig({
         name: 'CEC Portal - Cebu Eastern College',
         short_name: 'CEC Portal',
         description: 'Cebu Eastern College - Excellence in Education since 1915. Manage enrollment, view campus info, and stay connected.',
-        theme_color: '#0b1f40',
-        background_color: '#0b1f40',
+        theme_color: '#0B1F3A',
+        background_color: '#0B1F3A',
         display: 'standalone',
+        display_override: ['standalone', 'minimal-ui'],
         orientation: 'portrait-primary',
         scope: '/',
         start_url: '/',
@@ -73,17 +74,12 @@ export default defineConfig({
         icons: [
           {
             src: 'icons/icon.svg',
-            sizes: '192x192',
+            sizes: 'any',
             type: 'image/svg+xml'
           },
           {
             src: 'icons/icon.svg',
-            sizes: '512x512',
-            type: 'image/svg+xml'
-          },
-          {
-            src: 'icons/icon.svg',
-            sizes: '512x512',
+            sizes: 'any',
             type: 'image/svg+xml',
             purpose: 'maskable'
           }

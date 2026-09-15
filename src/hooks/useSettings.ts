@@ -55,9 +55,59 @@ interface SettingsState {
 let globalSettings: SettingsState = { school: null, website: null, homepage: null, loading: true, error: false }
 let listeners: Array<() => void> = []
 let loadingPromise: Promise<void> | null = null
+let realtimeChannel: ReturnType<typeof supabase.channel> | null = null
+let reloadTimer: ReturnType<typeof setTimeout> | null = null
 
 function notifyListeners() {
   listeners.forEach((l) => l())
+}
+
+async function fetchAll(): Promise<{ school: SchoolSettings | null; website: WebsiteSettings | null; homepage: HomepageContent | null; error: boolean } | null> {
+  try {
+    const [schoolRes, websiteRes, homepageRes] = await Promise.all([
+      supabase.from('school_settings').select('*').limit(1).maybeSingle(),
+      supabase.from('website_settings').select('*').limit(1).maybeSingle(),
+      supabase.from('homepage_content').select('*').limit(1).maybeSingle(),
+    ])
+
+    if (schoolRes.error || websiteRes.error || homepageRes.error) {
+      return null
+    }
+    return {
+      school: schoolRes.data,
+      website: websiteRes.data,
+      homepage: homepageRes.data,
+      error: false,
+    }
+  } catch {
+    return null
+  }
+}
+
+function setupRealtime() {
+  if (realtimeChannel || typeof window === 'undefined') return
+
+  realtimeChannel = supabase
+    .channel('cec-content-realtime')
+    .on('postgres_changes', { event: '*', schema: 'public' }, () => {
+      if (reloadTimer) clearTimeout(reloadTimer)
+      reloadTimer = setTimeout(() => { reloadSettings() }, 500)
+    })
+    .subscribe((status) => {
+      if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+        supabase.removeChannel(realtimeChannel!)
+        realtimeChannel = null
+        setTimeout(() => setupRealtime(), 5000)
+      }
+    })
+}
+
+async function reloadSettings() {
+  const data = await fetchAll()
+  if (data && !data.error) {
+    globalSettings = { ...data, loading: false }
+    notifyListeners()
+  }
 }
 
 export function useSettings() {
@@ -76,34 +126,18 @@ export function useSettings() {
     }
   }, [])
 
+  useEffect(() => {
+    setupRealtime()
+  }, [])
+
   return globalSettings
 }
 
 async function loadSettings() {
-  try {
-    const [schoolRes, websiteRes, homepageRes] = await Promise.all([
-      supabase.from('school_settings').select('*').limit(1).maybeSingle(),
-      supabase.from('website_settings').select('*').limit(1).maybeSingle(),
-      supabase.from('homepage_content').select('*').limit(1).maybeSingle(),
-    ])
-
-    if (schoolRes.error || websiteRes.error || homepageRes.error) {
-      console.error('Settings query errors:', {
-        school: schoolRes.error,
-        website: websiteRes.error,
-        homepage: homepageRes.error,
-      })
-      globalSettings = { school: null, website: null, homepage: null, loading: false, error: true }
-    } else {
-      globalSettings = {
-        school: schoolRes.data,
-        website: websiteRes.data,
-        homepage: homepageRes.data,
-        loading: false,
-        error: false,
-      }
-    }
-  } catch {
+  const data = await fetchAll()
+  if (data) {
+    globalSettings = { ...data, loading: false }
+  } else {
     globalSettings = { school: null, website: null, homepage: null, loading: false, error: true }
   }
   notifyListeners()
