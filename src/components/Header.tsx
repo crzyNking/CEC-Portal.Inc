@@ -53,6 +53,18 @@ type Dropdown = 'programs' | 'enrollment' | 'services' | 'about' | null
 type MobileAccordion = 'programs' | 'enrollment' | 'services' | 'about' | null
 type MobilePage = 'main' | 'enroll-picker'
 
+function DropdownHeader({ icon, title }: { icon: React.ReactNode; title: string }) {
+  return (
+    <>
+      <div className="flex items-center gap-2.5 mb-3">
+        {icon}
+        <h2 className="text-[#f7e0b5] text-[17px] font-semibold tracking-wide">{title}</h2>
+      </div>
+      <div className="h-[2px] bg-[#7b95c6] w-[50%] mb-5" />
+    </>
+  )
+}
+
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobilePage, setMobilePage] = useState<MobilePage>('main')
@@ -123,25 +135,15 @@ export default function Header() {
     setMobileAccordion((prev) => (prev === section ? null : section))
   }
 
-  const navigateAndClose = (path: string) => {
+  const navigateAndClose = useCallback((path: string) => {
     closeAll()
     navigate(path)
-  }
+  }, [closeAll, navigate])
 
   const navItemClass = (active: boolean) =>
     `text-[13.5px] font-medium transition-colors cursor-pointer flex items-center gap-1 ${
       active ? 'text-white' : 'text-[#cbd5e1] hover:text-white'
     }`
-
-  const DropdownHeader = ({ icon, title }: { icon: React.ReactNode; title: string }) => (
-    <>
-      <div className="flex items-center gap-2.5 mb-3">
-        {icon}
-        <h2 className="text-[#f7e0b5] text-[17px] font-semibold tracking-wide">{title}</h2>
-      </div>
-      <div className="h-[2px] bg-[#7b95c6] w-[50%] mb-5" />
-    </>
-  )
 
   return (
     <>

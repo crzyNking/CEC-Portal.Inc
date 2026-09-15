@@ -54,6 +54,7 @@ interface SettingsState {
 
 let globalSettings: SettingsState = { school: null, website: null, homepage: null, loading: true, error: false }
 let listeners: Array<() => void> = []
+let loadingPromise: Promise<void> | null = null
 
 function notifyListeners() {
   listeners.forEach((l) => l())
@@ -70,7 +71,9 @@ export function useSettings() {
 
   useEffect(() => {
     if (globalSettings.school !== null || globalSettings.error) return
-    loadSettings()
+    if (!loadingPromise) {
+      loadingPromise = loadSettings()
+    }
   }, [])
 
   return globalSettings
@@ -84,12 +87,21 @@ async function loadSettings() {
       supabase.from('homepage_content').select('*').limit(1).maybeSingle(),
     ])
 
-    globalSettings = {
-      school: schoolRes.data,
-      website: websiteRes.data,
-      homepage: homepageRes.data,
-      loading: false,
-      error: false,
+    if (schoolRes.error || websiteRes.error || homepageRes.error) {
+      console.error('Settings query errors:', {
+        school: schoolRes.error,
+        website: websiteRes.error,
+        homepage: homepageRes.error,
+      })
+      globalSettings = { school: null, website: null, homepage: null, loading: false, error: true }
+    } else {
+      globalSettings = {
+        school: schoolRes.data,
+        website: websiteRes.data,
+        homepage: homepageRes.data,
+        loading: false,
+        error: false,
+      }
     }
   } catch {
     globalSettings = { school: null, website: null, homepage: null, loading: false, error: true }

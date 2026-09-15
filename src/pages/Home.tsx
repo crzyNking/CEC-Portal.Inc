@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
 import { useSettings } from '../hooks/useSettings'
 import { useScrollReveal } from '../hooks/useScrollReveal'
@@ -118,6 +118,7 @@ export function Home() {
   const error = useAuthStore((s) => s.error)
   const setError = useAuthStore((s) => s.setError)
   const navigate = useNavigate()
+  const location = useLocation()
   const { school, homepage, website } = useSettings()
 
   const [authModal, setAuthModal] = useState<{ open: boolean; mode: AuthMode }>({ open: false, mode: 'login' })
@@ -138,32 +139,37 @@ export function Home() {
     setEmail('')
     setPassword('')
     setFullName('')
+    setSubmitting(false)
     setError(null)
   }, [setError])
 
   useEffect(() => {
     if (user && !loading) {
       closeAuth()
-      navigate('/dashboard')
+      const redirectTo = location.state?.from?.pathname || '/dashboard'
+      navigate(redirectTo, { replace: true })
     }
-  }, [user, loading, closeAuth, navigate])
+  }, [user, loading, closeAuth, navigate, location.state])
 
   const handleAuth = useCallback(async (e: React.FormEvent) => {
     e.preventDefault()
     setSubmitting(true)
     setError(null)
 
-    if (authTab === 'login') {
-      await signInWithEmail(email, password)
-    } else {
-      const result = await signUpWithEmail(email, password, fullName)
-      if (result.success && result.message.includes('check your email')) {
-        return
+    try {
+      if (authTab === 'login') {
+        await signInWithEmail(email, password)
+      } else {
+        const result = await signUpWithEmail(email, password, fullName)
+        if (result.success && result.message.includes('check your email')) {
+          setSubmitting(false)
+          return
+        }
       }
+    } finally {
+      setSubmitting(false)
     }
-
-    setSubmitting(false)
-  }, [authTab, email, password, fullName, signInWithEmail, signUpWithEmail, closeAuth, navigate, setError])
+  }, [authTab, email, password, fullName, signInWithEmail, signUpWithEmail])
 
   const handleGoogleLogin = useCallback(async () => {
     await signInWithGoogle()
@@ -369,8 +375,8 @@ export function Home() {
               </div>
 
               <div className="flex bg-white/8 border border-white/15 rounded-lg p-[3px] mb-6">
-                <button onClick={() => { setAuthTab('login'); setError(null) }} className={`flex-1 py-2 text-[13px] font-medium rounded-md transition-all ${authTab === 'login' ? 'bg-[#2563eb] text-white shadow' : 'text-[#94a3b8]'}`}>Log In</button>
-                <button onClick={() => { setAuthTab('signup'); setError(null) }} className={`flex-1 py-2 text-[13px] font-medium rounded-md transition-all ${authTab === 'signup' ? 'bg-[#2563eb] text-white shadow' : 'text-[#94a3b8]'}`}>Sign Up</button>
+                <button onClick={() => { setAuthTab('login'); setSubmitting(false); setError(null) }} className={`flex-1 py-2 text-[13px] font-medium rounded-md transition-all ${authTab === 'login' ? 'bg-[#2563eb] text-white shadow' : 'text-[#94a3b8]'}`}>Log In</button>
+                <button onClick={() => { setAuthTab('signup'); setSubmitting(false); setError(null) }} className={`flex-1 py-2 text-[13px] font-medium rounded-md transition-all ${authTab === 'signup' ? 'bg-[#2563eb] text-white shadow' : 'text-[#94a3b8]'}`}>Sign Up</button>
               </div>
 
               {error && <div className="bg-red-500/15 border border-red-400/30 text-red-300 text-[12px] rounded-lg px-4 py-3 mb-4">{error}</div>}
@@ -408,7 +414,7 @@ export function Home() {
 
               <p className="text-center text-[11.5px] text-[#cbd5e1] mt-4">
                 {authTab === 'login' ? "Don't have an Account? " : 'Already have an Account? '}
-                <button onClick={() => { setAuthTab(authTab === 'login' ? 'signup' : 'login'); setError(null) }} className="text-white font-semibold underline">
+                <button onClick={() => { setAuthTab(authTab === 'login' ? 'signup' : 'login'); setSubmitting(false); setError(null) }} className="text-white font-semibold underline">
                   {authTab === 'login' ? 'Sign Up' : 'Log In'}
                 </button>
               </p>

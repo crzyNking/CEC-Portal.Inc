@@ -1,10 +1,11 @@
 import { useSettings } from '../hooks/useSettings'
 import { useAuthStore } from '../store/authStore'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 
 export default function MaintenanceMode({ children }: { children: React.ReactNode }) {
   const { website, loading } = useSettings()
   const { user, profile } = useAuthStore()
+  const location = useLocation()
   const isAdmin = profile?.role === 'admin'
 
   if (loading) return null
@@ -16,7 +17,7 @@ export default function MaintenanceMode({ children }: { children: React.ReactNod
   if (!website?.maintenance_mode) return <>{children}</>
 
   // If user is on /admin, redirect to login (admin can still log in)
-  const isOnAdmin = window.location.pathname.startsWith('/admin')
+  const isOnAdmin = location.pathname.startsWith('/admin')
   if (isOnAdmin && !user) return <Navigate to="/" replace />
   if (isOnAdmin && user) return <>{children}</>
 

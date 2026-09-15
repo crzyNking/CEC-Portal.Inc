@@ -11,6 +11,19 @@ interface Announcement {
   text_color: string
 }
 
+function isValidColor(color: string): boolean {
+  if (!color) return false
+  if (/^#[0-9a-fA-F]{3,8}$/.test(color)) return true
+  if (/^rgba?\(/.test(color)) return true
+  if (/^hsla?\(/.test(color)) return true
+  if (/^[a-z]+$/i.test(color) && color !== 'initial' && color !== 'inherit') return true
+  return false
+}
+
+function safeColor(color: string, fallback: string): string {
+  return isValidColor(color) ? color : fallback
+}
+
 export default function AnnouncementBar() {
   const [announcement, setAnnouncement] = useState<Announcement | null>(null)
 
@@ -47,7 +60,7 @@ export default function AnnouncementBar() {
   return (
     <div
       className="relative px-4 py-2.5 text-center text-sm flex items-center justify-center gap-3 flex-wrap"
-      style={{ background: announcement.bg_color, color: announcement.text_color }}
+      style={{ background: safeColor(announcement.bg_color, '#0b1f40'), color: safeColor(announcement.text_color, '#ffffff') }}
     >
       <span>📢</span>
       <span>{announcement.message}</span>
@@ -55,7 +68,7 @@ export default function AnnouncementBar() {
         <Link
           to={announcement.button_url}
           className="inline-block px-3 py-1 rounded-md text-xs font-bold bg-white/20 hover:bg-white/30 transition-colors"
-          style={{ color: announcement.text_color }}
+          style={{ color: safeColor(announcement.text_color, '#ffffff') }}
         >
           {announcement.button_text}
         </Link>

@@ -113,6 +113,7 @@ export function Chatbot() {
       addMessage({ role: 'assistant', content: reply })
     } catch (error) {
       if (error instanceof DOMException && error.name === 'AbortError') return
+      if (error instanceof TypeError && error.message.includes('abort')) return
       const message = error instanceof Error ? error.message : 'Something went wrong'
       addMessage({ role: 'assistant', content: `Error: ${message}` })
     } finally {
@@ -156,7 +157,7 @@ export function Chatbot() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         ) : (
-          <img src="https://static.wikia.nocookie.net/wreckitralph/images/2/2d/Knowsmore.png/revision/latest?cb=20190204230437" alt="KnowsMore" className="w-full h-full object-cover" />
+                    <img src="https://static.wikia.nocookie.net/wreckitralph/images/2/2d/Knowsmore.png/revision/latest?cb=20190204230437" alt="KnowsMore" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%239333ea"><circle cx="12" cy="8" r="4"/><path d="M12 14c-6 0-8 3-8 3v1h16v-1s-2-3-8-3z"/></svg>' }} />
         )}
       </button>
 
@@ -168,7 +169,7 @@ export function Chatbot() {
               <div className="relative flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl overflow-hidden bg-white/20">
-                    <img src="https://static.wikia.nocookie.net/wreckitralph/images/2/2d/Knowsmore.png/revision/latest?cb=20190204230437" alt="KnowsMore" className="w-full h-full object-cover" />
+          <img src="https://static.wikia.nocookie.net/wreckitralph/images/2/2d/Knowsmore.png/revision/latest?cb=20190204230437" alt="KnowsMore" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%239333ea"><circle cx="12" cy="8" r="4"/><path d="M12 14c-6 0-8 3-8 3v1h16v-1s-2-3-8-3z"/></svg>' }} />
                   </div>
                   <div>
                     <h3 className="text-sm font-semibold text-white">KnowsMore</h3>
@@ -190,7 +191,7 @@ export function Chatbot() {
                     {msg.role === 'assistant' && (
                       <div className="flex items-center gap-1.5 mb-1.5">
                         <div className="w-5 h-5 rounded-md overflow-hidden">
-                          <img src="https://static.wikia.nocookie.net/wreckitralph/images/2/2d/Knowsmore.png/revision/latest?cb=20190204230437" alt="AI" className="w-full h-full object-cover" />
+                           <img src="https://static.wikia.nocookie.net/wreckitralph/images/2/2d/Knowsmore.png/revision/latest?cb=20190204230437" alt="AI" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%239333ea"><circle cx="12" cy="8" r="4"/><path d="M12 14c-6 0-8 3-8 3v1h16v-1s-2-3-8-3z"/></svg>' }} />
                         </div>
                         <span className="text-[11px] font-medium text-gray-400 dark:text-gray-500">KnowsMore</span>
                       </div>
@@ -213,7 +214,7 @@ export function Chatbot() {
                   <div className="max-w-[85%]">
                     <div className="flex items-center gap-1.5 mb-1.5">
                       <div className="w-5 h-5 rounded-md overflow-hidden">
-                        <img src="https://static.wikia.nocookie.net/wreckitralph/images/2/2d/Knowsmore.png/revision/latest?cb=20190204230437" alt="AI" className="w-full h-full object-cover" />
+                         <img src="https://static.wikia.nocookie.net/wreckitralph/images/2/2d/Knowsmore.png/revision/latest?cb=20190204230437" alt="AI" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%239333ea"><circle cx="12" cy="8" r="4"/><path d="M12 14c-6 0-8 3-8 3v1h16v-1s-2-3-8-3z"/></svg>' }} />
                       </div>
                       <span className="text-[11px] font-medium text-gray-400 dark:text-gray-500">KnowsMore</span>
                     </div>
