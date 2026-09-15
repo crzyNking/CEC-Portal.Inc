@@ -106,7 +106,7 @@ export default function Kindergarten() {
             </div>
           </div>
           <div className="min-h-[160px] md:min-h-0">
-            <img src="https://iili.io/nnFWy0B.jpg" alt="Classroom" className="w-full h-full object-cover" loading="lazy" />
+            <img src="https://iili.io/nnFk49V.jpg" alt="Classroom" className="w-full h-full object-cover" loading="lazy" />
           </div>
         </div>
 

@@ -53,7 +53,7 @@ export default function JuniorHigh() {
             </div>
           </div>
           <div className="relative bg-[#1E293B] min-h-[300px] md:min-h-[350px]">
-            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80" alt="Hands-on Learning" className="w-full h-full object-cover" loading="lazy" />
+            <img src="https://iili.io/nnFwzdB.png" alt="Hands-on Learning" className="w-full h-full object-cover" loading="lazy" />
             <div className="absolute bottom-4 right-4 bg-[#0F172A]/75 backdrop-blur-sm text-white px-3 py-1.5 rounded-md text-[11px] flex items-center gap-1.5">
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg>
               Grade 7–10 Hands-on Learning
@@ -112,7 +112,7 @@ export default function JuniorHigh() {
                 </ul>
               </div>
               <div className="relative bg-[#1E293B] min-h-[200px] hidden md:block">
-                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80" alt="Robotics Lab" className="w-full h-full object-cover" loading="lazy" />
+                <img src="https://iili.io/nnFwumF.png" alt="Robotics Lab" className="w-full h-full object-cover" loading="lazy" />
                 <div className="absolute top-3 right-3 bg-[#0F172A]/75 backdrop-blur-sm text-white px-2.5 py-1 rounded text-[10px] flex items-center gap-1">
                   <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3" /></svg>
                   Hands-on Science Lab
@@ -131,7 +131,7 @@ export default function JuniorHigh() {
                 </p>
               </div>
               <div className="relative rounded-2xl overflow-hidden h-[180px]">
-                <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=600&q=80" alt="Stage Event" className="w-full h-full object-cover" loading="lazy" />
+                <img src="https://iili.io/nnFwaqv.png" alt="Stage Event" className="w-full h-full object-cover" loading="lazy" />
                 <div className="absolute bottom-3 left-3 bg-[#0F172A]/75 backdrop-blur-sm text-white px-2.5 py-1 rounded text-[10px]">
                   Speech &amp; Cultural Oratory
                 </div>
@@ -142,6 +142,139 @@ export default function JuniorHigh() {
               </div>
             </div>
           </div>
+
+          {/* ADDED CARDS START HERE */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+            
+            {/* Card 1: Technology & Practical Skills */}
+            <div className="bg-[#061838] rounded-3xl p-8 md:p-10 flex flex-col justify-between text-white shadow-xl">
+              <div>
+                {/* Top Icon Placeholder Box */}
+                <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-sm">
+                  <svg className="w-7 h-7 text-[#061838]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <rect x="3" y="4" width="18" height="16" rx="3" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 9l3 3-3 3M13 15h4" />
+                  </svg>
+                </div>
+
+                {/* Category Tag */}
+                <h3 className="text-[#e5a93c] font-bold text-xs uppercase tracking-wider mb-3">
+                  TECHNOLOGY & PRACTICAL SKILLS
+                </h3>
+
+                {/* Main Title */}
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-2 leading-tight" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
+                  Technology & Practical Skills
+                </h2>
+
+                {/* Subtitle */}
+                <h4 className="text-white text-base md:text-lg font-bold mb-4">
+                  Coding, Computers & Practical Skills
+                </h4>
+
+                {/* Description */}
+                <p className="text-slate-300 text-sm md:text-base leading-relaxed max-w-lg mb-10">
+                  Learn useful computer, technology, and practical skills through coding, digital projects, and hands-on activities.
+                </p>
+              </div>
+
+              {/* Feature Chips / Bottom Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Chip 1 */}
+                <div className="bg-white rounded-2xl p-4 text-slate-900 shadow-sm flex flex-col justify-center">
+                  <div className="flex items-center gap-2 mb-1">
+                    <svg className="w-5 h-5 text-[#e5a93c] shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l-3 3 3 3m8-6l3 3-3 3" />
+                    </svg>
+                    <h5 className="font-bold text-sm text-[#061838]">Coding & Programming</h5>
+                  </div>
+                  <p className="text-[12px] text-slate-500 font-medium pl-7">
+                    Learn Coding Through Fun Activities
+                  </p>
+                </div>
+
+                {/* Chip 2 */}
+                <div className="bg-white rounded-2xl p-4 text-slate-900 shadow-sm flex flex-col justify-center">
+                  <div className="flex items-center gap-2 mb-1">
+                    <svg className="w-5 h-5 text-[#e5a93c] shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    <h5 className="font-bold text-sm text-[#061838]">Practical Skills</h5>
+                  </div>
+                  <p className="text-[12px] text-slate-500 font-medium pl-7">
+                    Explore Real-Life Skills & Projects
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 2: Growing Beyond the Classroom */}
+            <div className="bg-[#061838] rounded-3xl overflow-hidden flex flex-col md:flex-row text-white shadow-xl">
+              {/* Left Column Text Content */}
+              <div className="p-8 md:p-10 flex-1 flex flex-col justify-between">
+                <div>
+                  {/* Badge */}
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-600/80 bg-slate-800/40 text-[11px] font-bold tracking-wider text-slate-200 uppercase mb-6">
+                    <svg className="w-3.5 h-3.5 text-slate-300 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <span>LEARN • GROW • LEAD</span>
+                  </div>
+
+                  {/* Title */}
+                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-4 leading-tight" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
+                    Growing Beyond the<br />Classroom
+                  </h2>
+
+                  {/* Paragraph */}
+                  <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-6">
+                    We help students become confident, responsible, and caring individuals through sports, activities, community projects, and school events.
+                  </p>
+
+                  {/* Divider */}
+                  <div className="border-b border-slate-700/60 mb-6"></div>
+
+                  {/* List Items */}
+                  <ul className="space-y-4">
+                    <li className="flex items-center gap-3">
+                      <svg className="w-5 h-5 text-[#e5a93c] shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4l7 3.82 7-3.82v-4L12 17l-7-3.82z" />
+                      </svg>
+                      <span className="text-sm font-medium text-slate-200">DepEd Aligned Curriculum</span>
+                    </li>
+
+                    <li className="flex items-center gap-3">
+                      <svg className="w-5 h-5 text-[#e5a93c] shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+                      </svg>
+                      <span className="text-sm font-medium text-slate-200">Learn 3 Languages</span>
+                    </li>
+
+                    <li className="flex items-center gap-3">
+                      <svg className="w-5 h-5 text-[#e5a93c] shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <rect x="3" y="4" width="18" height="12" rx="2" />
+                        <path d="M2 20h20" />
+                      </svg>
+                      <span className="text-sm font-medium text-slate-200">Hands-on Technology Learning</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Right Column Image Placeholder */}
+              <div className="w-full md:w-1/2 min-h-[340px] relative">
+                <img 
+                  src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80" 
+                  alt="Students learning and engaging in activities placeholder image" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            
+          </div>
+          {/* ADDED CARDS END HERE */}
+          
         </section>
 
         {/* White Banner Section */}

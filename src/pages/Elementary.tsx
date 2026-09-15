@@ -22,7 +22,7 @@ export default function Elementary() {
             </p>
           </div>
           <div className="relative min-h-[280px] md:min-h-[380px]">
-            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80" alt="Elementary Students" className="w-full h-full object-cover" loading="lazy" />
+            <img src="https://iili.io/nnFw2e9.png" alt="Elementary Students" className="w-full h-full object-cover" loading="lazy" />
           </div>
         </section>
 
@@ -46,14 +46,14 @@ export default function Elementary() {
               </p>
             </div>
             <div className="md:w-[45%] min-h-[200px]">
-              <img src="https://images.unsplash.com/photo-1587654780291-39c9404d7dd0?auto=format&fit=crop&w=500&q=80" alt="Primary Division Students" className="w-full h-full object-cover" loading="lazy" />
+              <img src="https://iili.io/nnFjy0l.png" alt="Primary Division Students" className="w-full h-full object-cover" loading="lazy" />
             </div>
           </div>
 
           {/* Card 2: Intermediate Division */}
           <div className="bg-white rounded-2xl border border-[#E2E8F0] overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.02)] flex flex-col">
             <div className="h-[220px]">
-              <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80" alt="Intermediate Division Student" className="w-full h-full object-cover" loading="lazy" />
+              <img src="https://iili.io/nnFw3be.png" alt="Intermediate Division Student" className="w-full h-full object-cover" loading="lazy" />
             </div>
             <div className="px-8 py-7">
               <span className="inline-block bg-[#FEF3C7] text-[#B45309] border border-[#FDE68A] px-3.5 py-1.5 rounded-full text-[11px] font-bold tracking-wide uppercase mb-5">
@@ -91,7 +91,7 @@ export default function Elementary() {
               </p>
             </div>
             <div className="md:w-[45%] min-h-[200px]">
-              <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=500&q=80" alt="Co-Curricular Activities" className="w-full h-full object-cover" loading="lazy" />
+              <img src="https://iili.io/nnFw2e9.png" alt="Co-Curricular Activities" className="w-full h-full object-cover" loading="lazy" />
             </div>
           </div>
 
