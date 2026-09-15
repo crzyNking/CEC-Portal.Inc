@@ -22,6 +22,10 @@ const Kindergarten = lazy(() => import('./pages/Kindergarten'))
 const Elementary = lazy(() => import('./pages/Elementary'))
 const College = lazy(() => import('./pages/College'))
 const BSIT = lazy(() => import('./pages/BSIT'))
+const BSHM = lazy(() => import('./pages/BSHM'))
+const BSTM = lazy(() => import('./pages/BSTM'))
+const Criminology = lazy(() => import('./pages/Criminology'))
+const BEED = lazy(() => import('./pages/BEED'))
 const KindergartenEnrollment = lazy(() => import('./pages/enrollment/KindergartenEnrollment'))
 const ElementaryEnrollment = lazy(() => import('./pages/enrollment/ElementaryEnrollment'))
 const JuniorHighEnrollment = lazy(() => import('./pages/enrollment/JuniorHighEnrollment'))
@@ -86,6 +90,10 @@ function App() {
 <Route path="/programs/elementary" element={<Elementary />} />
 <Route path="/programs/college" element={<College />} />
 <Route path="/programs/bsit" element={<BSIT />} />
+<Route path="/programs/bshm" element={<BSHM />} />
+<Route path="/programs/bstm" element={<BSTM />} />
+<Route path="/programs/criminology" element={<Criminology />} />
+<Route path="/programs/beed" element={<BEED />} />
 <Route path="/campus/:campusId" element={<Campus />} />
             <Route path="/about" element={<About />} />
             <Route path="/news" element={<News />} />

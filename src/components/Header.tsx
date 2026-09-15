@@ -15,11 +15,11 @@ const k12Data = [
 
 const collegeData = [
   { name: 'BS in Information Technology', path: '/programs/bsit' },
-  { name: 'BS in Hospitality Management', path: '/programs/college' },
-  { name: 'BS in Criminology', path: '/programs/college' },
-  { name: 'BS in Tourism Management', path: '/programs/college' },
+  { name: 'BS in Hospitality Management', path: '/programs/bshm' },
+  { name: 'BS in Criminology', path: '/programs/criminology' },
+  { name: 'BS in Tourism Management', path: '/programs/bstm' },
   { name: 'BS in Secondary Education', path: '/programs/college' },
-  { name: 'BS in Elementary Education', path: '/programs/college' },
+  { name: 'BS in Elementary Education', path: '/programs/beed' },
 ]
 
 const enrollK12 = [
