@@ -9,8 +9,12 @@ import MaintenanceMode from './components/MaintenanceMode'
 import InstallPrompt from './components/InstallPrompt'
 import UpdateNotification from './components/UpdateNotification'
 import PWASplash from './components/PWASplash'
+import OfflineIndicator from './components/OfflineIndicator'
+import SyncIndicator from './components/SyncIndicator'
 import { Home } from './pages/Home'
 import AdminLayout from './pages/admin/AdminLayout'
+
+const ShareHandler = lazy(() => import('./pages/ShareHandler'))
 
 const SeniorHigh = lazy(() => import('./pages/SeniorHigh'))
 const KindergartenEnrollment = lazy(() => import('./pages/enrollment/KindergartenEnrollment'))
@@ -61,6 +65,8 @@ function App() {
       <AuthProvider>
         <PWASplash />
         <ToastContainer />
+        <OfflineIndicator />
+        <SyncIndicator />
         <Chatbot />
         <InstallPrompt />
         <UpdateNotification />
@@ -74,6 +80,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/news" element={<News />} />
             <Route path="/privacy" element={<Privacy />} />
+            <Route path="/share" element={<ShareHandler />} />
             <Route path="/enrollment/kindergarten" element={<KindergartenEnrollment />} />
             <Route path="/enrollment/elementary" element={<ElementaryEnrollment />} />
             <Route path="/enrollment/junior-high" element={<JuniorHighEnrollment />} />
