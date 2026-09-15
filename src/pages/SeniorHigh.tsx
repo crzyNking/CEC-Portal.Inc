@@ -83,7 +83,7 @@ export default function SeniorHigh() {
                 </p>
               </div>
               <div className="flex-1 relative min-h-[160px]">
-                <img src="https://iili.io/nnFwOrl.png" alt="HUMSS" className="w-full h-full object-cover" loading="lazy" />
+                <img src="" alt="HUMSS" className="w-full h-full object-cover" loading="lazy" />
                 <div className="absolute bottom-2 left-0 right-0 text-center text-[#8A90A0] font-bold text-[11px] tracking-[2px]">HUMSS</div>
               </div>
             </div>

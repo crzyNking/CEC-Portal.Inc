@@ -24,9 +24,9 @@ const collegePrograms = [
 ]
 
 const academicCards = [
-  { icon: '\uD83C\uDF93', title: 'Basic Education', desc: 'A strong foundation for lifelong learning, fostering curiosity and critical thinking.' },
-  { icon: '\uD83D\uDCD6', title: 'Senior High', desc: 'Specialized tracks preparing students for college and future careers.' },
-  { icon: '\uD83C\uDFDB\uFE0F', title: 'Higher Education', desc: 'Professional degree programs shaping the industry leaders of tomorrow.' },
+  { icon: 'M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5', title: 'Basic Education', desc: 'A strong foundation for lifelong learning, fostering curiosity and critical thinking.' },
+  { icon: 'M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25', title: 'Senior High', desc: 'Specialized tracks preparing students for college and future careers.' },
+  { icon: 'M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z', title: 'Higher Education', desc: 'Professional degree programs shaping the industry leaders of tomorrow.' },
 ]
 
 export default function Programs() {
@@ -169,23 +169,19 @@ export default function Programs() {
       </section>
 
       {/* Academic Excellence */}
-      <section className="py-10 sm:py-[60px] px-4 sm:px-10 bg-[#f8fafc] text-center">
-        <h2 className="text-xl sm:text-[26px] font-extrabold text-[#0B1F3A] mb-2">Academic Excellence</h2>
-        <p className="text-xs sm:text-[13px] text-[#64748b] mb-8 sm:mb-[45px]">Comprehensive educational programs designed to nurture future leaders.</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-[1100px] mx-auto">
+      <section className="py-10 sm:py-[60px] px-4 sm:px-10 bg-white text-center">
+        <h2 className="text-[22px] sm:text-[26px] font-extrabold text-[#0B1F3A] mb-2">Academic Excellence</h2>
+        <p className="text-[12px] sm:text-[13px] text-[#64748b] mb-[45px]">Comprehensive educational programs designed to nurture future leaders.</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[1100px] mx-auto">
           {academicCards.map((card) => (
-            <div key={card.title} className="bg-white rounded-lg p-6 sm:p-[30px_25px] text-left border border-[#e2e8f0] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.03)] flex flex-col hover:shadow-lg transition-shadow">
-              <div className="w-9 h-9 rounded-full bg-[#dbeafe] text-[#1d4ed8] flex items-center justify-center text-sm mb-5">
-                {card.icon}
-              </div>
-              <h3 className="text-base font-bold text-[#1e293b] mb-3">{card.title}</h3>
-              <p className="text-[12.5px] text-[#64748b] leading-relaxed mb-5 flex-grow">{card.desc}</p>
-              <a href="#" className="inline-flex items-center gap-1.5 text-[11.5px] font-bold text-[#1d4ed8] hover:underline">
-                Learn More
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+            <div key={card.title} className="group bg-[#F8FAFC] rounded-xl p-6 text-left shadow-[0_4px_20px_rgba(11,31,58,0.06)] backdrop-blur-sm border border-[rgba(11,31,58,0.08)] hover:border-[#0B1F3A]/20 card-glow cursor-default">
+              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#002366] to-[#1d4ed8] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d={card.icon} />
                 </svg>
-              </a>
+              </div>
+              <h3 className="text-[14px] font-bold text-[#1e293b] mb-2">{card.title}</h3>
+              <p className="text-[12px] text-[#64748b] leading-[1.5]">{card.desc}</p>
             </div>
           ))}
         </div>
