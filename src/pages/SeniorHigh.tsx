@@ -20,7 +20,7 @@ export default function SeniorHigh() {
           </p>
         </div>
         <div className="flex-1 relative min-h-[280px] md:min-h-[340px]">
-          <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80" alt="Senior High Students" className="w-full h-full object-cover" loading="lazy" />
+          <img src="https://iili.io/nnFwMmX.png" alt="Senior High Students" className="w-full h-full object-cover" loading="lazy" />
           <div className="absolute bottom-2.5 right-3.5 text-[10px] text-white/80 z-10">
             Facebook.com/CEC...
           </div>
@@ -47,7 +47,7 @@ export default function SeniorHigh() {
                 </p>
               </div>
               <div className="flex-1 relative min-h-[160px]">
-                <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=600&q=80" alt="STEM Lab" className="w-full h-full object-cover" loading="lazy" />
+                <img src="https://iili.io/nnFwWIn.png" alt="STEM Lab" className="w-full h-full object-cover" loading="lazy" />
                 <div className="absolute bottom-2 left-0 right-0 text-center text-[#8A90A0] font-bold text-[11px] tracking-[2px]">STEM</div>
               </div>
             </div>
@@ -55,7 +55,7 @@ export default function SeniorHigh() {
             {/* ABM Card */}
             <div className="bg-white rounded-md overflow-hidden flex flex-col md:flex-row shadow-[0_1px_4px_rgba(0,0,0,0.06)] min-h-[220px]">
               <div className="flex-1 relative min-h-[160px] order-1">
-                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80" alt="ABM" className="w-full h-full object-cover" loading="lazy" />
+                <img src="https://iili.io/nnFwhLG.png" alt="ABM" className="w-full h-full object-cover" loading="lazy" />
                 <div className="absolute bottom-2 left-0 right-0 text-center text-[#8A90A0] font-bold text-[11px] tracking-[2px]">ABM</div>
               </div>
               <div className="flex-1 px-6 py-6 flex flex-col gap-2 order-2">
@@ -83,7 +83,7 @@ export default function SeniorHigh() {
                 </p>
               </div>
               <div className="flex-1 relative min-h-[160px]">
-                <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80" alt="HUMSS" className="w-full h-full object-cover" loading="lazy" />
+                <img src="https://iili.io/nnFwOrl.png" alt="HUMSS" className="w-full h-full object-cover" loading="lazy" />
                 <div className="absolute bottom-2 left-0 right-0 text-center text-[#8A90A0] font-bold text-[11px] tracking-[2px]">HUMSS</div>
               </div>
             </div>
@@ -101,7 +101,7 @@ export default function SeniorHigh() {
                   </p>
                 </div>
                 <div className="flex-1 relative min-h-[160px]">
-                  <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=600&q=80" alt="Work Immersion" className="w-full h-full object-cover" loading="lazy" />
+                  <img src="https://iili.io/nnFwOrl.png" alt="Work Immersion" className="w-full h-full object-cover" loading="lazy" />
                   <span className="absolute top-4 right-4 text-[18px] opacity-70">📺</span>
                 </div>
               </div>
