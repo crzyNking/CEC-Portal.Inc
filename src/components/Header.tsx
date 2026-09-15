@@ -8,9 +8,9 @@ import AnnouncementBar from './AnnouncementBar'
 
 const k12Data = [
   { title: 'Kindergarten', desc: 'A supportive environment fostering early growth, creativity, and basic skills for young learners.', path: '/programs/kindergarten', img: 'https://iili.io/nn31S9f.jpg' },
-  { title: 'Elementary', desc: 'Nurturing young minds with strong values, foundational academic skills, and lifelong learning habits.', path: '/programs/elementary', img: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=600&auto=format&fit=crop' },
-  { title: 'Junior High School', desc: 'Dynamic programs strengthening critical thinking, character, and personal development.', path: '/programs/junior-high', img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=600&auto=format&fit=crop' },
-  { title: 'Senior High School', desc: 'Specialized academic tracks and practical training for college and future careers.', path: '/programs/senior-high', img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=600&auto=format&fit=crop' },
+  { title: 'Elementary', desc: 'Nurturing young minds with strong values, foundational academic skills, and lifelong learning habits.', path: '/programs/elementary', img: 'https://iili.io/nn3sBol.jpg' },
+  { title: 'Junior High School', desc: 'Dynamic programs strengthening critical thinking, character, and personal development.', path: '/programs/junior-high', img: 'https://iili.io/nnFJ10G.md.jpg' },
+  { title: 'Senior High School', desc: 'Specialized academic tracks and practical training for college and future careers.', path: '/programs/senior-high', img: 'https://iili.io/nnF3vgs.jpg' },
 ]
 
 const collegeData = [
