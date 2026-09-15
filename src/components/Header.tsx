@@ -7,7 +7,7 @@ import { CEC_LOGO } from '../lib/constants'
 import AnnouncementBar from './AnnouncementBar'
 
 const k12Data = [
-  { title: 'Kindergarten', desc: 'A supportive environment fostering early growth, creativity, and basic skills for young learners.', path: '/programs/kindergarten', img: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=600&auto=format&fit=crop' },
+  { title: 'Kindergarten', desc: 'A supportive environment fostering early growth, creativity, and basic skills for young learners.', path: '/programs/kindergarten', img: 'https://iili.io/nn31S9f.jpg' },
   { title: 'Elementary', desc: 'Nurturing young minds with strong values, foundational academic skills, and lifelong learning habits.', path: '/programs/elementary', img: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=600&auto=format&fit=crop' },
   { title: 'Junior High School', desc: 'Dynamic programs strengthening critical thinking, character, and personal development.', path: '/programs/junior-high', img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=600&auto=format&fit=crop' },
   { title: 'Senior High School', desc: 'Specialized academic tracks and practical training for college and future careers.', path: '/programs/senior-high', img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=600&auto=format&fit=crop' },
@@ -776,7 +776,7 @@ export default function Header() {
 
                 <div className="space-y-2">
                   {[
-                    { label: 'Kindergarten', desc: 'Ages 3-5', path: '/programs/kindergarten', color: 'from-blue-500 to-blue-700', img: 'https://images.unsplash.com/photo-1587654780291-39c9404d7dd0?auto=format&fit=crop&w=400&q=80' },
+                    { label: 'Kindergarten', desc: 'Ages 3-5', path: '/programs/kindergarten', color: 'from-blue-500 to-blue-700', img: 'https://iili.io/nn31S9f.jpg' },
                     { label: 'Elementary', desc: 'Grades 1-6', path: '/programs/elementary', color: 'from-indigo-500 to-indigo-700', img: 'https://cdn.vectorstock.com/i/500p/82/33/faceless-woman-placeholder-vector-24138233.jpg' },
                     { label: 'Junior High School', desc: 'Grades 7-10', path: '/programs/junior-high', color: 'from-violet-500 to-violet-700', img: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=400&q=80' },
                     { label: 'Senior High School', desc: 'Grades 11-12', path: '/programs/senior-high', color: 'from-purple-500 to-purple-700', img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80' },
