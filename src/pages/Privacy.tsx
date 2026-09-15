@@ -91,11 +91,11 @@ const sections = [
 
 export default function Privacy() {
   return (
-    <div className="min-h-screen" style={{ background: '#0d1b3e' }}>
+    <div className="min-h-screen bg-gradient-to-br from-[#0B1F3A] via-[#102A43] to-[#1E4E8C]">
       <Header />
 
       {/* Hero */}
-      <section className="py-[70px] px-5 text-center" style={{ background: '#0d1b3e' }}>
+      <section className="py-[70px] px-5 text-center bg-gradient-to-br from-[#0B1F3A] via-[#102A43] to-[#1E4E8C] backdrop-blur-xl">
         <div className="max-w-[640px] mx-auto">
           <h1
             className="mb-[18px]"
@@ -103,7 +103,7 @@ export default function Privacy() {
               fontFamily: "Georgia, 'Times New Roman', serif",
               fontWeight: 700,
               fontStyle: 'italic',
-              color: '#f0d675',
+              color: '#F59E0B',
               fontSize: 'clamp(32px, 5vw, 46px)',
             }}
           >
@@ -117,15 +117,10 @@ export default function Privacy() {
 
       {/* Content */}
       <div
-        className="flex justify-center pb-[60px]"
-        style={{ background: 'linear-gradient(180deg, #0d1b3e 0%, #13275c 30%, #13275c 100%)' }}
+        className="flex justify-center pb-[60px] bg-gradient-to-b from-[#0B1F3A] via-[#102A43] to-[#1E4E8C]"
       >
         <div
-          className="w-[92%] max-w-[640px] mt-[-20px] relative z-[2] rounded-[6px] px-[40px] py-[44px] max-sm:px-5 max-sm:py-8"
-          style={{
-            background: '#ffffff',
-            boxShadow: '0 20px 50px rgba(0,0,0,0.35)',
-          }}
+          className="w-[92%] max-w-[640px] mt-[-20px] relative z-[2] rounded-[6px] px-[40px] py-[44px] max-sm:px-5 max-sm:py-8 bg-white/95 backdrop-blur-sm shadow-[0_4px_20px_rgba(11,31,58,0.06)] border border-[rgba(11,31,58,0.08)]"
         >
           {sections.map((section, i) => (
             <div key={section.num}>
@@ -133,11 +128,11 @@ export default function Privacy() {
                 <div className="flex items-center gap-[14px] mb-[10px]">
                   <div
                     className="w-[26px] h-[26px] min-w-[26px] rounded-full flex items-center justify-center text-[13px] font-bold"
-                    style={{ background: '#dbe4fb', color: '#13275c' }}
+                    style={{ background: '#dbe4fb', color: '#0B1F3A' }}
                   >
                     {section.num}
                   </div>
-                  <h2 className="text-[19px] font-bold" style={{ color: '#13275c' }}>
+                  <h2 className="text-[19px] font-bold" style={{ color: '#0B1F3A' }}>
                     {section.title}
                   </h2>
                 </div>
@@ -156,7 +151,7 @@ export default function Privacy() {
             className="rounded-[6px] px-6 py-[22px] mt-[6px]"
             style={{ background: '#eef1fb' }}
           >
-            <h3 className="text-[17px] font-bold mb-2" style={{ color: '#13275c' }}>
+            <h3 className="text-[17px] font-bold mb-2" style={{ color: '#0B1F3A' }}>
               Contact Our Data Privacy Officer
             </h3>
             <p className="text-[13.5px] leading-[1.6] mb-[14px]" style={{ color: '#4a5568' }}>
@@ -166,7 +161,7 @@ export default function Privacy() {
               <a
                 href="mailto:cebueasterncollege1915@yahoo.com"
                 className="flex items-center gap-2 text-[13.5px] no-underline"
-                style={{ color: '#13275c' }}
+                style={{ color: '#0B1F3A' }}
               >
                 <span>✉️</span>
                 cebueasterncollege1915@yahoo.com
@@ -174,7 +169,7 @@ export default function Privacy() {
               <a
                 href="tel:+63322562523"
                 className="flex items-center gap-2 text-[13.5px] no-underline"
-                style={{ color: '#13275c' }}
+                style={{ color: '#0B1F3A' }}
               >
                 <span>📞</span>
                 (032) 256 2523

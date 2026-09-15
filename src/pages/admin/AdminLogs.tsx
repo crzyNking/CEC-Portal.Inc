@@ -18,16 +18,16 @@ export default function AdminLogs() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Activity Logs</h1>
+        <h1 className="text-2xl font-bold text-[#0B1F3A]">Activity Logs</h1>
         <button onClick={load} className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200">Refresh</button>
       </div>
 
-      {loading ? <div className="flex justify-center py-12"><div className="w-8 h-8 border-2 border-[#13275c]/30 border-t-[#13275c] rounded-full animate-spin" /></div>
-      : logs.length === 0 ? <div className="bg-white rounded-xl p-12 text-center text-gray-400 shadow-sm border border-gray-100">No activity logs yet.</div>
+      {loading ? <div className="flex justify-center py-12"><div className="w-8 h-8 border-2 border-[#1E4E8C]/30 border-t-[#1E4E8C] rounded-full animate-spin" /></div>
+      : logs.length === 0 ? <div className="bg-white/90 backdrop-blur-sm rounded-xl p-12 text-center text-gray-400 border border-[rgba(11,31,58,0.08)] shadow-[0_4px_20px_rgba(11,31,58,0.06)]">No activity logs yet.</div>
       : (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-white/90 backdrop-blur-sm rounded-xl border border-[rgba(11,31,58,0.08)] shadow-[0_4px_20px_rgba(11,31,58,0.06)] overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="bg-gray-50 border-b border-gray-200">
+            <thead className="bg-[#F8FAFC] border-b border-[rgba(11,31,58,0.08)]">
               <tr>
                 <th className="text-left px-4 py-3 font-medium text-gray-600">Action</th>
                 <th className="text-left px-4 py-3 font-medium text-gray-600">Entity</th>

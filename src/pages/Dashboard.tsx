@@ -70,14 +70,14 @@ export function Dashboard() {
   ], [])
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0f] relative overflow-hidden transition-colors">
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0B1F3A] relative overflow-hidden transition-colors">
       <div className="pointer-events-none absolute inset-0 dark:block hidden">
         <div className="absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-purple-600/8 blur-[120px]" />
         <div className="absolute top-1/3 -right-20 h-[400px] w-[400px] rounded-full bg-cyan-500/6 blur-[100px]" />
         <div className="absolute bottom-0 left-1/3 h-[300px] w-[500px] rounded-full bg-indigo-500/5 blur-[100px]" />
       </div>
 
-      <header className="sticky top-0 z-40 border-b border-gray-200 dark:border-white/[0.06] bg-gray-50/80 dark:bg-[#0a0a0f]/80 backdrop-blur-2xl transition-colors">
+      <header className="sticky top-0 z-40 border-b border-gray-200 dark:border-white/[0.06] bg-[#F8FAFC]/80 dark:bg-[#0B1F3A]/80 backdrop-blur-2xl transition-colors">
         <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-3 sm:py-4">
             <div className="flex items-center gap-2.5 sm:gap-3">
@@ -95,7 +95,7 @@ export function Dashboard() {
             <div className="relative">
               <button
                 onClick={() => setShowDropdown(!showDropdown)}
-                className="flex items-center gap-2 sm:gap-2.5 rounded-full bg-gray-100 dark:bg-white/[0.04] py-1 pr-1 pl-1 sm:pl-2.5 text-left transition-all duration-200 hover:bg-gray-200 dark:hover:bg-white/[0.08] ring-1 ring-gray-200 dark:ring-white/[0.08]"
+                className="flex items-center gap-2 sm:gap-2.5 rounded-full bg-white/90 dark:bg-[#102A43]/80 py-1 pr-1 pl-1 sm:pl-2.5 text-left transition-all duration-200 hover:bg-gray-200 dark:hover:bg-white/[0.08] ring-1 ring-gray-200 dark:ring-white/[0.08]"
               >
                 {avatarUrl ? (
                   <img className="h-8 w-8 rounded-full object-cover ring-2 ring-purple-500/40 sm:h-9 sm:w-9" src={avatarUrl} alt={displayName} />
@@ -116,7 +116,7 @@ export function Dashboard() {
               {showDropdown && (
                 <>
                   <div className="fixed inset-0 z-30" onClick={() => setShowDropdown(false)} />
-                  <div className="absolute right-0 z-40 mt-2 w-60 sm:w-64 overflow-hidden rounded-2xl border border-gray-200 dark:border-white/[0.08] bg-white dark:bg-[#141420]/95 shadow-2xl shadow-black/10 dark:shadow-black/40 backdrop-blur-xl">
+                  <div className="absolute right-0 z-40 mt-2 w-60 sm:w-64 overflow-hidden rounded-2xl border border-gray-200 dark:border-white/[0.08] bg-white/90 backdrop-blur-sm dark:bg-[#102A43]/80 dark:backdrop-blur-sm shadow-2xl shadow-black/10 dark:shadow-black/40">
                     <div className="border-b border-gray-100 dark:border-white/[0.06] p-4">
                       <div className="flex items-center gap-3">
                         {avatarUrl ? (
@@ -173,7 +173,7 @@ export function Dashboard() {
 
       <main className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
         <div className="mb-8 sm:mb-10">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-gray-900 dark:text-white mb-2">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#0B1F3A] dark:text-white mb-2">
             Welcome back,{' '}
             <span className="bg-gradient-to-r from-purple-400 via-fuchsia-300 to-cyan-400 bg-clip-text text-transparent">
               {displayName.split(' ')[0]}
@@ -184,7 +184,7 @@ export function Dashboard() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-8 sm:mb-10">
           {stats.map((stat, i) => (
-            <div key={i} className="group relative overflow-hidden rounded-2xl border border-gray-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] p-4 sm:p-5 transition-all duration-300 hover:border-gray-300 dark:hover:border-white/[0.12] hover:bg-gray-50 dark:hover:bg-white/[0.04]">
+            <div key={i} className="group relative overflow-hidden rounded-2xl bg-white/90 backdrop-blur-sm border border-[rgba(11,31,58,0.08)] dark:bg-[#102A43]/80 dark:backdrop-blur-sm dark:border-white/[0.08] shadow-[0_4px_20px_rgba(11,31,58,0.06)] p-4 sm:p-5 transition-all duration-300 hover:border-gray-300 dark:hover:border-white/[0.12] hover:bg-gray-50 dark:hover:bg-white/[0.04]">
               <div className={`absolute -right-6 -top-6 h-24 w-24 rounded-full ${colorMap[stat.color].bg} blur-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100`} />
               <div className="relative flex items-start justify-between">
                 <div>
@@ -202,7 +202,7 @@ export function Dashboard() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-          <div className="relative overflow-hidden rounded-2xl border border-gray-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] p-5 sm:p-6 lg:row-span-2">
+          <div className="relative overflow-hidden rounded-2xl bg-white/90 backdrop-blur-sm border border-[rgba(11,31,58,0.08)] dark:bg-[#102A43]/80 dark:backdrop-blur-sm dark:border-white/[0.08] shadow-[0_4px_20px_rgba(11,31,58,0.06)] p-5 sm:p-6 lg:row-span-2">
             <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-purple-500/10 blur-3xl" />
             <div className="absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-cyan-500/10 blur-3xl" />
             <div className="relative">
@@ -258,7 +258,7 @@ export function Dashboard() {
           </div>
 
           <div className="lg:col-span-2 space-y-4 sm:space-y-6">
-            <div className="rounded-2xl border border-gray-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] p-5 sm:p-6">
+            <div className="rounded-2xl bg-white/90 backdrop-blur-sm border border-[rgba(11,31,58,0.08)] dark:bg-[#102A43]/80 dark:backdrop-blur-sm dark:border-white/[0.08] shadow-[0_4px_20px_rgba(11,31,58,0.06)] p-5 sm:p-6">
               <h3 className="mb-5 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-gray-500">
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
@@ -270,7 +270,7 @@ export function Dashboard() {
                   <button
                     key={action.label}
                     onClick={() => handleNavigate(action.path)}
-                    className="group relative overflow-hidden rounded-xl border border-gray-200 dark:border-white/[0.06] bg-gray-50 dark:bg-white/[0.02] p-4 sm:p-5 text-center transition-all duration-300 hover:border-gray-300 dark:hover:border-white/[0.12] hover:bg-gray-100 dark:hover:bg-white/[0.06]"
+                    className="group relative overflow-hidden rounded-xl bg-white/90 backdrop-blur-sm border border-[rgba(11,31,58,0.08)] dark:bg-[#102A43]/80 dark:backdrop-blur-sm dark:border-white/[0.08] shadow-[0_4px_20px_rgba(11,31,58,0.06)] p-4 sm:p-5 text-center transition-all duration-300 hover:border-gray-300 dark:hover:border-white/[0.12] hover:bg-gray-100 dark:hover:bg-white/[0.06]"
                   >
                     <div className="relative mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-gray-100 dark:bg-white/[0.04] ring-1 ring-gray-200 dark:ring-white/[0.08] transition-all duration-300 group-hover:scale-110 group-hover:ring-gray-300 dark:group-hover:ring-white/[0.16]">
                       <svg className={`h-5 w-5 ${action.iconColor}`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -297,7 +297,7 @@ export function Dashboard() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-gray-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] p-5 sm:p-6">
+            <div className="rounded-2xl bg-white/90 backdrop-blur-sm border border-[rgba(11,31,58,0.08)] dark:bg-[#102A43]/80 dark:backdrop-blur-sm dark:border-white/[0.08] shadow-[0_4px_20px_rgba(11,31,58,0.06)] p-5 sm:p-6">
               <h3 className="mb-5 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-gray-500">
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />

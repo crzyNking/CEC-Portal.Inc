@@ -48,15 +48,15 @@ export default function AdminUsers() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Users ({users.length})</h1>
+        <h1 className="text-2xl font-bold text-[#0B1F3A]">Users ({users.length})</h1>
         <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search..." className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-64" />
       </div>
 
-      {loading ? <div className="flex justify-center py-12"><div className="w-8 h-8 border-2 border-[#13275c]/30 border-t-[#13275c] rounded-full animate-spin" /></div>
+      {loading ? <div className="flex justify-center py-12"><div className="w-8 h-8 border-2 border-[#1E4E8C]/30 border-t-[#1E4E8C] rounded-full animate-spin" /></div>
       : (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-white/90 backdrop-blur-sm rounded-xl border border-[rgba(11,31,58,0.08)] shadow-[0_4px_20px_rgba(11,31,58,0.06)] overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="bg-gray-50 border-b border-gray-200">
+            <thead className="bg-[#F8FAFC] border-b border-[rgba(11,31,58,0.08)]">
               <tr>
                 <th className="text-left px-4 py-3 font-medium text-gray-600">User</th>
                 <th className="text-left px-4 py-3 font-medium text-gray-600">Role</th>
@@ -69,7 +69,7 @@ export default function AdminUsers() {
                 <tr key={u.id} className="border-b border-gray-50 hover:bg-gray-50/50">
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-[#13275c] text-white flex items-center justify-center text-xs font-bold shrink-0">
+                      <div className="w-8 h-8 rounded-full bg-[#1E4E8C] text-white flex items-center justify-center text-xs font-bold shrink-0">
                         {u.avatar_url ? <img src={u.avatar_url} alt="" className="w-8 h-8 rounded-full object-cover" /> : (u.full_name?.[0] || u.email?.[0]?.toUpperCase() || '?')}
                       </div>
                       <div>
@@ -83,7 +83,7 @@ export default function AdminUsers() {
                   </td>
                   <td className="px-4 py-3 text-gray-500 text-xs">{new Date(u.created_at).toLocaleDateString()}</td>
                   <td className="px-4 py-3 text-right">
-                    <button onClick={() => toggleRole(u)} className="text-[#13275c] hover:underline text-xs font-medium">
+                    <button onClick={() => toggleRole(u)} className="text-[#1E4E8C] hover:text-[#0B1F3A] hover:underline text-xs font-medium">
                       {u.role === 'admin' ? 'Remove Admin' : 'Make Admin'}
                     </button>
                   </td>

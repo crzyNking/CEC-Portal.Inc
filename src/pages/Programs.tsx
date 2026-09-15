@@ -109,11 +109,11 @@ export default function Programs() {
       {/* Hero with Programs Overlay Card */}
       <section
         className="relative py-8 px-4 sm:py-10 flex justify-center"
-        style={{ background: "linear-gradient(rgba(10, 25, 47, 0.65), rgba(10, 25, 47, 0.65)), url('https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat" }}
+        style={{ background: "linear-gradient(rgba(11, 31, 58, 0.65), rgba(11, 31, 58, 0.65)), url('https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat" }}
       >
-        <div className="w-full max-w-[1100px] rounded-2xl p-5 sm:p-8 md:p-[35px_40px] shadow-[0_20px_40px_rgba(0,0,0,0.4)] grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-[40px] border border-white/10 bg-[rgba(6,25,68,0.92)] backdrop-blur-[8px]">
+        <div className="w-full max-w-[1100px] rounded-2xl p-5 sm:p-8 md:p-[35px_40px] shadow-[0_20px_40px_rgba(0,0,0,0.4)] grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-[40px] border border-white/10 bg-[rgba(11,31,58,0.92)] backdrop-blur-[8px]">
           <div>
-            <div className="flex items-center gap-2.5 text-white text-base sm:text-[18px] font-bold pb-3 border-b-2 border-[#1e3a8a] mb-4 sm:mb-5">
+            <div className="flex items-center gap-2.5 text-white text-base sm:text-[18px] font-bold pb-3 border-b-2 border-[#1E4E8C] mb-4 sm:mb-5">
               <svg className="w-4 h-4 sm:w-[18px] sm:h-[18px]" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
               </svg>
@@ -141,7 +141,7 @@ export default function Programs() {
             </div>
           </div>
           <div>
-            <div className="flex items-center gap-2.5 text-white text-base sm:text-[18px] font-bold pb-3 border-b-2 border-[#1e3a8a] mb-4 sm:mb-5">
+            <div className="flex items-center gap-2.5 text-white text-base sm:text-[18px] font-bold pb-3 border-b-2 border-[#1E4E8C] mb-4 sm:mb-5">
               <svg className="w-4 h-4 sm:w-[18px] sm:h-[18px]" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
               </svg>
@@ -151,7 +151,7 @@ export default function Programs() {
               {collegePrograms.map((prog) => (
                 <Link to="/senior-high" key={prog.name} className="flex items-center justify-between rounded-lg px-3 py-2.5 transition-all hover:-translate-y-0.5 hover:shadow-md cursor-pointer bg-gradient-to-r from-[#dbe2ef] to-[#e2e8f0]">
                   <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-[#1e3a8a] text-white flex items-center justify-center shrink-0">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-[#1E4E8C] text-white flex items-center justify-center shrink-0">
                       <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" d={prog.icon} />
                       </svg>
@@ -170,7 +170,7 @@ export default function Programs() {
 
       {/* Academic Excellence */}
       <section className="py-10 sm:py-[60px] px-4 sm:px-10 bg-[#f8fafc] text-center">
-        <h2 className="text-xl sm:text-[26px] font-extrabold text-[#002366] mb-2">Academic Excellence</h2>
+        <h2 className="text-xl sm:text-[26px] font-extrabold text-[#0B1F3A] mb-2">Academic Excellence</h2>
         <p className="text-xs sm:text-[13px] text-[#64748b] mb-8 sm:mb-[45px]">Comprehensive educational programs designed to nurture future leaders.</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-[1100px] mx-auto">
           {academicCards.map((card) => (
@@ -198,7 +198,7 @@ export default function Programs() {
             <img src={CEC_LOGO} alt="CEC Seal" className="w-full max-w-[200px] sm:max-w-[240px] h-auto object-contain mix-blend-multiply transition-transform hover:scale-[1.03]" loading="lazy" />
           </div>
           <div className="flex-1 text-center lg:text-left">
-            <h2 className="text-xl sm:text-[26px] font-extrabold text-[#002366] mb-4">Our Heritage & Mission</h2>
+            <h2 className="text-xl sm:text-[26px] font-extrabold text-[#0B1F3A] mb-4">Our Heritage & Mission</h2>
             <p className="text-xs sm:text-[13px] text-[#64748b] leading-relaxed mb-6 sm:mb-[30px]">
               Founded in 1915, Cebu Eastern College has stood as a pillar of academic excellence in Cebu City. We remain committed to our founding principle: delivering top-tier, quality education that is accessible and affordable to all aspiring minds.
             </p>
@@ -225,12 +225,12 @@ export default function Programs() {
       </section>
 
       {/* CTA */}
-      <section className="py-10 sm:py-[50px] bg-[#002366] text-center text-white px-4">
+      <section className="py-10 sm:py-[50px] bg-[#0B1F3A] text-center text-white px-4">
         <h2 className="text-2xl sm:text-[28px] font-extrabold mb-2.5 tracking-tight">Join the Easternian<br />Community</h2>
         <p className="text-xs sm:text-[13px] text-[#cbd5e1] mb-6">Begin your journey towards academic excellence and personal growth today.</p>
         <button
           onClick={() => openAuth('signup')}
-          className="bg-white text-[#002366] font-bold text-[13px] px-6 py-2.5 rounded-md hover:bg-[#f1f5f9] transition-colors border-none cursor-pointer"
+          className="bg-white text-[#0B1F3A] font-bold text-[13px] px-6 py-2.5 rounded-md hover:bg-[#f1f5f9] transition-colors border-none cursor-pointer"
         >
           Sign Up Now
         </button>

@@ -78,10 +78,10 @@ export default function AdminGallery() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Gallery</h1>
+      <h1 className="text-2xl font-bold text-[#0B1F3A] mb-6">Gallery</h1>
 
       {/* Upload */}
-      <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 mb-6">
+      <div className="bg-white/90 backdrop-blur-sm rounded-xl p-5 border border-[rgba(11,31,58,0.08)] shadow-[0_4px_20px_rgba(11,31,58,0.06)] mb-6">
         <div className="flex flex-wrap items-end gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
@@ -95,19 +95,19 @@ export default function AdminGallery() {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Upload Images</label>
-            <input type="file" accept="image/*" multiple onChange={handleUpload} disabled={uploading} className="text-sm file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#13275c] file:text-white file:text-sm file:cursor-pointer" />
+            <input type="file" accept="image/*" multiple onChange={handleUpload} disabled={uploading} className="text-sm file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#1E4E8C] file:text-white file:text-sm file:cursor-pointer" />
           </div>
           {uploading && <span className="text-sm text-gray-500">Uploading...</span>}
         </div>
       </div>
 
       {/* Grid */}
-      {loading ? <div className="flex justify-center py-12"><div className="w-8 h-8 border-2 border-[#13275c]/30 border-t-[#13275c] rounded-full animate-spin" /></div>
-      : items.length === 0 ? <div className="bg-white rounded-xl p-12 text-center text-gray-400 shadow-sm border border-gray-100">No images yet.</div>
+      {loading ? <div className="flex justify-center py-12"><div className="w-8 h-8 border-2 border-[#1E4E8C]/30 border-t-[#1E4E8C] rounded-full animate-spin" /></div>
+      : items.length === 0 ? <div className="bg-white/90 backdrop-blur-sm rounded-xl p-12 text-center text-gray-400 border border-[rgba(11,31,58,0.08)] shadow-[0_4px_20px_rgba(11,31,58,0.06)]">No images yet.</div>
       : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {items.map((item) => (
-            <div key={item.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group relative">
+            <div key={item.id} className="bg-white/90 backdrop-blur-sm rounded-xl border border-[rgba(11,31,58,0.08)] shadow-[0_4px_20px_rgba(11,31,58,0.06)] overflow-hidden group relative">
               <img src={item.image_url} alt={item.caption || item.title} className="w-full aspect-square object-cover" />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors opacity-0 group-hover:opacity-100 flex items-center justify-center gap-2">
                 <button onClick={() => togglePublish(item)} className={`px-3 py-1.5 rounded-lg text-xs font-medium text-white ${item.is_published ? 'bg-green-500' : 'bg-gray-500'}`}>{item.is_published ? 'Published' : 'Hidden'}</button>

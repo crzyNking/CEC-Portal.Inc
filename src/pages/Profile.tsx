@@ -74,13 +74,13 @@ export function Profile() {
   const initials = displayName.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#07070d] relative overflow-hidden transition-colors">
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0B1F3A] relative overflow-hidden transition-colors">
       <div className="pointer-events-none absolute inset-0 dark:block hidden">
         <div className="absolute top-0 left-1/4 h-[600px] w-[600px] rounded-full bg-purple-600/6 blur-[180px]" />
         <div className="absolute bottom-0 right-1/4 h-[500px] w-[500px] rounded-full bg-cyan-500/5 blur-[150px]" />
       </div>
 
-      <header className="sticky top-0 z-40 border-b border-gray-200/50 dark:border-white/[0.06] bg-gray-50/80 dark:bg-[#07070d]/80 backdrop-blur-2xl transition-colors">
+      <header className="sticky top-0 z-40 border-b border-gray-200/50 dark:border-white/[0.06] bg-[#F8FAFC]/80 dark:bg-[#0B1F3A]/80 backdrop-blur-2xl transition-colors">
         <div className="mx-auto max-w-2xl px-4 sm:px-6">
           <div className="flex items-center justify-between py-4">
             <button
@@ -99,7 +99,7 @@ export function Profile() {
       </header>
 
       <main className="relative mx-auto max-w-2xl px-4 sm:px-6 py-8">
-        <div className="relative overflow-hidden rounded-2xl border border-gray-200/50 dark:border-white/[0.06] bg-white/60 dark:bg-white/[0.02] backdrop-blur-xl shadow-xl shadow-black/5 dark:shadow-black/20 p-6 sm:p-8">
+        <div className="relative overflow-hidden rounded-2xl bg-white/90 backdrop-blur-sm border border-[rgba(11,31,58,0.08)] dark:bg-[#102A43]/80 dark:backdrop-blur-sm dark:border-white/[0.08] shadow-[0_4px_20px_rgba(11,31,58,0.06)] p-6 sm:p-8">
           <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-purple-500/8 blur-[80px]" />
           <div className="absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-cyan-500/8 blur-[80px]" />
 
@@ -119,12 +119,12 @@ export function Profile() {
               <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-purple-500 to-cyan-500 opacity-40 blur-md group-hover:opacity-60 transition-opacity" />
               {avatarUrl ? (
                 <img
-                  className="relative h-24 w-24 sm:h-28 sm:w-28 rounded-2xl object-cover ring-4 ring-white dark:ring-[#07070d]"
+                  className="relative h-24 w-24 sm:h-28 sm:w-28 rounded-2xl object-cover ring-4 ring-white dark:ring-[#0B1F3A]"
                   src={avatarUrl}
                   alt={displayName}
                 />
               ) : (
-                <div className="relative flex h-24 w-24 sm:h-28 sm:w-28 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 to-cyan-500 text-3xl sm:text-4xl font-bold text-white ring-4 ring-white dark:ring-[#07070d]">
+                <div className="relative flex h-24 w-24 sm:h-28 sm:w-28 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 to-cyan-500 text-3xl sm:text-4xl font-bold text-white ring-4 ring-white dark:ring-[#0B1F3A]">
                   {initials}
                 </div>
               )}
@@ -152,7 +152,7 @@ export function Profile() {
                 type="text"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-gray-50/80 dark:bg-white/[0.04] border border-gray-200 dark:border-white/[0.08] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/10 transition-all"
+                className="w-full px-4 py-3 rounded-xl bg-gray-50/80 dark:bg-white/[0.04] border border-gray-200 dark:border-white/[0.08] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-[#1E4E8C] focus:ring-2 focus:ring-[#1E4E8C]/20 transition-all"
                 placeholder="Enter your name"
               />
             </div>
@@ -178,7 +178,7 @@ export function Profile() {
             <button
               onClick={handleSaveProfile}
               disabled={saving || fullName === (profile?.full_name || '')}
-              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-500 to-cyan-500 text-white text-sm font-semibold shadow-lg shadow-purple-500/25 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/30 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center gap-2"
+              className="px-5 py-2.5 rounded-xl bg-[#1E4E8C] hover:bg-[#0B1F3A] text-white text-sm font-semibold shadow-lg shadow-purple-500/25 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/30 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center gap-2"
             >
               {saving ? (
                 <>

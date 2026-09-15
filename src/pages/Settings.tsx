@@ -45,7 +45,7 @@ export function Settings() {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0f] relative overflow-hidden transition-colors">
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0B1F3A] relative overflow-hidden transition-colors">
       {/* Ambient background - only visible in dark mode */}
       <div className="pointer-events-none absolute inset-0 dark:block hidden">
         <div className="absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-purple-600/8 blur-[120px]"></div>
@@ -53,7 +53,7 @@ export function Settings() {
       </div>
 
       {/* Header */}
-      <header className="sticky top-0 z-40 border-b border-gray-200 dark:border-white/[0.06] bg-gray-50/80 dark:bg-[#0a0a0f]/80 backdrop-blur-2xl transition-colors">
+      <header className="sticky top-0 z-40 border-b border-gray-200 dark:border-white/[0.06] bg-[#F8FAFC]/80 dark:bg-[#0B1F3A]/80 backdrop-blur-2xl transition-colors">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-4">
             <button
@@ -75,8 +75,8 @@ export function Settings() {
       <main className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-8">
         <div className="space-y-6">
           {/* Theme Section */}
-          <div className="rounded-2xl border border-gray-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] p-6 transition-colors">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Appearance</h2>
+          <div className="rounded-2xl bg-white/90 backdrop-blur-sm border border-[rgba(11,31,58,0.08)] dark:bg-[#102A43]/80 dark:backdrop-blur-sm dark:border-white/[0.08] shadow-[0_4px_20px_rgba(11,31,58,0.06)] p-6 transition-colors">
+            <h2 className="text-lg font-semibold text-[#0B1F3A] dark:text-white mb-1">Appearance</h2>
             <p className="text-sm text-gray-500 mb-6">Customize how the app looks on your device</p>
             
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -86,20 +86,20 @@ export function Settings() {
                   onClick={() => handleThemeChange(theme.value)}
                   className={`relative p-4 rounded-xl border transition-all duration-200 ${
                     preferences?.theme === theme.value
-                      ? 'border-purple-500/50 bg-purple-500/10'
+                      ? 'border-[#1E4E8C]/50 bg-[#1E4E8C]/10'
                       : 'border-gray-200 dark:border-white/[0.06] bg-gray-50 dark:bg-white/[0.02] hover:border-gray-300 dark:hover:border-white/[0.12]'
                   }`}
                 >
                   <div className={`w-full h-16 rounded-lg mb-3 ${
-                    theme.value === 'dark' ? 'bg-[#141420] border border-white/10' :
+                    theme.value === 'dark' ? 'bg-[#102A43] border border-white/10' :
                     theme.value === 'light' ? 'bg-gray-100 border border-gray-200' :
-                    'bg-gradient-to-r from-[#141420] to-gray-100 border border-white/10'
+                    'bg-gradient-to-r from-[#102A43] to-gray-100 border border-white/10'
                   }`} />
                   <p className="text-sm font-medium text-gray-900 dark:text-white">{theme.label}</p>
                   <p className="text-xs text-gray-500 mt-0.5">{theme.description}</p>
                   {preferences?.theme === theme.value && (
                     <div className="absolute top-3 right-3">
-                      <svg className="h-5 w-5 text-purple-500 dark:text-purple-400" fill="currentColor" viewBox="0 0 20 20">
+                      <svg className="h-5 w-5 text-[#1E4E8C] dark:text-[#1E4E8C]" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
                     </div>
@@ -110,8 +110,8 @@ export function Settings() {
           </div>
 
           {/* Notifications Section */}
-          <div className="rounded-2xl border border-gray-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] p-6 transition-colors">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Notifications</h2>
+          <div className="rounded-2xl bg-white/90 backdrop-blur-sm border border-[rgba(11,31,58,0.08)] dark:bg-[#102A43]/80 dark:backdrop-blur-sm dark:border-white/[0.08] shadow-[0_4px_20px_rgba(11,31,58,0.06)] p-6 transition-colors">
+            <h2 className="text-lg font-semibold text-[#0B1F3A] dark:text-white mb-1">Notifications</h2>
             <p className="text-sm text-gray-500 mb-6">Manage how you receive updates</p>
             
             <div className="space-y-4">
@@ -124,7 +124,7 @@ export function Settings() {
                   <button
                     onClick={() => handleNotificationToggle(notif.key, !(preferences?.[notif.key] ?? true))}
                     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                      preferences?.[notif.key] ?? true ? 'bg-purple-500' : 'bg-gray-300 dark:bg-gray-700'
+                      preferences?.[notif.key] ?? true ? 'bg-[#1E4E8C]' : 'bg-gray-300 dark:bg-gray-700'
                     }`}
                   >
                     <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
@@ -137,8 +137,8 @@ export function Settings() {
           </div>
 
           {/* Account Section */}
-          <div className="rounded-2xl border border-gray-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] p-6 transition-colors">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Account</h2>
+          <div className="rounded-2xl bg-white/90 backdrop-blur-sm border border-[rgba(11,31,58,0.08)] dark:bg-[#102A43]/80 dark:backdrop-blur-sm dark:border-white/[0.08] shadow-[0_4px_20px_rgba(11,31,58,0.06)] p-6 transition-colors">
+            <h2 className="text-lg font-semibold text-[#0B1F3A] dark:text-white mb-1">Account</h2>
             <p className="text-sm text-gray-500 mb-6">Manage your account settings</p>
             
             <div className="space-y-3">
@@ -147,8 +147,8 @@ export function Settings() {
                 className="flex w-full items-center justify-between p-4 rounded-xl bg-gray-50 dark:bg-white/[0.02] border border-gray-100 dark:border-white/[0.04] hover:bg-gray-100 dark:hover:bg-white/[0.04] transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-500/10">
-                    <svg className="h-5 w-5 text-purple-500 dark:text-purple-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1E4E8C]/10">
+                    <svg className="h-5 w-5 text-[#1E4E8C] dark:text-[#1E4E8C]" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                     </svg>
                   </div>

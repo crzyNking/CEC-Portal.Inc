@@ -70,10 +70,10 @@ export default function News() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] overflow-x-hidden">
+    <div className="min-h-screen bg-[#F8FAFC] overflow-x-hidden">
       <Header />
 
-      <div className="bg-[#0a1f44] pt-[120px] pb-20 text-center px-4">
+      <div className="bg-gradient-to-br from-[#0B1F3A] via-[#102A43] to-[#1E4E8C] pt-[120px] pb-20 text-center px-4 backdrop-blur-xl">
         <h1 className="text-[2rem] sm:text-[2.5rem] md:text-[2.8rem] font-bold text-white mb-4 tracking-wide">News & Events</h1>
         <p className="text-white/80 max-w-2xl mx-auto text-[12px] sm:text-[13px] leading-relaxed">
           Stay updated with the latest news, events, and announcements from Cebu Eastern College
@@ -83,7 +83,7 @@ export default function News() {
       <section className="max-w-[1100px] mx-auto px-4 sm:px-6 -mt-8 relative z-10 pb-16 sm:pb-20">
         {loading ? (
           <div className="flex justify-center py-20">
-            <div className="w-8 h-8 border-3 border-[#0b2545] border-t-transparent rounded-full animate-spin" />
+            <div className="w-8 h-8 border-3 border-[#1E4E8C] border-t-transparent rounded-full animate-spin" />
           </div>
         ) : error ? (
           <div className="text-center py-20">
@@ -96,7 +96,7 @@ export default function News() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             {items.map((item) => (
-              <div key={item.id} className="bg-white rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-shadow">
+              <div key={item.id} className="bg-white/90 backdrop-blur-sm rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(11,31,58,0.06)] border border-[rgba(11,31,58,0.08)] hover:shadow-[0_8px_30px_rgba(11,31,58,0.12)] transition-shadow">
                 <div className="relative h-[200px] sm:h-[240px]">
                   <img
                     src={item.image_url || (item.type === 'event'
@@ -108,7 +108,7 @@ export default function News() {
                   />
                   <div className="absolute top-4 left-4 flex gap-2">
                     <span className={`text-white text-[10px] font-bold px-3 py-1 rounded tracking-wide uppercase ${
-                      item.type === 'event' ? 'bg-amber-600' : 'bg-[#0a3182]'
+                      item.type === 'event' ? 'bg-amber-600' : 'bg-[#1E4E8C]'
                     }`}>
                       {item.type === 'event' ? 'Event' : (item as NewsItem).category || 'News'}
                     </span>
@@ -138,7 +138,7 @@ export default function News() {
                   ) : (
                     <p className="text-[#666] text-[11px] sm:text-[12px] mb-3">{formatDate(item.published_at || item.created_at)}</p>
                   )}
-                  <h3 className="text-[#0b1b42] text-[1.1rem] sm:text-[1.2rem] font-bold mb-3 leading-snug">{item.title}</h3>
+                  <h3 className="text-[#0B1F3A] text-[1.1rem] sm:text-[1.2rem] font-bold mb-3 leading-snug">{item.title}</h3>
                   <p className="text-[#666] text-[12px] sm:text-[13px] leading-relaxed mb-4">
                     {item.type === 'event' ? item.description : item.summary}
                   </p>

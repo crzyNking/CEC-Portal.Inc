@@ -32,7 +32,7 @@ export default function UpdateNotification() {
   if (!showUpdate) return null
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:w-[360px] z-50 bg-[#0b1f40] text-white p-4 rounded-xl shadow-2xl border border-white/10">
+    <div className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:w-[360px] z-50 bg-[#0B1F3A] text-white p-4 rounded-xl shadow-2xl border border-white/10">
       <div className="flex items-start gap-3">
         <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center shrink-0">
           <svg className="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
@@ -48,7 +48,7 @@ export default function UpdateNotification() {
         <button
           onClick={handleUpdate}
           aria-label="Update to latest version"
-          className="flex-1 bg-white text-[#0b1f40] py-2 rounded-lg text-sm font-semibold hover:bg-white/90 transition-colors"
+          className="flex-1 bg-white text-[#0B1F3A] py-2 rounded-lg text-sm font-semibold hover:bg-white/90 transition-colors"
         >
           Update Now
         </button>

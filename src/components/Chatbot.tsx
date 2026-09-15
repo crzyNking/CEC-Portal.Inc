@@ -149,7 +149,7 @@ export function Chatbot() {
         className={`fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl shadow-lg transition-all duration-300 flex items-center justify-center overflow-hidden ${
           isOpen
             ? 'bg-gray-800 dark:bg-gray-700 shadow-gray-800/25 dark:shadow-black/30 rotate-90'
-            : 'shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/30 hover:scale-105 active:scale-95'
+            : 'shadow-[#1E4E8C]/25 hover:shadow-xl hover:shadow-[#1E4E8C]/30 hover:scale-105 active:scale-95'
         }`}
       >
         {isOpen ? (
@@ -164,7 +164,7 @@ export function Chatbot() {
       {isOpen && (
         <div className="fixed bottom-20 left-4 right-4 sm:bottom-24 sm:left-auto sm:right-6 z-50 w-auto sm:w-[380px] max-w-[400px]" role="dialog" aria-label="Chatbot">
           <div className="rounded-[1.5rem] border border-gray-200/50 dark:border-white/[0.06] bg-white/95 dark:bg-[#0f0f1a]/95 backdrop-blur-xl shadow-2xl shadow-black/10 dark:shadow-black/40 overflow-hidden">
-            <div className="relative px-5 py-4 bg-gradient-to-r from-purple-500 to-cyan-500">
+            <div className="relative px-5 py-4 bg-gradient-to-r from-[#0B1F3A] to-[#1E4E8C]">
               <div className="absolute inset-0 opacity-20" style={gridPattern} />
               <div className="relative flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -199,7 +199,7 @@ export function Chatbot() {
                     <div
                       className={`px-4 py-2.5 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
                         msg.role === 'user'
-                          ? 'bg-gradient-to-r from-purple-500 to-cyan-500 text-white rounded-br-md'
+                          ? 'bg-gradient-to-r from-[#0B1F3A] to-[#1E4E8C] text-white rounded-br-md'
                           : 'bg-gray-100 dark:bg-white/[0.06] text-gray-900 dark:text-gray-200 rounded-bl-md'
                       }`}
                     >
@@ -241,14 +241,14 @@ export function Chatbot() {
                   onKeyDown={handleKeyDown}
                   placeholder="Ask KnowsMore anything..."
                   rows={1}
-                  className="flex-1 resize-none px-4 py-2.5 text-sm rounded-xl bg-white dark:bg-white/[0.04] border border-gray-200 dark:border-white/[0.08] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 max-h-24"
+                  className="flex-1 resize-none px-4 py-2.5 text-sm rounded-xl bg-white dark:bg-white/[0.04] border border-gray-200 dark:border-white/[0.08] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-[#1E4E8C]/50 focus:ring-1 focus:ring-[#1E4E8C]/50 max-h-24"
                   style={textareaMinHeight}
                   onInput={handleInput}
                 />
                 <button
                   onClick={sendMessage}
                   disabled={!input.trim() || isLoading}
-                  className="p-2.5 rounded-xl bg-gradient-to-r from-purple-500 to-cyan-500 text-white shadow-md shadow-purple-500/20 transition-all duration-200 hover:shadow-lg hover:shadow-purple-500/30 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="p-2.5 rounded-xl bg-gradient-to-r from-[#0B1F3A] to-[#1E4E8C] text-white shadow-md shadow-[#1E4E8C]/20 transition-all duration-200 hover:shadow-lg hover:shadow-[#1E4E8C]/30 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
                   <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />

@@ -96,27 +96,27 @@ export default function AdminNews() {
     return (
       <div>
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">{editing.id ? 'Edit' : 'New'} News</h1>
+          <h1 className="text-2xl font-bold text-[#0B1F3A]">{editing.id ? 'Edit' : 'New'} News</h1>
           <button onClick={() => setEditing(null)} className="text-sm text-gray-500 hover:text-gray-700">Cancel</button>
         </div>
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 max-w-3xl">
+        <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 border border-[rgba(11,31,58,0.08)] shadow-[0_4px_20px_rgba(11,31,58,0.06)] max-w-3xl">
           <div className="space-y-4">
-            <div><label className="block text-sm font-medium text-gray-700 mb-1">Title</label><input value={editing.title || ''} onChange={(e) => setEditing({ ...editing, title: e.target.value })} required className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#13275c] focus:border-transparent" /></div>
+            <div><label className="block text-sm font-medium text-gray-700 mb-1">Title</label><input value={editing.title || ''} onChange={(e) => setEditing({ ...editing, title: e.target.value })} required className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#1E4E8C]/20 focus:border-[#1E4E8C]" /></div>
             <div className="grid grid-cols-2 gap-4">
               <div><label className="block text-sm font-medium text-gray-700 mb-1">Category</label><select value={editing.category || 'general'} onChange={(e) => setEditing({ ...editing, category: e.target.value })} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"><option value="general">General</option><option value="academic">Academic</option><option value="sports">Sports</option><option value="events">Events</option><option value="announcements">Announcements</option></select></div>
-              <div><label className="block text-sm font-medium text-gray-700 mb-1">Image</label><input type="file" accept="image/*" onChange={handleImageUpload} className="w-full text-sm file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#13275c] file:text-white file:text-sm file:cursor-pointer" /></div>
+              <div><label className="block text-sm font-medium text-gray-700 mb-1">Image</label><input type="file" accept="image/*" onChange={handleImageUpload} className="w-full text-sm file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#1E4E8C] file:text-white file:text-sm file:cursor-pointer" /></div>
             </div>
             {editing.image_url && <img src={editing.image_url} alt="" className="w-40 h-24 object-cover rounded-lg" />}
-            <div><label className="block text-sm font-medium text-gray-700 mb-1">Summary</label><textarea value={editing.summary || ''} onChange={(e) => setEditing({ ...editing, summary: e.target.value })} rows={2} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#13275c] focus:border-transparent" /></div>
-            <div><label className="block text-sm font-medium text-gray-700 mb-1">Content</label><textarea value={editing.content || ''} onChange={(e) => setEditing({ ...editing, content: e.target.value })} rows={8} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#13275c] focus:border-transparent" /></div>
+            <div><label className="block text-sm font-medium text-gray-700 mb-1">Summary</label><textarea value={editing.summary || ''} onChange={(e) => setEditing({ ...editing, summary: e.target.value })} rows={2} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#1E4E8C]/20 focus:border-[#1E4E8C]" /></div>
+            <div><label className="block text-sm font-medium text-gray-700 mb-1">Content</label><textarea value={editing.content || ''} onChange={(e) => setEditing({ ...editing, content: e.target.value })} rows={8} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#1E4E8C]/20 focus:border-[#1E4E8C]" /></div>
             <div className="flex gap-6">
               <label className="flex items-center gap-2"><input type="checkbox" checked={editing.is_published || false} onChange={(e) => setEditing({ ...editing, is_published: e.target.checked })} className="rounded" /><span className="text-sm text-gray-700">Published</span></label>
               <label className="flex items-center gap-2"><input type="checkbox" checked={editing.is_featured || false} onChange={(e) => setEditing({ ...editing, is_featured: e.target.checked })} className="rounded" /><span className="text-sm text-gray-700">Featured</span></label>
             </div>
           </div>
           <div className="mt-6 flex gap-3">
-            <button onClick={save} disabled={saving} className="px-5 py-2.5 bg-[#13275c] text-white rounded-lg text-sm font-medium hover:bg-[#1a3570] disabled:opacity-50">{saving ? 'Saving...' : 'Save'}</button>
-            <button onClick={() => setEditing(null)} className="px-5 py-2.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200">Cancel</button>
+            <button onClick={save} disabled={saving} className="px-5 py-2.5 bg-[#1E4E8C] text-white rounded-lg text-sm font-medium hover:bg-[#0B1F3A] disabled:opacity-50">{saving ? 'Saving...' : 'Save'}</button>
+            <button onClick={() => setEditing(null)} className="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-[#0B1F3A] rounded-lg text-sm font-medium">Cancel</button>
           </div>
         </div>
       </div>
@@ -126,22 +126,22 @@ export default function AdminNews() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">News</h1>
-        <button onClick={() => setEditing({ ...empty })} className="px-4 py-2 bg-[#13275c] text-white rounded-lg text-sm font-medium hover:bg-[#1a3570]">+ New</button>
+        <h1 className="text-2xl font-bold text-[#0B1F3A]">News</h1>
+        <button onClick={() => setEditing({ ...empty })} className="px-4 py-2 bg-[#1E4E8C] text-white rounded-lg text-sm font-medium hover:bg-[#0B1F3A]">+ New</button>
       </div>
-      {loading ? <div className="flex justify-center py-12"><div className="w-8 h-8 border-2 border-[#13275c]/30 border-t-[#13275c] rounded-full animate-spin" /></div>
-      : items.length === 0 ? <div className="bg-white rounded-xl p-12 text-center text-gray-400 shadow-sm border border-gray-100">No news yet.</div>
+      {loading ? <div className="flex justify-center py-12"><div className="w-8 h-8 border-2 border-[#1E4E8C]/30 border-t-[#1E4E8C] rounded-full animate-spin" /></div>
+      : items.length === 0 ? <div className="bg-white/90 backdrop-blur-sm rounded-xl p-12 text-center text-gray-400 border border-[rgba(11,31,58,0.08)] shadow-[0_4px_20px_rgba(11,31,58,0.06)]">No news yet.</div>
       : (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-white/90 backdrop-blur-sm rounded-xl border border-[rgba(11,31,58,0.08)] shadow-[0_4px_20px_rgba(11,31,58,0.06)] overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="bg-gray-50 border-b border-gray-200"><tr><th className="text-left px-4 py-3 font-medium text-gray-600">Title</th><th className="text-left px-4 py-3 font-medium text-gray-600">Status</th><th className="text-left px-4 py-3 font-medium text-gray-600">Date</th><th className="text-right px-4 py-3 font-medium text-gray-600">Actions</th></tr></thead>
+            <thead className="bg-[#F8FAFC] border-b border-[rgba(11,31,58,0.08)]"><tr><th className="text-left px-4 py-3 font-medium text-gray-600">Title</th><th className="text-left px-4 py-3 font-medium text-gray-600">Status</th><th className="text-left px-4 py-3 font-medium text-gray-600">Date</th><th className="text-right px-4 py-3 font-medium text-gray-600">Actions</th></tr></thead>
             <tbody>
               {items.map((n) => (
                 <tr key={n.id} className="border-b border-gray-50 hover:bg-gray-50/50">
                   <td className="px-4 py-3 font-medium text-gray-800">{n.title}</td>
                   <td className="px-4 py-3"><button onClick={() => togglePublish(n)} className={`px-3 py-1 rounded-full text-xs font-medium ${n.is_published ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>{n.is_published ? 'Published' : 'Draft'}</button></td>
                   <td className="px-4 py-3 text-gray-500 text-xs">{new Date(n.created_at).toLocaleDateString()}</td>
-                  <td className="px-4 py-3 text-right space-x-2"><button onClick={() => setEditing(n)} className="text-[#13275c] hover:underline text-xs font-medium">Edit</button><button onClick={() => remove(n.id)} className="text-red-500 hover:underline text-xs font-medium">Delete</button></td>
+                  <td className="px-4 py-3 text-right space-x-2"><button onClick={() => setEditing(n)} className="text-[#1E4E8C] hover:text-[#0B1F3A] hover:underline text-xs font-medium">Edit</button><button onClick={() => remove(n.id)} className="text-red-500 hover:underline text-xs font-medium">Delete</button></td>
                 </tr>
               ))}
             </tbody>

@@ -23,10 +23,10 @@ export default function MaintenanceMode({ children }: { children: React.ReactNod
 
   // Show maintenance page
   return (
-    <div className="min-h-screen bg-[#061830] flex items-center justify-center px-5">
+    <div className="min-h-screen bg-[#0B1F3A] flex items-center justify-center px-5">
       <div className="text-center max-w-md">
         <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-white/10 flex items-center justify-center">
-          <svg className="w-10 h-10 text-[#f7b32b]" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+          <svg className="w-10 h-10 text-[#F59E0B]" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17l-5.384 3.18A1.125 1.125 0 014.5 17.29V5.71a1.125 1.125 0 011.536-1.06l5.384 3.18a1.125 1.125 0 010 1.94z" />
             <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75l3.75 2.165v7.17l-3.75 2.165a1.125 1.125 0 01-1.536-1.06V8.81a1.125 1.125 0 011.536-1.06z" />
           </svg>

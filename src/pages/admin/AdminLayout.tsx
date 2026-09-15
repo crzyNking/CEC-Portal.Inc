@@ -30,17 +30,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   return (
-    <div className="min-h-screen bg-[#f0f2f5]">
+    <div className="min-h-screen bg-[#F8FAFC]">
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />
       )}
 
       {/* Sidebar */}
-      <aside className={`fixed top-0 left-0 h-full w-[260px] bg-[#0a1628] z-50 transform transition-transform duration-200 lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <aside className={`fixed top-0 left-0 h-full w-[260px] bg-[#0B1F3A] backdrop-blur-xl z-50 transform transition-transform duration-200 lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="flex items-center gap-3 px-5 py-4 border-b border-white/10">
           <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#f2545b] via-[#f7b32b] to-[#6dd5ed] flex items-center justify-center shrink-0">
-            <div className="w-6 h-6 rounded-full bg-[#0a1628]" />
+            <div className="w-6 h-6 rounded-full bg-[#0B1F3A]" />
           </div>
           <div>
             <div className="text-white font-bold text-sm leading-tight">Cebu Eastern College</div>
@@ -58,8 +58,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 onClick={() => setSidebarOpen(false)}
                 className={`flex items-center gap-3 px-5 py-2.5 text-[13px] transition-colors ${
                   isActive
-                    ? 'bg-white/10 text-white border-r-2 border-[#f7b32b]'
-                    : 'text-white/60 hover:bg-white/5 hover:text-white/80'
+                    ? 'bg-[#1E4E8C] text-white'
+                    : 'text-white/70 hover:text-white hover:bg-white/10'
                 }`}
               >
                 <svg className="w-[18px] h-[18px] shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -71,13 +71,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           })}
 
           <div className="border-t border-white/10 mt-3 pt-3">
-            <Link to="/" className="flex items-center gap-3 px-5 py-2.5 text-[13px] text-white/60 hover:bg-white/5 hover:text-white/80 transition-colors">
+            <Link to="/" className="flex items-center gap-3 px-5 py-2.5 text-[13px] text-white/70 hover:bg-white/10 hover:text-white transition-colors">
               <svg className="w-[18px] h-[18px] shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5h3m-6.75 2.25h10.5a2.25 2.25 0 002.25-2.25v-15a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 4.5v15a2.25 2.25 0 002.25 2.25z" />
               </svg>
               View Website
             </Link>
-            <button onClick={handleLogout} className="w-full flex items-center gap-3 px-5 py-2.5 text-[13px] text-white/60 hover:bg-white/5 hover:text-red-400 transition-colors">
+            <button onClick={handleLogout} className="w-full flex items-center gap-3 px-5 py-2.5 text-[13px] text-white/70 hover:bg-white/10 hover:text-red-400 transition-colors">
               <svg className="w-[18px] h-[18px] shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
               </svg>
@@ -90,14 +90,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Main content */}
       <div className="lg:ml-[260px] min-h-screen">
         {/* Top bar */}
-        <header className="sticky top-0 z-30 bg-white border-b border-gray-200 px-5 py-3 flex items-center justify-between">
+        <header className="sticky top-0 z-30 bg-white/90 backdrop-blur-sm border-b border-[rgba(11,31,58,0.08)] px-5 py-3 flex items-center justify-between">
           <button onClick={() => setSidebarOpen(true)} className="lg:hidden p-1.5 rounded-lg hover:bg-gray-100">
             <svg className="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
             </svg>
           </button>
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-[#13275c] text-white flex items-center justify-center text-sm font-bold">
+            <div className="w-8 h-8 rounded-full bg-[#1E4E8C] text-white flex items-center justify-center text-sm font-bold">
               {profile?.full_name?.[0] || profile?.email?.[0]?.toUpperCase() || 'A'}
             </div>
             <div className="hidden sm:block">

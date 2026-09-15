@@ -23,7 +23,7 @@ export default function SyncIndicator() {
   if (!showSync) return null
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:w-[300px] z-50 bg-[#0b1f40]/95 text-white p-3 rounded-xl shadow-lg border border-white/10 backdrop-blur-sm">
+    <div className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:w-[300px] z-50 bg-[#0B1F3A]/95 text-white p-3 rounded-xl shadow-lg border border-white/10 backdrop-blur-sm">
       <div className="flex items-center gap-3">
         {isSyncing ? (
           <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />

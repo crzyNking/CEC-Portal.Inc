@@ -27,7 +27,7 @@ export default function PWASplash() {
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0b1f40] transition-opacity duration-400 ${fading ? 'opacity-0' : 'opacity-100'}`}
+      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0B1F3A] transition-opacity duration-400 ${fading ? 'opacity-0' : 'opacity-100'}`}
     >
       <div className={`transition-all duration-500 ${fading ? 'scale-105 opacity-0' : 'scale-100 opacity-100'}`}>
         <img src="/icons/icon.svg" alt="CEC Portal" className="w-24 h-24 rounded-3xl mb-4 mx-auto" />

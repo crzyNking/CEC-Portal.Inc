@@ -10,7 +10,7 @@ import Footer from '../components/Footer'
 
 const DEFAULT_HERO_BG = 'https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?q=80&w=1920&auto=format&fit=crop'
 
-const authModalBackdrop = { background: 'rgba(3, 8, 20, 0.75)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)' }
+const authModalBackdrop = { background: 'rgba(11, 31, 58, 0.6)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)' }
 
 type AuthMode = 'login' | 'signup'
 
@@ -192,7 +192,7 @@ export function Home() {
   }, [email, setError])
 
   const heroBgImage = homepage?.hero_image || DEFAULT_HERO_BG
-  const heroStyle = { background: `linear-gradient(rgba(11, 31, 64, 0.45), rgba(11, 31, 64, 0.45)), url(${heroBgImage}) center/cover no-repeat` }
+  const heroStyle = { background: `linear-gradient(rgba(11, 31, 58, 0.5), rgba(11, 31, 58, 0.5)), url(${heroBgImage}) center/cover no-repeat` }
 
   const academicRef = useScrollReveal()
   const heritageRef = useScrollReveal()
@@ -210,7 +210,7 @@ export function Home() {
       <section className="relative py-[60px] px-4 sm:py-[80px] text-center text-white overflow-hidden" style={heroStyle}>
         <div className="animate-float opacity-20 absolute top-10 left-10 w-32 h-32 bg-[#1d4ed8] rounded-full blur-3xl" />
         <div className="animate-float opacity-15 absolute bottom-10 right-10 w-48 h-48 bg-[#eab308] rounded-full blur-3xl" style={{ animationDelay: '2s' }} />
-        <p className="text-[#eab308] text-[28px] sm:text-[38px] font-semibold tracking-[8px] mb-[30px] animate-gradient-text relative z-10">
+        <p className="text-[#F59E0B] text-[28px] sm:text-[38px] font-semibold tracking-[8px] mb-[30px] animate-gradient-text relative z-10">
           {homepage?.hero_subtitle || '宿務 東方 學院'}
         </p>
 
@@ -222,10 +222,10 @@ export function Home() {
             {homepage?.hero_description || "Be part of the Easternian Community, where quality education is less expensive. Join Cebu City's premier institution for holistic development."}
           </p>
           <div className="flex justify-center gap-4">
-            <button onClick={() => openAuth('login')} className="px-8 py-2 rounded-md text-[12px] font-semibold bg-[#1d4ed8] text-white hover:bg-[#1e40af] transition-all duration-300 hover:scale-105 active:scale-95">
+            <button onClick={() => openAuth('login')} className="px-8 py-2 rounded-md text-[12px] font-semibold bg-[#1E4E8C] text-white hover:bg-[#0B1F3A] shadow-lg shadow-navy-900/20 transition-all duration-300 hover:scale-105 active:scale-95">
               Log In
             </button>
-            <button onClick={() => openAuth('signup')} className="px-8 py-2 rounded-md text-[12px] font-semibold bg-transparent text-white border border-white/70 hover:bg-white/10 transition-all duration-300 hover:scale-105 active:scale-95">
+            <button onClick={() => openAuth('signup')} className="px-8 py-2 rounded-md text-[12px] font-semibold bg-transparent text-white border border-white/30 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 hover:scale-105 active:scale-95">
               Sign Up
             </button>
           </div>
@@ -235,16 +235,16 @@ export function Home() {
       {/* Academic Excellence */}
       {website?.programs_section !== false && (
         <section ref={academicRef.ref} className={`py-[60px] px-4 sm:px-10 bg-[#f8fafc] text-center reveal ${academicRef.isVisible ? 'visible' : ''}`}>
-          <h2 className="text-[22px] sm:text-[26px] font-extrabold text-[#002366] mb-2">Academic Excellence</h2>
+          <h2 className="text-[22px] sm:text-[26px] font-extrabold text-[#0B1F3A] mb-2">Academic Excellence</h2>
           <p className="text-[12px] sm:text-[13px] text-[#64748b] mb-[45px]">Comprehensive educational programs designed to nurture future leaders.</p>
 
           <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[1100px] mx-auto stagger-children ${academicRef.isVisible ? 'visible' : ''}`}>
             {academicCards.map((card) => (
-              <div key={card.title} onClick={() => navigate(card.link)} className="bg-white rounded-lg p-[30px_25px] text-left border border-[#e2e8f0] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.03)] flex flex-col card-glow cursor-pointer">
+              <div key={card.title} onClick={() => navigate(card.link)} className="bg-white rounded-lg p-[30px_25px] text-left shadow-[0_4px_20px_rgba(11,31,58,0.06)] backdrop-blur-sm border border-[rgba(11,31,58,0.08)] flex flex-col card-glow cursor-pointer">
                 <div className="w-9 h-9 rounded-full bg-[#dbeafe] flex items-center justify-center mb-5">{card.icon}</div>
                 <h3 className="text-[16px] font-bold text-[#1e293b] mb-3">{card.title}</h3>
                 <p className="text-[12.5px] text-[#64748b] leading-[1.5] mb-5 flex-1">{card.desc}</p>
-                <span className="text-[11.5px] font-bold text-[#1d4ed8] flex items-center gap-1.5">
+                <span className="text-[11.5px] font-bold text-[#1E4E8C] flex items-center gap-1.5">
                   Learn More
                   <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>
                 </span>
@@ -263,7 +263,7 @@ export function Home() {
             </div>
           </div>
           <div className={`flex-1 text-center md:text-left reveal-right ${heritageRef.isVisible ? 'visible' : ''}`}>
-            <h2 className="text-[22px] sm:text-[26px] font-extrabold text-[#002366] mb-4">Our Heritage &amp; Mission</h2>
+            <h2 className="text-[22px] sm:text-[26px] font-extrabold text-[#0B1F3A] mb-4">Our Heritage &amp; Mission</h2>
             <p className="text-[12px] sm:text-[13px] text-[#64748b] leading-relaxed mb-[30px]">
               {school?.school_description || 'Founded in 1915, Cebu Eastern College has stood as a pillar of academic excellence in Cebu City. We remain committed to our founding principle: delivering top-tier, quality education that is accessible and affordable to all aspiring minds.'}
             </p>
@@ -298,7 +298,7 @@ export function Home() {
 
       {/* Quick Enrollment Links */}
       <section ref={enrollRef.ref} className={`py-[60px] px-4 sm:px-10 bg-[#f8fafc] text-center reveal ${enrollRef.isVisible ? 'visible' : ''}`}>
-        <h2 className="text-[22px] sm:text-[26px] font-extrabold text-[#002366] mb-2">Start Your Enrollment</h2>
+        <h2 className="text-[22px] sm:text-[26px] font-extrabold text-[#0B1F3A] mb-2">Start Your Enrollment</h2>
         <p className="text-[12px] sm:text-[13px] text-[#64748b] mb-[45px]">Choose your level and begin your journey with CEC.</p>
         <div className={`flex flex-wrap justify-center gap-3 max-w-[900px] mx-auto stagger-children ${enrollRef.isVisible ? 'visible' : ''}`}>
           {enrollmentLevels.map((level) => (
@@ -312,11 +312,11 @@ export function Home() {
 
       {/* Why Choose CEC */}
       <section ref={whyRef.ref} className={`py-[60px] px-4 sm:px-10 bg-white text-center reveal ${whyRef.isVisible ? 'visible' : ''}`}>
-        <h2 className="text-[22px] sm:text-[26px] font-extrabold text-[#002366] mb-2">Why Choose CEC?</h2>
+        <h2 className="text-[22px] sm:text-[26px] font-extrabold text-[#0B1F3A] mb-2">Why Choose CEC?</h2>
         <p className="text-[12px] sm:text-[13px] text-[#64748b] mb-[45px]">What makes us stand out from the rest.</p>
         <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1100px] mx-auto stagger-children ${whyRef.isVisible ? 'visible' : ''}`}>
           {whyChooseUs.map((item) => (
-            <div key={item.title} className="group bg-[#f8fafc] rounded-xl p-6 text-left border border-[#e2e8f0] hover:border-[#002366]/20 card-glow cursor-default">
+            <div key={item.title} className="group bg-[#F8FAFC] rounded-xl p-6 text-left shadow-[0_4px_20px_rgba(11,31,58,0.06)] backdrop-blur-sm border border-[rgba(11,31,58,0.08)] hover:border-[#0B1F3A]/20 card-glow cursor-default">
               <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#002366] to-[#1d4ed8] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                 <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
@@ -331,11 +331,11 @@ export function Home() {
 
       {/* Testimonials */}
       <section ref={testimonialRef.ref} className={`py-[60px] px-4 sm:px-10 bg-[#f1f5f9] text-center reveal ${testimonialRef.isVisible ? 'visible' : ''}`}>
-        <h2 className="text-[22px] sm:text-[26px] font-extrabold text-[#002366] mb-2">What People Say</h2>
+        <h2 className="text-[22px] sm:text-[26px] font-extrabold text-[#0B1F3A] mb-2">What People Say</h2>
         <p className="text-[12px] sm:text-[13px] text-[#64748b] mb-[45px]">Hear from our students, alumni, and parents.</p>
         <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1100px] mx-auto stagger-children ${testimonialRef.isVisible ? 'visible' : ''}`}>
           {testimonials.map((t) => (
-            <div key={t.name} className="bg-white rounded-xl p-6 text-left border border-[#e2e8f0] shadow-sm hover:shadow-md transition-shadow duration-300">
+            <div key={t.name} className="bg-white rounded-xl p-6 text-left shadow-sm hover:shadow-md backdrop-blur-sm border border-[rgba(11,31,58,0.06)] transition-shadow duration-300">
               <svg className="w-8 h-8 text-[#002366]/15 mb-3" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151C7.546 6.068 5.983 8.789 5.983 11H10v10H0z" /></svg>
               <p className="text-[12.5px] text-[#475569] leading-[1.6] mb-4">{t.text}</p>
               <div className="border-t border-[#e2e8f0] pt-3">
@@ -348,7 +348,7 @@ export function Home() {
       </section>
 
       {/* CTA */}
-      <section ref={ctaRef.ref} className={`py-[60px] px-4 bg-[#002366] text-center text-white reveal-scale ${ctaRef.isVisible ? 'visible' : ''}`}>
+      <section ref={ctaRef.ref} className={`py-[60px] px-4 bg-[#0B1F3A] backdrop-blur-xl text-center text-white reveal-scale ${ctaRef.isVisible ? 'visible' : ''}`}>
         <h2 className="text-[28px] sm:text-[32px] font-extrabold mb-3.5">Join the Easternian<br />Community</h2>
         <p className="text-[12px] sm:text-[13.5px] text-[#cbd5e1] mb-6">Begin your journey towards academic excellence and personal growth today.</p>
         <button onClick={() => openAuth('signup')} className="px-6 py-2.5 rounded-md text-[13px] font-bold bg-white text-[#002366] hover:bg-[#f1f5f9] transition-all duration-300 hover:scale-105 active:scale-95">
@@ -384,16 +384,16 @@ export function Home() {
               <form onSubmit={handleAuth} className="flex flex-col gap-3.5">
                 {authTab === 'signup' && (
                   <div className="relative">
-                    <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} className="w-full bg-white/7 border border-white/20 rounded-lg px-3.5 py-3 pr-10 text-[13px] text-white placeholder-[#94a3b8] outline-none focus:border-[#3b82f6] transition-colors" placeholder="Full Name" required />
+                    <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} className="w-full bg-white/7 border border-white/15 rounded-lg px-3.5 py-3 pr-10 text-[13px] text-white placeholder-[#94a3b8] outline-none focus:border-[#3B82F6] transition-colors" placeholder="Full Name" required />
                     <svg className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94a3b8]" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>
                   </div>
                 )}
                 <div className="relative">
-                  <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-white/7 border border-white/20 rounded-lg px-3.5 py-3 pr-10 text-[13px] text-white placeholder-[#94a3b8] outline-none focus:border-[#3b82f6] transition-colors" placeholder="Email Address" required />
+                  <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-white/7 border border-white/15 rounded-lg px-3.5 py-3 pr-10 text-[13px] text-white placeholder-[#94a3b8] outline-none focus:border-[#3B82F6] transition-colors" placeholder="Email Address" required />
                   <svg className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94a3b8]" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" /></svg>
                 </div>
                 <div className="relative">
-                  <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full bg-white/7 border border-white/20 rounded-lg px-3.5 py-3 pr-10 text-[13px] text-white placeholder-[#94a3b8] outline-none focus:border-[#3b82f6] transition-colors" placeholder="Password" required minLength={6} />
+                  <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full bg-white/7 border border-white/15 rounded-lg px-3.5 py-3 pr-10 text-[13px] text-white placeholder-[#94a3b8] outline-none focus:border-[#3B82F6] transition-colors" placeholder="Password" required minLength={6} />
                   <svg className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94a3b8]" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" /></svg>
                 </div>
                 {authTab === 'login' && <div className="text-right"><button type="button" onClick={handleForgotPassword} className="text-[11px] text-[#cbd5e1] hover:underline">Forgot Password?</button></div>}

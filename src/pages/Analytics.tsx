@@ -86,14 +86,14 @@ export function Analytics() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0f] flex items-center justify-center transition-colors">
-        <div className="animate-spin h-8 w-8 border-2 border-purple-500 border-t-transparent rounded-full" />
+      <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0B1F3A] flex items-center justify-center transition-colors">
+        <div className="animate-spin h-8 w-8 border-2 border-[#1E4E8C] border-t-transparent rounded-full" />
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0f] relative overflow-hidden transition-colors">
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0B1F3A] relative overflow-hidden transition-colors">
       {/* Ambient background - only visible in dark mode */}
       <div className="pointer-events-none absolute inset-0 dark:block hidden">
         <div className="absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-purple-600/8 blur-[120px]"></div>
@@ -101,7 +101,7 @@ export function Analytics() {
       </div>
 
       {/* Header */}
-      <header className="sticky top-0 z-40 border-b border-gray-200 dark:border-white/[0.06] bg-gray-50/80 dark:bg-[#0a0a0f]/80 backdrop-blur-2xl transition-colors">
+      <header className="sticky top-0 z-40 border-b border-gray-200 dark:border-white/[0.06] bg-[#F8FAFC]/80 dark:bg-[#0B1F3A]/80 backdrop-blur-2xl transition-colors">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-4">
             <button
@@ -128,7 +128,7 @@ export function Analytics() {
             return (
               <div
                 key={i}
-                className="rounded-2xl border border-gray-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] p-5 hover:border-gray-300 dark:hover:border-white/[0.12] transition-colors"
+                className="rounded-2xl bg-white/90 backdrop-blur-sm border border-[rgba(11,31,58,0.08)] dark:bg-[#102A43]/80 dark:backdrop-blur-sm dark:border-white/[0.08] shadow-[0_4px_20px_rgba(11,31,58,0.06)] p-5 hover:border-gray-300 dark:hover:border-white/[0.12] transition-colors"
               >
                 <div className="flex items-center justify-between mb-3">
                   <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${colors.bg} ring-1 ${colors.ring}`}>
@@ -145,8 +145,8 @@ export function Analytics() {
         </div>
 
         {/* Activity Chart Placeholder */}
-        <div className="rounded-2xl border border-gray-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] p-6 mb-8 transition-colors">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Activity Overview</h2>
+        <div className="rounded-2xl bg-white/90 backdrop-blur-sm border border-[rgba(11,31,58,0.08)] dark:bg-[#102A43]/80 dark:backdrop-blur-sm dark:border-white/[0.08] shadow-[0_4px_20px_rgba(11,31,58,0.06)] p-6 mb-8 transition-colors">
+          <h2 className="text-lg font-semibold text-[#0B1F3A] dark:text-white mb-4">Activity Overview</h2>
           <div className="h-64 flex items-center justify-center border border-dashed border-gray-300 dark:border-white/[0.1] rounded-xl">
             <div className="text-center">
               <svg className="h-12 w-12 text-gray-400 mx-auto mb-3" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor">
@@ -159,8 +159,8 @@ export function Analytics() {
 
         {/* Usage Stats */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="rounded-2xl border border-gray-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] p-6 transition-colors">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Account Information</h2>
+          <div className="rounded-2xl bg-white/90 backdrop-blur-sm border border-[rgba(11,31,58,0.08)] dark:bg-[#102A43]/80 dark:backdrop-blur-sm dark:border-white/[0.08] shadow-[0_4px_20px_rgba(11,31,58,0.06)] p-6 transition-colors">
+            <h2 className="text-lg font-semibold text-[#0B1F3A] dark:text-white mb-4">Account Information</h2>
             <div className="space-y-4">
               <div className="flex justify-between items-center p-3 rounded-xl bg-gray-50 dark:bg-white/[0.02]">
                 <span className="text-gray-500">Account Status</span>
@@ -177,8 +177,8 @@ export function Analytics() {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-gray-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] p-6 transition-colors">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Security</h2>
+          <div className="rounded-2xl bg-white/90 backdrop-blur-sm border border-[rgba(11,31,58,0.08)] dark:bg-[#102A43]/80 dark:backdrop-blur-sm dark:border-white/[0.08] shadow-[0_4px_20px_rgba(11,31,58,0.06)] p-6 transition-colors">
+            <h2 className="text-lg font-semibold text-[#0B1F3A] dark:text-white mb-4">Security</h2>
             <div className="space-y-4">
               <div className="flex justify-between items-center p-3 rounded-xl bg-gray-50 dark:bg-white/[0.02]">
                 <span className="text-gray-500">Two-Factor Auth</span>

@@ -3,48 +3,132 @@
 /*
  * Z-INDEX SCALE
  * =============
- * Use these values for consistent stacking:
- *
  * z-50    (50)      - Toast notifications, Install prompt, Update notification, Chatbot
  * z-[60]  (60)      - Mobile navigation overlay
  * z-[100] (100)     - Auth modal backdrop
  * z-[200] (200)     - Auth modal content
- * z-[9999](9999)    - PWA splash screen (temporary, on top of everything)
- *
- * Existing layers:
- * - Header: sticky (no z-index needed, uses stacking context)
- * - Mobile nav: z-[60]
- * - Auth modal: z-[200]
- * - Chatbot: z-50
- * - Toast: z-50
- * - Install prompt: z-50
- * - Update notification: z-50
- * - PWA splash: z-[9999]
+ * z-[9999](9999)    - PWA splash screen
  */
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* =====================================================
+   THEME: White + Dark Blue Glassmorphism
+   ===================================================== */
+
+@theme {
+  --color-navy-900: #0B1F3A;
+  --color-navy-800: #102A43;
+  --color-navy-700: #1E4E8C;
+  --color-navy-600: #2563EB;
+  --color-navy-500: #3B82F6;
+  --color-navy-400: #60A5FA;
+  --color-navy-300: #93C5FD;
+  --color-navy-200: #BFDBFE;
+  --color-navy-100: #DBEAFE;
+  --color-navy-50: #EFF6FF;
+
+  --color-surface-primary: #FFFFFF;
+  --color-surface-secondary: #F8FAFC;
+  --color-surface-tertiary: #F1F5F9;
+  --color-surface-glass: rgba(255, 255, 255, 0.7);
+  --color-surface-glass-hover: rgba(255, 255, 255, 0.85);
+  --color-surface-glass-dark: rgba(11, 31, 58, 0.85);
+  --color-surface-glass-dark-hover: rgba(11, 31, 58, 0.95);
+
+  --color-text-heading: #0B1F3A;
+  --color-text-body: #334155;
+  --color-text-muted: #64748B;
+  --color-text-light: #94A3B8;
+  --color-text-inverse: #FFFFFF;
+
+  --color-border-light: rgba(11, 31, 58, 0.08);
+  --color-border-medium: rgba(11, 31, 58, 0.12);
+  --color-border-focus: #1E4E8C;
+  --color-border-glass: rgba(255, 255, 255, 0.2);
+  --color-border-glass-strong: rgba(255, 255, 255, 0.35);
+
+  --color-accent-blue: #1E4E8C;
+  --color-accent-blue-light: #3B82F6;
+  --color-accent-blue-glow: rgba(30, 78, 140, 0.25);
+  --color-accent-yellow: #F59E0B;
+
+  --color-shadow-soft: 0 4px 24px rgba(11, 31, 58, 0.08);
+  --color-shadow-medium: 0 8px 32px rgba(11, 31, 58, 0.12);
+  --color-shadow-strong: 0 12px 48px rgba(11, 31, 58, 0.16);
+  --color-shadow-glass: 0 8px 32px rgba(11, 31, 58, 0.1);
+
+  --font-family-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* =====================================================
+   CSS CUSTOM PROPERTIES
+   ===================================================== */
+
 :root {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f9fafb;
-  --bg-tertiary: #f3f4f6;
-  --text-primary: #111827;
-  --text-secondary: #6b7280;
-  --text-tertiary: #9ca3af;
-  --border-color: #e5e7eb;
-  --border-hover: #d1d5db;
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F8FAFC;
+  --bg-tertiary: #F1F5F9;
+  --text-primary: #0B1F3A;
+  --text-secondary: #334155;
+  --text-tertiary: #64748B;
+  --border-color: rgba(11, 31, 58, 0.08);
+  --border-hover: rgba(11, 31, 58, 0.15);
 }
 
 .dark {
-  --bg-primary: #0a0a0f;
-  --bg-secondary: #141420;
-  --bg-tertiary: #1f1f2e;
-  --text-primary: #ffffff;
-  --text-secondary: #9ca3af;
-  --text-tertiary: #6b7280;
-  --border-color: rgba(255, 255, 255, 0.06);
-  --border-hover: rgba(255, 255, 255, 0.12);
+  --bg-primary: #0B1F3A;
+  --bg-secondary: #102A43;
+  --bg-tertiary: #1E4E8C;
+  --text-primary: #FFFFFF;
+  --text-secondary: #BFDBFE;
+  --text-tertiary: #93C5FD;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.15);
 }
+
+/* =====================================================
+   GLASSMORPHISM UTILITIES
+   ===================================================== */
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.glass-dark {
+  background: rgba(11, 31, 58, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-dark-strong {
+  background: rgba(11, 31, 58, 0.95);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.glass-subtle {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* =====================================================
+   BASE STYLES
+   ===================================================== */
 
 html {
   overflow-x: hidden;
@@ -53,7 +137,7 @@ html {
 
 body {
   margin: 0;
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-family-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: var(--bg-primary);
@@ -64,17 +148,21 @@ body {
 }
 
 .dark body {
-  background: #0a0a0f;
+  background: #0B1F3A;
   color: #fff;
 }
 
+/* =====================================================
+   SCROLLBAR
+   ===================================================== */
+
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(128, 128, 128, 0.3) transparent;
+  scrollbar-color: rgba(11, 31, 58, 0.15) transparent;
 }
 
 .dark * {
-  scrollbar-color: rgba(255, 255, 255, 0.08) transparent;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
 }
 
 ::-webkit-scrollbar {
@@ -84,18 +172,22 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(128, 128, 128, 0.3);
+  background: rgba(11, 31, 58, 0.15);
   border-radius: 3px;
 }
 .dark ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.1);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(128, 128, 128, 0.5);
+  background: rgba(11, 31, 58, 0.25);
 }
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.2);
 }
+
+/* =====================================================
+   ANIMATIONS
+   ===================================================== */
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -110,14 +202,9 @@ body {
   from { transform: rotate(360deg); }
   to { transform: rotate(0deg); }
 }
-
 .spin-reverse {
   animation: spin-reverse 1.5s linear infinite;
 }
-
-/* =====================================================
-   SMOOTH ANIMATIONS
-   ===================================================== */
 
 /* Scroll Reveal */
 .reveal {
@@ -130,7 +217,6 @@ body {
   transform: translateY(0);
 }
 
-/* Stagger children */
 .stagger-children.visible > * {
   opacity: 0;
   transform: translateY(20px);
@@ -144,13 +230,9 @@ body {
 .stagger-children.visible > *:nth-child(6) { animation-delay: 400ms; }
 
 @keyframes stagger-in {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Slide from left */
 .reveal-left {
   opacity: 0;
   transform: translateX(-40px);
@@ -161,7 +243,6 @@ body {
   transform: translateX(0);
 }
 
-/* Slide from right */
 .reveal-right {
   opacity: 0;
   transform: translateX(40px);
@@ -172,7 +253,6 @@ body {
   transform: translateX(0);
 }
 
-/* Scale up reveal */
 .reveal-scale {
   opacity: 0;
   transform: scale(0.92);
@@ -190,7 +270,7 @@ body {
 }
 .card-glow:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 40px -8px rgba(0, 35, 102, 0.18), 0 0 0 1px rgba(0, 35, 102, 0.06);
+  box-shadow: 0 12px 40px -8px rgba(11, 31, 58, 0.18), 0 0 0 1px rgba(11, 31, 58, 0.06);
 }
 
 /* Float animation */
@@ -218,14 +298,8 @@ body {
 
 /* Page transition */
 @keyframes page-in {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 .page-enter {
   animation: page-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -233,21 +307,15 @@ body {
 
 /* Modal entrance */
 @keyframes modalIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95) translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 /* Header shrink on scroll */
 .header-scrolled {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px rgba(11, 31, 58, 0.08);
 }
 
 /* Logo circular container */

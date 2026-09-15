@@ -51,7 +51,7 @@ export default function AdminDashboard() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="w-8 h-8 border-2 border-[#13275c]/30 border-t-[#13275c] rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-[#1E4E8C]/30 border-t-[#1E4E8C] rounded-full animate-spin" />
       </div>
     )
   }
@@ -74,13 +74,13 @@ export default function AdminDashboard() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-1">Welcome, Admin</h1>
+      <h1 className="text-2xl font-bold text-[#0B1F3A] mb-1">Welcome, Admin</h1>
       <p className="text-gray-500 text-sm mb-6">Manage your school website from here.</p>
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
         {statCards.map((s) => (
-          <Link key={s.label} to={s.link} className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+          <Link key={s.label} to={s.link} className="bg-white/90 backdrop-blur-sm rounded-xl p-4 border border-[rgba(11,31,58,0.08)] shadow-[0_4px_20px_rgba(11,31,58,0.06)] hover:shadow-md transition-shadow">
             <div className={`w-10 h-10 ${s.color} rounded-lg flex items-center justify-center mb-3`}>
               <span className="text-white font-bold text-lg">{s.value}</span>
             </div>
@@ -90,11 +90,11 @@ export default function AdminDashboard() {
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 mb-8">
-        <h2 className="font-bold text-gray-900 mb-4">Quick Actions</h2>
+      <div className="bg-white/90 backdrop-blur-sm rounded-xl p-5 border border-[rgba(11,31,58,0.08)] shadow-[0_4px_20px_rgba(11,31,58,0.06)] mb-8">
+        <h2 className="font-bold text-[#0B1F3A] mb-4">Quick Actions</h2>
         <div className="flex flex-wrap gap-3">
           {quickActions.map((a) => (
-            <Link key={a.label} to={a.path} className="flex items-center gap-2 px-4 py-2.5 bg-[#13275c] text-white rounded-lg text-sm font-medium hover:bg-[#1a3570] transition-colors">
+            <Link key={a.label} to={a.path} className="flex items-center gap-2 px-4 py-2.5 bg-[#1E4E8C] text-white rounded-lg text-sm font-medium hover:bg-[#0B1F3A] transition-colors">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d={a.icon} />
               </svg>
@@ -106,10 +106,10 @@ export default function AdminDashboard() {
 
       <div className="grid md:grid-cols-2 gap-6">
         {/* Recent News */}
-        <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+        <div className="bg-white/90 backdrop-blur-sm rounded-xl p-5 border border-[rgba(11,31,58,0.08)] shadow-[0_4px_20px_rgba(11,31,58,0.06)]">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-bold text-gray-900">Recent News</h2>
-            <Link to="/admin/news" className="text-sm text-[#13275c] hover:underline">View all</Link>
+            <h2 className="font-bold text-[#0B1F3A]">Recent News</h2>
+            <Link to="/admin/news" className="text-sm text-[#1E4E8C] hover:text-[#0B1F3A] hover:underline">View all</Link>
           </div>
           {recentNews.length === 0 ? (
             <p className="text-gray-400 text-sm">No news yet.</p>
@@ -131,10 +131,10 @@ export default function AdminDashboard() {
         </div>
 
         {/* Recent Events */}
-        <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+        <div className="bg-white/90 backdrop-blur-sm rounded-xl p-5 border border-[rgba(11,31,58,0.08)] shadow-[0_4px_20px_rgba(11,31,58,0.06)]">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-bold text-gray-900">Upcoming Events</h2>
-            <Link to="/admin/events" className="text-sm text-[#13275c] hover:underline">View all</Link>
+            <h2 className="font-bold text-[#0B1F3A]">Upcoming Events</h2>
+            <Link to="/admin/events" className="text-sm text-[#1E4E8C] hover:text-[#0B1F3A] hover:underline">View all</Link>
           </div>
           {recentEvents.length === 0 ? (
             <p className="text-gray-400 text-sm">No events yet.</p>
