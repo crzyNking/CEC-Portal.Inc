@@ -23,7 +23,7 @@ export default function Kindergarten() {
           </a>
         </div>
         <div className="w-full aspect-[4/3] rounded-lg overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=600&q=80" alt="School Building" className="w-full h-full object-cover" loading="lazy" />
+          <img src="https://iili.io/nnFSHCX.jpg" alt="School Building" className="w-full h-full object-cover" loading="lazy" />
         </div>
       </section>
 
@@ -52,14 +52,14 @@ export default function Kindergarten() {
             </ul>
           </div>
           <div className="min-h-[160px] md:min-h-0">
-            <img src="https://images.unsplash.com/photo-1587654780291-39c9404d7dd0?auto=format&fit=crop&w=400&q=80" alt="Classroom" className="w-full h-full object-cover" loading="lazy" />
+            <img src="https://iili.io/nnFMCfS.jpg" alt="Classroom" className="w-full h-full object-cover" loading="lazy" />
           </div>
         </div>
 
         {/* Card 2 - Image Top */}
         <div className="bg-white rounded-[10px] overflow-hidden shadow-[0_2px_10px_rgba(0,0,0,0.05)]">
           <div className="h-[180px]">
-            <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=600&q=80" alt="Playroom" className="w-full h-full object-cover" loading="lazy" />
+            <img src="https://iili.io/nnFk49V.jpg" alt="Playroom" className="w-full h-full object-cover" loading="lazy" />
           </div>
           <div className="p-6">
             <span className="inline-block bg-[#FDF0DA] text-[#B8860B] text-[10px] font-bold tracking-wide px-2.5 py-1 rounded mb-2.5">
@@ -106,7 +106,7 @@ export default function Kindergarten() {
             </div>
           </div>
           <div className="min-h-[160px] md:min-h-0">
-            <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=400&q=80" alt="Classroom" className="w-full h-full object-cover" loading="lazy" />
+            <img src="https://iili.io/nnFWy0B.jpg" alt="Classroom" className="w-full h-full object-cover" loading="lazy" />
           </div>
         </div>
 
