@@ -3,131 +3,114 @@ import Footer from '../components/Footer'
 
 export default function Kindergarten() {
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] overflow-x-hidden">
+    <div className="min-h-screen bg-[#EEF1F6] text-[#1C1C1C] overflow-x-hidden">
       <Header />
 
-      {/* Breadcrumbs */}
-      <div className="bg-white border-b border-[#E2E8F0] py-2.5 px-6">
-        <div className="max-w-[1200px] mx-auto text-[12px] text-[#475569]">
-          <a href="/" className="hover:text-[#0B1F3A]">Home</a> &gt;{' '}
-          <a href="/programs" className="hover:text-[#0B1F3A]">Academic Programs</a> &gt;{' '}
-          <span className="text-[#0F172A] font-semibold">Kindergarten</span>
+      {/* Hero */}
+      <section className="bg-[#0B1F3A] grid grid-cols-1 md:grid-cols-2 items-center px-6 md:px-10 py-12 gap-6">
+        <div className="max-w-[520px]">
+          <span className="inline-block bg-[#D8CBA8] text-[#3B3220] text-[11px] font-bold tracking-wide px-3 py-1.5 rounded mb-4">
+            BASIC EDUCATION &bull; S.Y. 2026-2027
+          </span>
+          <h1 className="text-white text-3xl md:text-[34px] leading-[1.25] mb-4">
+            Learn the Chinese Language Quickly and Conveniently
+          </h1>
+          <p className="text-[#CBD5E1] text-sm leading-[1.6] mb-6">
+            Cebu Eastern College is a premier Filipino-Chinese institution designed to deliver integrated, quality education interfaced with Confucian teachings to prepare young leaders for the future. The preschool curriculum uses a holistic "learning by doing" approach that seamlessly blends cultural heritage, modern technology, and values-driven character building.
+          </p>
+          <a href="/enrollment/kindergarten" className="inline-block bg-[#F6B93B] text-[#3B2F00] font-bold text-[13px] tracking-wide px-8 py-3.5 rounded-full hover:bg-[#E5A52E] transition-colors">
+            ENROLL NOW!
+          </a>
         </div>
+        <div className="w-full aspect-[4/3] rounded-lg overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=600&q=80" alt="School Building" className="w-full h-full object-cover" loading="lazy" />
+        </div>
+      </section>
+
+      {/* Section Title */}
+      <div className="text-center pt-12 pb-2 px-5">
+        <h2 className="text-[#0B1F3A] text-[26px] md:text-[30px] mb-2.5">Pre-Elementary Programs</h2>
+        <p className="text-[#6B7280] text-sm">Now Accepting Enrollees | Be an Easternian Today!</p>
       </div>
 
-      <main className="max-w-[1200px] mx-auto px-6 py-8">
-        {/* Hero */}
-        <section className="bg-[#071F43] rounded-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 text-white shadow-lg mb-8">
-          <div className="p-10 md:p-12 flex flex-col justify-between">
-            <div>
-              <span className="inline-flex items-center gap-1.5 bg-white/10 border border-white/20 px-3 py-1 rounded-full text-[11px] font-semibold tracking-wide uppercase mb-5">
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                Kindergarten
-              </span>
-              <h1 className="text-[28px] md:text-[32px] font-bold leading-[1.25] mb-4">
-                Nurturing Young Minds with Care and Creativity
-              </h1>
-              <p className="text-[#94A3B8] text-[14px] leading-[1.6] mb-10">
-                A warm, stimulating environment where children develop foundational skills through play-based learning, Chinese immersion, and values formation.
-              </p>
-            </div>
-            <div className="flex gap-5 text-[12px] text-[#CBD5E1]">
-              <span className="flex items-center gap-1.5">
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                Play-Based Learning
-              </span>
-              <span className="flex items-center gap-1.5">
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>
-                Chinese Immersion
-              </span>
-            </div>
-          </div>
-          <div className="relative bg-[#1E293B] min-h-[300px]">
-            <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80" alt="Kindergarten" className="w-full h-full object-cover" loading="lazy" />
-          </div>
-        </section>
+      {/* Programs Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[1100px] mx-auto px-6 md:px-10 mt-8 pb-10">
 
-        {/* Stats */}
-        <section className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-12">
-          {[
-            { icon: '🎨', value: 'Nursery 1', label: '3 Years Old' },
-            { icon: '📚', value: 'Kinder 1', label: '4 Years Old' },
-            { icon: '✏️', value: 'Kinder 2', label: '5 Years Old' },
-            { icon: '🌐', value: '3 Languages', label: 'English, Filipino & Mandarin' },
-          ].map((s) => (
-            <div key={s.label} className="bg-white border border-[#E2E8F0] rounded-xl p-5 flex items-start gap-4 shadow-sm">
-              <div className="w-10 h-10 bg-[#F1F5F9] rounded-lg flex items-center justify-center text-lg shrink-0">{s.icon}</div>
-              <div>
-                <h3 className="text-[16px] font-bold text-[#0F172A]">{s.value}</h3>
-                <p className="text-[12px] text-[#475569]">{s.label}</p>
-              </div>
-            </div>
-          ))}
-        </section>
+        {/* Card 1 - Split */}
+        <div className="bg-white rounded-[10px] overflow-hidden shadow-[0_2px_10px_rgba(0,0,0,0.05)] grid grid-cols-1 md:grid-cols-2">
+          <div className="p-6">
+            <div className="w-9 h-9 bg-[#EEF1F6] rounded-md flex items-center justify-center mb-4 text-base">📖</div>
+            <h3 className="text-[#0B1F3A] text-lg mb-2.5 leading-[1.3]">Programs Offered & Chinese Immersion</h3>
+            <p className="text-[#6B7280] text-[13px] leading-[1.6] mb-4">
+              Comprehensive early childhood programs featuring integrated English & Chinese classes with Free Chinese Textbook.
+            </p>
+            <div className="text-[#C9A13B] text-[11px] font-bold tracking-wide mb-2">LEVELS OFFERED</div>
+            <ul className="list-none text-[13px] text-[#1C1C1C]">
+              <li className="py-1.5 border-t border-[#EEE]"><span className="text-[#C9A13B] text-[8px] mr-1.5 align-middle">●</span>Nursery 1 (3 Years Old)</li>
+              <li className="py-1.5 border-t border-[#EEE]"><span className="text-[#C9A13B] text-[8px] mr-1.5 align-middle">●</span>Kinder 1 (4 Years Old)</li>
+              <li className="py-1.5 border-t border-[#EEE]"><span className="text-[#C9A13B] text-[8px] mr-1.5 align-middle">●</span>Kinder 2 (5 Years Old)</li>
+            </ul>
+          </div>
+          <div className="min-h-[160px] md:min-h-0">
+            <img src="https://images.unsplash.com/photo-1587654780291-39c9404d7dd0?auto=format&fit=crop&w=400&q=80" alt="Classroom" className="w-full h-full object-cover" loading="lazy" />
+          </div>
+        </div>
 
-        {/* Programs Offered */}
-        <section className="mb-12">
-          <div className="mb-8">
-            <div className="text-[12px] font-bold uppercase tracking-wide text-[#475569] flex items-center gap-2 mb-1.5">
-              <span className="w-4 h-0.5 bg-[#475569]" /> Programs Offered
-            </div>
-            <h2 className="text-[26px] font-bold text-[#0F172A] mb-1.5">Pre-Elementary Programs &amp; Chinese Immersion</h2>
-            <p className="text-[14px] text-[#475569]">Comprehensive early childhood programs featuring integrated English &amp; Chinese classes with Free Chinese Textbook.</p>
+        {/* Card 2 - Image Top */}
+        <div className="bg-white rounded-[10px] overflow-hidden shadow-[0_2px_10px_rgba(0,0,0,0.05)]">
+          <div className="h-[180px]">
+            <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=600&q=80" alt="Playroom" className="w-full h-full object-cover" loading="lazy" />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { icon: '📖', title: 'Integrated Curriculum', desc: 'English and Chinese classes with free Chinese textbook for all students.' },
-              { icon: '🎭', title: 'Cultural Activities', desc: 'Chinese cultural activities, celebrations, and language immersion programs.' },
-              { icon: '🧩', title: 'Learning by Doing', desc: 'Holistic approach blending cultural heritage, modern technology, and values.' },
-            ].map((c) => (
-              <div key={c.title} className="bg-white border border-[#E2E8F0] rounded-xl p-6 shadow-sm">
-                <div className="w-10 h-10 bg-[#F1F5F9] rounded-lg flex items-center justify-center text-lg mb-4">{c.icon}</div>
-                <h3 className="text-[16px] font-bold text-[#0F172A] mb-2">{c.title}</h3>
-                <p className="text-[13px] text-[#475569] leading-[1.6]">{c.desc}</p>
-              </div>
-            ))}
+          <div className="p-6">
+            <span className="inline-block bg-[#FDF0DA] text-[#B8860B] text-[10px] font-bold tracking-wide px-2.5 py-1 rounded mb-2.5">
+              EXCLUSIVE FACILITIES
+            </span>
+            <h3 className="text-[#0B1F3A] text-lg mb-2.5">Exclusivity Playroom & Learning Spaces</h3>
+            <p className="text-[#6B7280] text-[13px] leading-[1.6] mb-4">
+              Air-conditioned, spacious classrooms designed to provide a safe and highly conductive environment for individual and group growth.
+            </p>
+            <span className="text-[#0B1F3A] text-xs font-semibold block pt-2.5 border-t border-[#EEE]">
+              Child-Safe Indoor Turf & Soft Play
+            </span>
           </div>
-        </section>
+        </div>
 
-        {/* Why Choose CEC */}
-        <section className="mb-12">
-          <div className="mb-8">
-            <div className="text-[12px] font-bold uppercase tracking-wide text-[#475569] flex items-center gap-2 mb-1.5">
-              <span className="w-4 h-0.5 bg-[#475569]" /> Why Choose CEC
-            </div>
-            <h2 className="text-[26px] font-bold text-[#0F172A] mb-1.5">A Legacy of Educational Excellence</h2>
-          </div>
-          <div className="bg-[#071F43] rounded-2xl p-8 md:p-10 text-white grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-[18px] font-bold mb-4">Kindergarten at CEC</h3>
-              <ul className="space-y-3">
-                {['Exemplary English & Chinese Faculty', 'Affordable Tuition Fees with Discounts', 'Grounded in Confucian Teachings', 'Safe & Nurturing Environment', 'Free Chinese Textbook'].map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-[13px] text-[#CBD5E1]">
-                    <svg className="w-4 h-4 text-[#F59E0B] shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" /></svg>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="relative rounded-xl overflow-hidden min-h-[250px]">
-              <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=600&q=80" alt="Kindergarten" className="w-full h-full object-cover" loading="lazy" />
-            </div>
-          </div>
-        </section>
+        {/* Card 3 - Why Choose CEC */}
+        <div className="bg-white rounded-[10px] overflow-hidden shadow-[0_2px_10px_rgba(0,0,0,0.05)] p-6">
+          <div className="w-9 h-9 bg-[#EEF1F6] rounded-md flex items-center justify-center mb-4 text-base">🎓</div>
+          <h3 className="text-[#0B1F3A] text-lg mb-2.5">Why Choose CEC for Pre-Elementary?</h3>
+          <p className="text-[#6B7280] text-[13px] leading-[1.6] mb-4">
+            Guiding young learners through individualized instruction and holistic character development.
+          </p>
+          <div className="text-[#C9A13B] text-[11px] font-bold tracking-wide mb-2">KEY HIGHLIGHTS</div>
+          <ul className="list-none text-[13px] text-[#1C1C1C]">
+            <li className="py-1.5 border-t border-[#EEE]"><span className="text-[#C9A13B] text-[8px] mr-1.5 align-middle">●</span>Exemplary English & Chinese Faculty</li>
+            <li className="py-1.5 border-t border-[#EEE]"><span className="text-[#C9A13B] text-[8px] mr-1.5 align-middle">●</span>Affordable Tuition Fees with Discounts & Privileges</li>
+            <li className="py-1.5 border-t border-[#EEE]"><span className="text-[#C9A13B] text-[8px] mr-1.5 align-middle">●</span>Grounded in Confucian Teachings & Pragmatic Concepts</li>
+          </ul>
+        </div>
 
-        {/* CTA */}
-        <section className="bg-[#F8FAFC] border border-[#CBD5E1] rounded-2xl p-8 md:px-10 flex flex-col md:flex-row justify-between items-center gap-5">
-          <div>
-            <h3 className="text-[20px] font-bold text-[#071F43] mb-1.5">Ready to enroll your child?</h3>
-            <p className="text-[13px] text-[#475569]">Give your child the opportunity to learn, grow, and prepare for a brighter future at CEC.</p>
+        {/* Card 4 - Dark Legacy */}
+        <div className="bg-[#0B1F3A] rounded-[10px] overflow-hidden shadow-[0_2px_10px_rgba(0,0,0,0.05)] grid grid-cols-1 md:grid-cols-2">
+          <div className="p-6 text-white">
+            <span className="inline-block bg-[#D8CBA8] text-[#3B3220] text-[10px] font-bold tracking-wide px-3 py-1.5 rounded mb-3.5">
+              CECSINCE1915 &bull; 109 YEARS
+            </span>
+            <h3 className="text-lg mb-2.5 text-white">A Legacy of Educational Excellence</h3>
+            <p className="text-[#CBD5E1] text-[13px] leading-[1.6] mb-3">
+              Over a century of commitment to quality Filipino-Chinese education in Cebu City.
+            </p>
+            <div className="bg-[#122A63] rounded-md p-3 flex items-center gap-2.5 text-[11px] text-[#E5E9F0] mt-2.5">
+              <span>🛡️</span>
+              <span>Centennial institution fostering character, wisdom, and leadership</span>
+            </div>
           </div>
-          <div className="flex gap-3 shrink-0">
-            <a href="/enrollment/kindergarten" className="bg-[#071F43] text-white px-5 py-2.5 rounded-lg text-[13px] font-semibold hover:bg-[#0B1F3A] transition-colors">
-              Enroll Now
-            </a>
+          <div className="min-h-[160px] md:min-h-0">
+            <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=400&q=80" alt="Classroom" className="w-full h-full object-cover" loading="lazy" />
           </div>
-        </section>
-      </main>
+        </div>
+
+      </div>
 
       <Footer />
     </div>
