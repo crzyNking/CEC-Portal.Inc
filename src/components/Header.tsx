@@ -23,10 +23,10 @@ const collegeData = [
 ]
 
 const enrollK12 = [
-  { title: 'KINDERGARTEN', desc: 'Ages 3-5', path: '/programs/kindergarten', img: 'https://images.unsplash.com/photo-1587654780291-39c9404d7dd0?auto=format&fit=crop&w=400&q=80' },
-  { title: 'ELEMENTARY', desc: 'Grades 1-6', path: '/programs/elementary', img: 'https://cdn.vectorstock.com/i/500p/82/33/faceless-woman-placeholder-vector-24138233.jpg' },
+  { title: 'KINDERGARTEN', desc: 'Ages 3-5', path: '/programs/kindergarten', img: 'https://iili.io/nn31S9f.jpg' },
+  { title: 'ELEMENTARY', desc: 'Grades 1-6', path: '/programs/elementary', img: 'https://iili.io/nn3sBol.jpg' },
   { title: 'JUNIOR HIGH', desc: 'Grades 7-10', path: '/programs/junior-high', img: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=400&q=80' },
-  { title: 'SENIOR HIGH', desc: 'Grades 11-12', path: '/programs/senior-high', img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80' },
+  { title: 'SENIOR HIGH', desc: 'Grades 11-12', path: '/programs/senior-high', img: 'https://iili.io/nnF3vgs.jpg' },
 ]
 
 const servicesData = [
@@ -500,7 +500,7 @@ export default function Header() {
         {isAdmin && (
           <Link
             to="/admin"
-            className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#f7b32b]/20 text-[#f7b32b] text-[12px] font-semibold hover:bg-[#f7b32b]/30 transition-colors absolute right-20"
+            className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#f7b32b]/20 text-[#f7b32b] text-[12px] font-semibold hover:bg-[#f7b32b]/30 transition-colors shrink-0 z-10"
           >
             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />

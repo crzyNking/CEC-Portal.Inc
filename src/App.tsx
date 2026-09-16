@@ -8,7 +8,6 @@ import { Chatbot } from './components/Chatbot'
 import MaintenanceMode from './components/MaintenanceMode'
 import InstallPrompt from './components/InstallPrompt'
 import UpdateNotification from './components/UpdateNotification'
-import PWASplash from './components/PWASplash'
 import OfflineIndicator from './components/OfflineIndicator'
 import SyncIndicator from './components/SyncIndicator'
 import { Home } from './pages/Home'
@@ -72,7 +71,6 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <PWASplash />
         <ToastContainer />
         <OfflineIndicator />
         <SyncIndicator />
