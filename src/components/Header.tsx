@@ -9,7 +9,7 @@ import AnnouncementBar from './AnnouncementBar'
 const k12Data = [
   { title: 'Kindergarten', desc: 'A supportive environment fostering early growth, creativity, and basic skills for young learners.', path: '/programs/kindergarten', img: 'https://iili.io/nn31S9f.jpg' },
   { title: 'Elementary', desc: 'Nurturing young minds with strong values, foundational academic skills, and lifelong learning habits.', path: '/programs/elementary', img: 'https://iili.io/nn3sBol.jpg' },
-  { title: 'Junior High School', desc: 'Dynamic programs strengthening critical thinking, character, and personal development.', path: '/programs/junior-high', img: 'https://iili.io/nnFJ10G.md.jpg' },
+  { title: 'Junior High School', desc: 'Dynamic programs strengthening critical thinking, character, and personal development.', path: '/programs/junior-high', img: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=600&q=80' },
   { title: 'Senior High School', desc: 'Specialized academic tracks and practical training for college and future careers.', path: '/programs/senior-high', img: 'https://iili.io/nnF3vgs.jpg' },
 ]
 
@@ -206,8 +206,14 @@ export default function Header() {
                             onClick={() => navigateAndClose(prog.path)}
                             className="group bg-white rounded-xl overflow-hidden cursor-pointer shadow-[0_2px_10px_rgba(0,0,0,0.15)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.25)] transition-all duration-200 text-left flex flex-col"
                           >
-                            <div className="relative h-[120px] w-full overflow-hidden">
-                              <img src={prog.img} alt={prog.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <div className="relative h-[120px] w-full overflow-hidden bg-gradient-to-br from-[#0B1F3A] to-[#1E4E8C]">
+                              <img
+                                src={prog.img}
+                                alt={prog.title}
+                                loading="lazy"
+                                onError={(e) => { e.currentTarget.style.display = 'none' }}
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              />
                               <div className="absolute bottom-0 left-0 right-0 px-3 pb-2 pt-4 bg-gradient-to-t from-black/75 to-transparent">
                                 <h3 className="text-white text-[14px] font-semibold" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.6)' }}>{prog.title}</h3>
                               </div>
@@ -787,7 +793,13 @@ export default function Header() {
                       onClick={() => navigateAndClose(item.path)}
                       className={`w-full flex items-center justify-between p-3.5 rounded-xl bg-gradient-to-r ${item.color} text-white hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200 relative overflow-hidden`}
                     >
-                      <img src={item.img} alt={item.label} className="absolute inset-0 w-full h-full object-cover opacity-20 hover:opacity-35 transition-opacity duration-200" />
+                      <img
+                        src={item.img}
+                        alt={item.label}
+                        loading="lazy"
+                        onError={(e) => { e.currentTarget.style.display = 'none' }}
+                        className="absolute inset-0 w-full h-full object-cover opacity-20 hover:opacity-35 transition-opacity duration-200"
+                      />
                       <div className="text-left z-10 relative">
                         <div className="text-[13px] font-bold">{item.label}</div>
                         <div className="text-[11px] text-white/60">{item.desc}</div>

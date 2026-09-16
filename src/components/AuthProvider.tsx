@@ -9,12 +9,16 @@ interface AuthProviderProps {
   children: ReactNode
 }
 
+const PROFILE_REFRESH_INTERVAL = 60_000
+
 export function AuthProvider({ children }: AuthProviderProps) {
   const { setUser, setSession, setLoading, fetchProfile } = useAuthStore()
   const { fetchPreferences } = usePreferencesStore()
   const { logActivity } = useActivityStore()
 
   useEffect(() => {
+    let profileChannel: ReturnType<typeof supabase.channel> | null = null
+
     const getInitialSession = async () => {
       try {
         const { data: { session }, error } = await supabase.auth.getSession()
@@ -56,7 +60,58 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
     )
 
-    return () => subscription.unsubscribe()
+    // Realtime: when the logged-in user's profile row changes (e.g. role toggled
+    // to admin by an admin), refetch it so the Admin button appears instantly.
+    const setupProfileRealtime = () => {
+      const userId = useAuthStore.getState().user?.id
+      if (!userId) return
+
+      if (profileChannel) {
+        supabase.removeChannel(profileChannel)
+        profileChannel = null
+      }
+
+      profileChannel = supabase
+        .channel(`profile-realtime-${userId}`)
+        .on(
+          'postgres_changes',
+          { event: '*', schema: 'public', table: 'profiles', filter: `id=eq.${userId}` },
+          () => { fetchProfile(userId) }
+        )
+        .subscribe((status) => {
+          if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+            if (profileChannel) supabase.removeChannel(profileChannel)
+            profileChannel = null
+            setTimeout(setupProfileRealtime, 5000)
+          }
+        })
+    }
+
+    const profileTimeout = setTimeout(setupProfileRealtime, 1000)
+
+    // Backup: refetch profile on focus / visibility / periodically, so role
+    // changes still propagate even if realtime is unavailable.
+    const refreshProfile = () => {
+      const userId = useAuthStore.getState().user?.id
+      if (userId && document.visibilityState === 'visible' && navigator.onLine) {
+        fetchProfile(userId)
+      }
+    }
+
+    const onFocus = () => refreshProfile()
+    const onVisibility = () => refreshProfile()
+    const interval = setInterval(refreshProfile, PROFILE_REFRESH_INTERVAL)
+    window.addEventListener('focus', onFocus)
+    document.addEventListener('visibilitychange', onVisibility)
+
+    return () => {
+      subscription.unsubscribe()
+      clearTimeout(profileTimeout)
+      clearInterval(interval)
+      window.removeEventListener('focus', onFocus)
+      document.removeEventListener('visibilitychange', onVisibility)
+      if (profileChannel) supabase.removeChannel(profileChannel)
+    }
   }, [setUser, setSession, setLoading, fetchProfile, fetchPreferences, logActivity])
 
   return <>{children}</>

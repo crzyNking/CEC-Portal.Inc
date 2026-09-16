@@ -263,10 +263,12 @@ export default function JuniorHigh() {
               </div>
 
               {/* Right Column Image Placeholder */}
-              <div className="w-full md:w-1/2 min-h-[340px] relative">
+              <div className="w-full md:w-1/2 min-h-[340px] relative bg-gradient-to-br from-[#0B1F3A] to-[#1E4E8C]">
                 <img 
                   src="https://iili.io/nnKUkjp.jpg" 
                   alt="Students learning and engaging in activities placeholder image" 
+                  loading="lazy"
+                  onError={(e) => { e.currentTarget.style.display = 'none' }}
                   className="w-full h-full object-cover"
                 />
               </div>
