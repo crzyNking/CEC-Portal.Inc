@@ -30,7 +30,7 @@ export default function BSED() {
             </div>
           </div>
           <div className="flex-1 relative min-h-[300px]">
-            <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80" alt="Future Teachers" className="w-full h-full object-cover" loading="lazy" />
+            <img src="https://iili.io/nnFN5y7.png" alt="Future Teachers" className="w-full h-full object-cover" loading="lazy" />
             <span className="absolute bottom-5 right-5 bg-[#0B1F3A]/85 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-[11px] flex items-center gap-1.5">
               <span className="text-[#F5B027]">👥</span> Future Teachers Practicum & Mentorship
             </span>
@@ -76,7 +76,7 @@ export default function BSED() {
 
               {/* Demonstration Teaching Lab Image */}
               <div className="md:flex-[0_0_25%] relative rounded-[20px] overflow-hidden min-h-[200px] bg-gradient-to-br from-[#0B1F3A] to-[#1E4E8C]">
-                <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=600&q=80" alt="Demonstration Teaching Lab" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                <img src="https://iili.io/nnFNxCG.png" alt="Demonstration Teaching Lab" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
                 <span className="absolute top-5 left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#0B1F3A]/85 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-[10px] flex items-center gap-1.5">
                   <span className="text-[#F5B027]">🧑‍🏫</span> Demonstration Teaching Lab
                 </span>
@@ -112,7 +112,7 @@ export default function BSED() {
                   </p>
                 </div>
                 <div className="flex-1 relative min-h-[160px]">
-                  <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=600&q=80" alt="Specialization Seminars" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                  <img src="https://iili.io/nodkaZQ.jpg" alt="Specialization Seminars" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
                   <span className="absolute bottom-3.5 left-3.5 bg-[#0B1F3A]/85 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-[10px]">
                     Specialization Seminars & Workshops
                   </span>
@@ -143,7 +143,7 @@ export default function BSED() {
                   </ul>
                 </div>
                 <div className="md:flex-[0_0_40%] relative min-h-[180px]">
-                  <img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=600&q=80" alt="EdTech & Learning Hub" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                  <img src="https://iili.io/nnFNcZu.png" alt="EdTech & Learning Hub" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
                   <span className="absolute bottom-3.5 right-3.5 bg-[#0B1F3A]/85 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-[10px] flex items-center gap-1.5">
                     <span className="text-[#F5B027]">💻</span> EdTech & Learning Hub
                   </span>
@@ -166,7 +166,7 @@ export default function BSED() {
                   </ul>
                 </div>
                 <div className="md:flex-[0_0_40%] relative min-h-[180px]">
-                  <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=600&q=80" alt="Pre-Service Teaching Internship" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                  <img src="https://iili.io/nnFNCjn.png" alt="Pre-Service Teaching Internship" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
                   <span className="absolute bottom-3.5 right-3.5 bg-[#0B1F3A]/85 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-[10px] flex items-center gap-1.5">
                     <span className="text-[#F5B027]">🤝</span> Pre-Service Teaching Internship
                   </span>
@@ -198,7 +198,7 @@ export default function BSED() {
             </div>
           </div>
           <div className="flex-1 relative min-h-[300px]">
-            <img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=800&q=80" alt="Cebu Eastern College Campus" className="w-full h-full object-cover" loading="lazy" />
+            <img src="https://iili.io/nnFN1Gj.png" alt="Cebu Eastern College Campus" className="w-full h-full object-cover" loading="lazy" />
             <span className="absolute bottom-5 right-5 bg-[#0B1F3A]/85 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-[11px] flex items-center gap-1.5">
               <span className="text-[#F5B027]">🏛️</span> Cebu Eastern College Campus & Facilities
             </span>
