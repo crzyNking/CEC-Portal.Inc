@@ -9,7 +9,7 @@ import AnnouncementBar from './AnnouncementBar'
 const k12Data = [
   { title: 'Kindergarten', desc: 'A supportive environment fostering early growth, creativity, and basic skills for young learners.', path: '/programs/kindergarten', img: 'https://iili.io/nn31S9f.jpg' },
   { title: 'Elementary', desc: 'Nurturing young minds with strong values, foundational academic skills, and lifelong learning habits.', path: '/programs/elementary', img: 'https://iili.io/nn3sBol.jpg' },
-  { title: 'Junior High School', desc: 'Dynamic programs strengthening critical thinking, character, and personal development.', path: '/programs/junior-high', img: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=600&q=80' },
+  { title: 'Junior High School', desc: 'Dynamic programs strengthening critical thinking, character, and personal development.', path: '/programs/junior-high', img: 'https://iili.io/nnDzDyg.jpg' },
   { title: 'Senior High School', desc: 'Specialized academic tracks and practical training for college and future careers.', path: '/programs/senior-high', img: 'https://iili.io/nnF3vgs.jpg' },
 ]
 
@@ -23,19 +23,19 @@ const collegeData = [
 ]
 
 const enrollK12 = [
-  { title: 'KINDERGARTEN', desc: 'Ages 3-5', path: '/programs/kindergarten', img: 'https://iili.io/nn31S9f.jpg' },
-  { title: 'ELEMENTARY', desc: 'Grades 1-6', path: '/programs/elementary', img: 'https://iili.io/nn3sBol.jpg' },
-  { title: 'JUNIOR HIGH', desc: 'Grades 7-10', path: '/programs/junior-high', img: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=400&q=80' },
-  { title: 'SENIOR HIGH', desc: 'Grades 11-12', path: '/programs/senior-high', img: 'https://iili.io/nnF3vgs.jpg' },
+  { title: 'KINDERGARTEN', desc: 'Ages 3-5', path: '/programs/kindergarten', img: 'https://iili.io/nnDWnGS.jpg' },
+  { title: 'ELEMENTARY', desc: 'Grades 1-6', path: '/programs/elementary', img: 'https://iili.io/nnDYFsa.jpg' },
+  { title: 'JUNIOR HIGH', desc: 'Grades 7-10', path: '/programs/junior-high', img: 'https://iili.io/nnDjlP2.jpg' },
+  { title: 'SENIOR HIGH', desc: 'Grades 11-12', path: '/programs/senior-high', img: 'https://iili.io/nnDhxku.jpg' },
 ]
 
 const servicesData = [
-  { name: 'Registrar', desc: 'Student records, enrollment verification, and academic documents', icon: 'M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z' },
-  { name: 'EDP', desc: 'Electronic data processing and technology support services', icon: 'M9 17H7A5 5 0 0 1 7 7h2M15 7h2a5 5 0 1 1 0 10h-2M8 12h8' },
-  { name: 'Accounting', desc: 'Tuition fees, financial records, and payment processing', icon: 'M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6' },
-  { name: 'Clinic', desc: 'Health services, medical checkups, and first aid care', icon: 'M22 12h-4l-3 9L9 3l-3 9H2' },
-  { name: 'Library', desc: 'Books, research materials, digital resources, and study spaces', icon: 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 1 6.5 17H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z' },
-  { name: 'Guidance', desc: 'Counseling, career guidance, and student support services', icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z' },
+  { name: 'Registrar', img: 'https://iili.io/nnE0v1J.jpg' },
+  { name: 'EDP', img: 'https://iili.io/nnE08Pu.jpg' },
+  { name: 'Accounting', img: 'https://iili.io/nnE0l1X.jpg' },
+  { name: 'Clinic', img: 'https://iili.io/nnE0bDP.jpg' },
+  { name: 'Library', img: 'https://iili.io/nnE0JQB.jpg' },
+  { name: 'Guidance', img: 'https://iili.io/nnE0C7g.jpg' },
 ]
 
 const campusesData = [
@@ -304,11 +304,11 @@ export default function Header() {
                             onClick={() => navigateAndClose(card.path)}
                             className="group relative bg-gradient-to-b from-[#5b72cd] to-[#3a4b9c] rounded-xl h-[120px] border border-white/20 overflow-hidden shadow-[inset_0_0_15px_rgba(0,0,0,0.15)] hover:-translate-y-0.5 hover:border-white/50 hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] transition-all duration-200 flex flex-col justify-between items-start p-3 cursor-pointer"
                           >
-                            <img src={card.img} alt={card.title} className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:opacity-50 transition-opacity duration-200" />
+                            <img src={card.img} alt={card.title} className="absolute inset-0 w-full h-full object-cover" />
                             <span className="text-white text-[12px] font-extrabold tracking-wide uppercase leading-tight z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
                               {card.title}
                             </span>
-                            <span className="text-white/50 text-[10px] font-medium z-10 relative">
+                            <span className="text-white/70 text-[10px] font-medium z-10 relative" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.9)' }}>
                               {card.desc}
                             </span>
                             <svg className="absolute bottom-3 right-3 w-3.5 h-3.5 text-white/0 group-hover:text-white/70 transition-all duration-200 translate-x-1 group-hover:translate-x-0 z-10" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
@@ -331,7 +331,7 @@ export default function Header() {
                         onClick={() => navigateAndClose('/enrollment/college')}
                         className="group w-full bg-gradient-to-b from-[#8496db] to-[#4f61b3] rounded-xl h-full min-h-[260px] border border-white/20 overflow-hidden relative flex flex-col justify-between p-4 cursor-pointer hover:-translate-y-0.5 hover:border-white/50 hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] transition-all duration-200"
                       >
-                        <img src="https://cdn.vectorstock.com/i/500p/82/33/faceless-woman-placeholder-vector-24138233.jpg" alt="College" className="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 transition-opacity duration-200" />
+                        <img src="https://iili.io/nnDl95l.jpg" alt="College" className="absolute inset-0 w-full h-full object-cover" />
                         <span className="text-[#fef08a] text-[20px] font-black tracking-wider uppercase z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                           COLLEGE
                         </span>
@@ -383,15 +383,20 @@ export default function Header() {
                     {servicesData.map((service) => (
                       <div
                         key={service.name}
-                        className="bg-white rounded-xl flex flex-col items-center justify-center gap-2.5 cursor-pointer hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 py-4 px-2"
+                        className="group bg-white rounded-xl overflow-hidden cursor-pointer hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
                       >
-                        <div className="w-[46px] h-[46px] bg-[#f4f4f4] rounded-lg flex items-center justify-center">
-                          <svg className="w-5 h-5 text-[#061830]" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-                            <path d={service.icon} />
-                          </svg>
+                        <div className="relative h-[80px] w-full overflow-hidden bg-gradient-to-br from-[#0B1F3A] to-[#1E4E8C]">
+                          <img
+                            src={service.img}
+                            alt={service.name}
+                            loading="lazy"
+                            onError={(e) => { e.currentTarget.style.display = 'none' }}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
                         </div>
-                        <span className="text-[#061830] text-[12px] font-bold tracking-wider text-center">{service.name}</span>
-                        <p className="text-[#6b7280] text-[9px] text-center leading-[1.3] px-1">{service.desc}</p>
+                        <div className="py-2.5 px-2">
+                          <span className="text-[#061830] text-[12px] font-bold tracking-wider text-center block">{service.name}</span>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -629,11 +634,11 @@ export default function Header() {
                               onClick={() => navigateAndClose(card.path)}
                               className="group relative bg-gradient-to-b from-[#5b72cd] to-[#3a4b9c] rounded-xl border border-white/20 overflow-hidden flex flex-col justify-between items-start p-2.5 cursor-pointer min-h-[80px]"
                             >
-                              <img src={card.img} alt={card.title} className="absolute inset-0 w-full h-full object-cover opacity-25 group-hover:opacity-40 transition-opacity duration-200" />
+                              <img src={card.img} alt={card.title} className="absolute inset-0 w-full h-full object-cover" />
                               <span className="text-white text-[11px] font-extrabold tracking-wide uppercase leading-tight z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
                                 {card.title}
                               </span>
-                              <span className="text-white/50 text-[9px] font-medium z-10 relative">
+                              <span className="text-white/70 text-[9px] font-medium z-10 relative" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.9)' }}>
                                 {card.desc}
                               </span>
                             </button>
@@ -646,7 +651,7 @@ export default function Header() {
                           onClick={() => navigateAndClose('/enrollment/college')}
                           className="group w-full bg-gradient-to-b from-[#8496db] to-[#4f61b3] rounded-xl border border-white/20 overflow-hidden relative flex flex-col justify-between p-3 cursor-pointer min-h-[80px]"
                         >
-                          <img src="https://cdn.vectorstock.com/i/500p/82/33/faceless-woman-placeholder-vector-24138233.jpg" alt="College" className="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-35 transition-opacity duration-200" />
+                          <img src="https://iili.io/nnDl95l.jpg" alt="College" className="absolute inset-0 w-full h-full object-cover" />
                           <span className="text-[#fef08a] text-[16px] font-black tracking-wider uppercase z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                             COLLEGE
                           </span>
@@ -677,15 +682,20 @@ export default function Header() {
                         {servicesData.map((service) => (
                           <div
                             key={service.name}
-                            className="bg-white rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer py-3 px-2"
+                            className="group bg-white rounded-xl overflow-hidden cursor-pointer"
                           >
-                            <div className="w-[38px] h-[38px] bg-[#f4f4f4] rounded-lg flex items-center justify-center">
-                              <svg className="w-4.5 h-4.5 text-[#061830]" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-                                <path d={service.icon} />
-                              </svg>
+                            <div className="relative h-[70px] w-full overflow-hidden bg-gradient-to-br from-[#0B1F3A] to-[#1E4E8C]">
+                              <img
+                                src={service.img}
+                                alt={service.name}
+                                loading="lazy"
+                                onError={(e) => { e.currentTarget.style.display = 'none' }}
+                                className="w-full h-full object-cover"
+                              />
                             </div>
-                            <span className="text-[#061830] text-[11px] font-bold tracking-wider text-center">{service.name}</span>
-                            <p className="text-[#6b7280] text-[8px] text-center leading-[1.3] px-0.5">{service.desc}</p>
+                            <div className="py-2 px-2">
+                              <span className="text-[#061830] text-[11px] font-bold tracking-wider text-center block">{service.name}</span>
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -852,3 +862,4 @@ export default function Header() {
     </>
   )
 }
+
