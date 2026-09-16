@@ -22,7 +22,7 @@ export default function BSHM() {
             </p>
           </div>
           <div className="flex-1 relative bg-[#1A202C] min-h-[260px] md:min-h-[300px]">
-            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=80" alt="Hospitality Management Banquet Hall" className="w-full h-full object-cover" loading="lazy" />
+            <img src="https://iili.io/nnFwPBj.png" alt="Hospitality Management Banquet Hall" className="w-full h-full object-cover" loading="lazy" />
             <div className="absolute bottom-3 right-3 bg-black/60 text-white px-2.5 py-1 rounded-xl text-[10px] flex items-center gap-1.5 backdrop-blur-sm">
               <span className="font-bold">f</span>
               <span>/alumnipublicationcec</span>
@@ -44,7 +44,7 @@ export default function BSHM() {
             {/* Card: Mock Hotel & Dining */}
             <article className="border border-[#EDF2F7] rounded-xl overflow-hidden bg-white shadow-[0_4px_6px_-1px_rgba(0,0,0,0.03)] flex flex-col">
               <div className="h-[160px]">
-                <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=80" alt="Students in Hospitality Uniform" className="w-full h-full object-cover" loading="lazy" />
+                <img src="https://iili.io/nnFwiEx.png" alt="Students in Hospitality Uniform" className="w-full h-full object-cover" loading="lazy" />
               </div>
               <div className="p-5">
                 <span className="inline-block border border-[#ED8936] text-[#DD6B20] text-[8px] font-bold tracking-wider px-1.5 py-0.5 rounded-sm uppercase mb-2">
@@ -126,7 +126,7 @@ export default function BSHM() {
                 </ul>
               </div>
               <div className="md:flex-[0.8] h-[160px] rounded-lg overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=400&q=80" alt="Hands-on Practice" className="w-full h-full object-cover" loading="lazy" />
+                <img src="https://iili.io/nnFwQ2V.png" alt="Hands-on Practice" className="w-full h-full object-cover" loading="lazy" />
               </div>
             </article>
           </div>
@@ -150,7 +150,7 @@ export default function BSHM() {
             </div>
           </div>
           <div className="md:flex-[1.2] relative min-h-[220px]">
-            <img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=800&q=80" alt="Cebu Eastern College Building" className="w-full h-full object-cover" loading="lazy" />
+            <img src="https://iili.io/nnFwZYB.png" alt="Cebu Eastern College Building" className="w-full h-full object-cover" loading="lazy" />
             <div className="absolute top-4 left-4 text-white text-lg font-bold tracking-wide" style={{ fontFamily: 'serif', textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
               CEBUEASTERN COLLEGE 宿務東方學院
             </div>
