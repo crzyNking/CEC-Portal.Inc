@@ -23,7 +23,7 @@ const collegeData = [
 ]
 
 const enrollK12 = [
-  { title: 'KINDERGARTEN', desc: 'Ages 3-5', path: '/enrollment/kindergarten', img: 'https://iili.io/nnDWnGS.jpg' },
+  { title: 'KINDERGARTEN', desc: 'Ages 3-5', path: '/enrollment/kindergarten', img: 'https://iili.io/nnp5HHQ.png' },
   { title: 'ELEMENTARY', desc: 'Grades 1-6', path: '/enrollment/elementary', img: 'https://iili.io/nnDYFsa.jpg' },
   { title: 'JUNIOR HIGH', desc: 'Grades 7-10', path: '/enrollment/junior-high', img: 'https://iili.io/nnDjlP2.jpg' },
   { title: 'SENIOR HIGH', desc: 'Grades 11-12', path: '/enrollment/senior-high', img: 'https://iili.io/nnDhxku.jpg' },
@@ -304,10 +304,12 @@ export default function Header() {
                             onClick={() => navigateAndClose(card.path)}
                             className="group relative bg-gradient-to-b from-[#0B1F3A] to-[#0F2356] rounded-xl h-[120px] border border-white/20 overflow-hidden shadow-[inset_0_0_15px_rgba(0,0,0,0.15)] hover:-translate-y-0.5 hover:border-white/50 hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] transition-all duration-200 flex flex-col justify-between items-start p-3 cursor-pointer"
                           >
-                            <img src={card.img} alt={card.title} className="absolute inset-0 w-full h-full object-contain" />
-                            <span className="text-white text-[12px] font-extrabold tracking-wide uppercase leading-tight z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
-                              {card.title}
-                            </span>
+                            <img src={card.img} alt={card.title} className={`absolute inset-0 w-full h-full ${card.title === 'KINDERGARTEN' ? 'object-cover' : 'object-contain'}`} />
+                            {card.title !== 'KINDERGARTEN' && (
+                              <span className="text-white text-[12px] font-extrabold tracking-wide uppercase leading-tight z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
+                                {card.title}
+                              </span>
+                            )}
                             <svg className="absolute bottom-3 right-3 w-3.5 h-3.5 text-white/0 group-hover:text-white/70 transition-all duration-200 translate-x-1 group-hover:translate-x-0 z-10" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                             </svg>
@@ -628,10 +630,12 @@ export default function Header() {
                               onClick={() => navigateAndClose(card.path)}
                               className="group relative bg-gradient-to-b from-[#0B1F3A] to-[#0F2356] rounded-xl border border-white/20 overflow-hidden flex flex-col justify-between items-start p-2.5 cursor-pointer min-h-[80px]"
                             >
-                              <img src={card.img} alt={card.title} className="absolute inset-0 w-full h-full object-contain" />
-                              <span className="text-white text-[11px] font-extrabold tracking-wide uppercase leading-tight z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
-                                {card.title}
-                              </span>
+                              <img src={card.img} alt={card.title} className={`absolute inset-0 w-full h-full ${card.title === 'KINDERGARTEN' ? 'object-cover' : 'object-contain'}`} />
+                              {card.title !== 'KINDERGARTEN' && (
+                                <span className="text-white text-[11px] font-extrabold tracking-wide uppercase leading-tight z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
+                                  {card.title}
+                                </span>
+                              )}
                             </button>
                           ))}
                         </div>
