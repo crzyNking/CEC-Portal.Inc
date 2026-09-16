@@ -1,7 +1,9 @@
+import { usePageTitle } from '../hooks/usePageTitle'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
 export default function BSTM() {
+  usePageTitle('BS in Tourism Management')
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-[#333333] overflow-x-hidden">
       <Header />
@@ -25,7 +27,7 @@ export default function BSTM() {
             </a>
           </div>
           <div className="flex-1 relative bg-[#1A202C] min-h-[260px] md:min-h-[320px]">
-            <img src="https://iili.io/noH2yVp.png" alt="Tourism Management Students & Campus" className="w-full h-full object-cover" loading="lazy" />
+            <img src="/images/selfhost/noH2yVp.png" alt="Tourism Management Students & Campus" className="w-full h-full object-cover" loading="lazy" />
           </div>
         </header>
 
@@ -57,14 +59,14 @@ export default function BSTM() {
               </ul>
             </div>
             <div className="md:flex-1 relative min-h-[180px]">
-              <img src="https://iili.io/nnFwtkP.png" alt="Flight Attendants Uniform" className="w-full h-full object-cover" loading="lazy" />
+              <img src="/images/selfhost/nnFwtkP.png" alt="Flight Attendants Uniform" className="w-full h-full object-cover" loading="lazy" />
             </div>
           </article>
 
           {/* Card 2: Mock Hotel & Aviation Simulation Laboratories */}
           <article className="border border-[#EDF2F7] rounded-xl overflow-hidden bg-white shadow-[0_4px_6px_-1px_rgba(0,0,0,0.03)] flex flex-col">
             <div className="h-[180px]">
-              <img src="https://iili.io/nnFwyQa.png" alt="Large Student Group Assembly" className="w-full h-full object-cover" loading="lazy" />
+              <img src="/images/selfhost/nnFwyQa.png" alt="Large Student Group Assembly" className="w-full h-full object-cover" loading="lazy" />
             </div>
             <div className="p-6 flex flex-col flex-1">
               <span className="inline-block border border-[#FBD38D] text-[#DD6B20] text-[8px] font-bold tracking-wider px-2 py-0.5 rounded-full uppercase w-fit mb-3">
@@ -74,7 +76,7 @@ export default function BSTM() {
               <p className="text-[11px] text-[#718096] leading-[1.5] mb-5">
                 State-of-the-art mock aircraft cabin, airline reservation lab, and banquet suites designed for authentic industry practice.
               </p>
-              <a href="#" className="text-[#4A5568] text-[11px] font-bold flex items-center gap-1.5 mt-auto">
+              <a href="/campus/main" className="text-[#4A5568] text-[11px] font-bold flex items-center gap-1.5 mt-auto">
                 <span>Explore Our Campus Facilities</span>
                 <span className="text-[#FFB703]">→</span>
               </a>
@@ -117,7 +119,7 @@ export default function BSTM() {
               </div>
             </div>
             <div className="md:flex-1 min-h-[180px]">
-              <img src="https://iili.io/nnFNJEv.png" alt="Campus Building" className="w-full h-full object-cover" loading="lazy" />
+              <img src="/images/selfhost/nnFNJEv.png" alt="Campus Building" className="w-full h-full object-cover" loading="lazy" />
             </div>
           </article>
         </div>
@@ -139,3 +141,4 @@ export default function BSTM() {
     </div>
   )
 }
+

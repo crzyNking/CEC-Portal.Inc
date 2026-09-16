@@ -5,12 +5,14 @@ import { ErrorBoundary } from './components/ErrorBoundary'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { ToastContainer } from './components/Toast'
 import { Chatbot } from './components/Chatbot'
+import { AuthModal } from './components/AuthModal'
 import MaintenanceMode from './components/MaintenanceMode'
 import InstallPrompt from './components/InstallPrompt'
 import UpdateNotification from './components/UpdateNotification'
 import OfflineIndicator from './components/OfflineIndicator'
 import SyncIndicator from './components/SyncIndicator'
 import { Home } from './pages/Home'
+import Programs from './pages/Programs'
 import AdminLayout from './pages/admin/AdminLayout'
 
 const ShareHandler = lazy(() => import('./pages/ShareHandler'))
@@ -72,6 +74,7 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <AuthModal />
         <ToastContainer />
         <OfflineIndicator />
         <SyncIndicator />
@@ -83,6 +86,7 @@ function App() {
         <Suspense fallback={<PageSpinner />}>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/programs" element={<Programs />} />
 <Route path="/programs/senior-high" element={<SeniorHigh />} />
 <Route path="/programs/junior-high" element={<JuniorHigh />} />
 <Route path="/programs/kindergarten" element={<Kindergarten />} />

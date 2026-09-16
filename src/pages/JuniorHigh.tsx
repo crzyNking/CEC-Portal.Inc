@@ -1,7 +1,9 @@
+import { usePageTitle } from '../hooks/usePageTitle'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
 export default function JuniorHigh() {
+  usePageTitle('Junior High School')
   return (
     <div className="min-h-screen bg-[#F1F5F9] text-[#0F172A] overflow-x-hidden">
       <Header />
@@ -53,7 +55,7 @@ export default function JuniorHigh() {
             </div>
           </div>
           <div className="relative bg-[#1E293B] min-h-[300px] md:min-h-[350px]">
-            <img src="https://iili.io/nnFwzdB.png" alt="Hands-on Learning" className="w-full h-full object-cover" loading="lazy" />
+            <img src="/images/selfhost/nnFwzdB.png" alt="Hands-on Learning" className="w-full h-full object-cover" loading="lazy" />
             <div className="absolute bottom-4 right-4 bg-[#0F172A]/75 backdrop-blur-sm text-white px-3 py-1.5 rounded-md text-[11px] flex items-center gap-1.5">
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg>
               Grade 7–10 Hands-on Learning
@@ -94,7 +96,7 @@ export default function JuniorHigh() {
                 </ul>
               </div>
               <div className="relative bg-[#1E293B] min-h-[200px] hidden md:block">
-                <img src="https://iili.io/nnFwumF.png" alt="Robotics Lab" className="w-full h-full object-cover" loading="lazy" />
+                <img src="/images/selfhost/nnFwumF.png" alt="Robotics Lab" className="w-full h-full object-cover" loading="lazy" />
                 <div className="absolute top-3 right-3 bg-[#0F172A]/75 backdrop-blur-sm text-white px-2.5 py-1 rounded text-[10px] flex items-center gap-1">
                   <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3" /></svg>
                   Hands-on Science Lab
@@ -113,7 +115,7 @@ export default function JuniorHigh() {
                 </p>
               </div>
               <div className="relative rounded-2xl overflow-hidden h-[180px]">
-                <img src="https://iili.io/nnFwaqv.png" alt="Stage Event" className="w-full h-full object-cover" loading="lazy" />
+                <img src="/images/selfhost/nnFwaqv.png" alt="Stage Event" className="w-full h-full object-cover" loading="lazy" />
                 <div className="absolute bottom-3 left-3 bg-[#0F172A]/75 backdrop-blur-sm text-white px-2.5 py-1 rounded text-[10px]">
                   Speech &amp; Cultural Oratory
                 </div>
@@ -247,7 +249,7 @@ export default function JuniorHigh() {
               {/* Right Column Image Placeholder */}
               <div className="w-full md:w-1/2 min-h-[340px] relative bg-gradient-to-br from-[#0B1F3A] to-[#1E4E8C]">
                 <img 
-                  src="https://iili.io/nnKUkjp.jpg" 
+                  src="/images/selfhost/nnKUkjp.jpg" 
                   alt="Students learning and engaging in activities placeholder image" 
                   loading="lazy"
                   onError={(e) => { e.currentTarget.style.display = 'none' }}
@@ -286,7 +288,7 @@ export default function JuniorHigh() {
             </div>
           </div>
           <div className="relative bg-[#CBD5E1] min-h-[300px] md:min-h-[350px]">
-            <img src="https://iili.io/nnFwKzu.png" alt="CEC Campus" className="w-full h-full object-cover" loading="lazy" />
+            <img src="/images/selfhost/nnFwKzu.png" alt="CEC Campus" className="w-full h-full object-cover" loading="lazy" />
             <div className="absolute bottom-4 right-4 bg-[#0F172A]/75 backdrop-blur-sm text-white px-3 py-1.5 rounded-md text-[11px] flex items-center gap-1.5">
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" /></svg>
               Grade 7–10 Collaborative Labs

@@ -1,7 +1,9 @@
+import { usePageTitle } from '../hooks/usePageTitle'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
 export default function BEED() {
+  usePageTitle('BS in Elementary Education')
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-[#333333] overflow-x-hidden">
       <Header />
@@ -26,7 +28,7 @@ export default function BEED() {
             </div>
           </div>
           <div className="md:flex-[1.2] relative bg-[#2D3748] md:border-l-2 md:border-dashed md:border-[#4A5568] min-h-[240px]">
-            <img src="https://iili.io/nnFNCjn.png" alt="Nutrition Month Event" className="w-full h-full object-cover" loading="lazy" />
+            <img src="/images/selfhost/nnFNCjn.png" alt="Nutrition Month Event" className="w-full h-full object-cover" loading="lazy" />
           </div>
         </section>
 
@@ -66,25 +68,25 @@ export default function BEED() {
               icon: '👩‍🏫', label: 'PROFESSIONAL EDUCATION', title: 'Teaching Strategies and Methods',
               desc: 'Learn effective teaching strategies, classroom management, and child development to create meaningful learning experiences.',
               items: ['Child and Adolescent Development', 'Curriculum and Instruction', 'Classroom Management'],
-              img: 'https://iili.io/nnFNxCG.png', alt: 'Classroom Teaching',
+              img: '/images/selfhost/nnFNxCG.png', alt: 'Classroom Teaching',
             },
             {
               icon: '💬', label: 'LANGUAGE & COMMUNICATION', title: 'English and Filipino Literature',
               desc: 'Strengthen your communication skills in both English and Filipino, and learn how to use language effectively in teaching and in life.',
               items: ['Reading and Writing', 'Literature', 'Communication Skills'],
-              img: 'https://iili.io/nnFNzGf.png', alt: 'Students Reading',
+              img: '/images/selfhost/nnFNzGf.png', alt: 'Students Reading',
             },
             {
               icon: '👥', label: 'FIELD EXPERIENCE', title: 'Teaching Practicum and Internship',
               desc: 'Gain real classroom experience through supervised teaching, observation, and community immersion',
               items: ['Observation', 'Demonstration Teaching', 'Student Teaching'],
-              img: 'https://iili.io/nnFNI44.png', alt: 'Classroom Observation',
+              img: '/images/selfhost/nnFNI44.png', alt: 'Classroom Observation',
             },
             {
               icon: '❤️', label: 'VALUES AND CHARACTERS', title: 'Professionalism and Social Responsibility',
               desc: 'Build your values, leadership skills, and commitment to serve the community through education.',
               items: ['Christian Living', 'Ethics and Values', 'Community Engagement'],
-              img: 'https://iili.io/nnFNAa2.png', alt: 'School Assembly',
+              img: '/images/selfhost/nnFNAa2.png', alt: 'School Assembly',
             },
           ].map((c) => (
             <div key={c.title} className="bg-[#0F2356] rounded-2xl flex flex-col md:flex-row overflow-hidden text-white min-h-[300px]">
@@ -124,7 +126,7 @@ export default function BEED() {
             </div>
           </div>
           <div className="md:flex-1 bg-[#E2E8F0] md:border-l-2 md:border-dashed md:border-[#CBD5E0] min-h-[220px]">
-            <img src="https://iili.io/nnFNRvS.png" alt="Cebu Eastern College Building" className="w-full h-full object-cover" loading="lazy" />
+            <img src="/images/selfhost/nnFNRvS.png" alt="Cebu Eastern College Building" className="w-full h-full object-cover" loading="lazy" />
           </div>
         </section>
 

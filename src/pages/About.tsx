@@ -1,7 +1,9 @@
+import { usePageTitle } from '../hooks/usePageTitle'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
 export default function About() {
+  usePageTitle('About Us')
   return (
     <div className="min-h-screen bg-[#F8FAFC] overflow-x-hidden">
       <Header />

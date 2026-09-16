@@ -1,7 +1,9 @@
+import { usePageTitle } from '../hooks/usePageTitle'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
 export default function BSIT() {
+  usePageTitle('BS in Information Technology')
   return (
     <div className="min-h-screen bg-white text-[#333333] overflow-x-hidden">
       <Header />
@@ -32,7 +34,7 @@ export default function BSIT() {
             </div>
           </div>
           <div className="flex-1 relative bg-[#1A202C] min-h-[280px] md:min-h-[320px]">
-            <img src="https://iili.io/nnFw8k7.png" alt="Students in Computer Lab" className="w-full h-full object-cover" loading="lazy" />
+            <img src="/images/selfhost/nnFw8k7.png" alt="Students in Computer Lab" className="w-full h-full object-cover" loading="lazy" />
             <div className="absolute bottom-3 right-3 bg-black/60 text-white px-2.5 py-1 rounded-xl text-[10px] flex items-center gap-1.5 backdrop-blur-sm">
               <span className="font-bold">f</span>
               <span>facebook.com/CECSince1915</span>
@@ -63,7 +65,7 @@ export default function BSIT() {
               </div>
             </div>
             <div className="md:flex-[0.8] relative min-h-[180px]">
-              <img src="https://iili.io/nnpwbSV.jpg" alt="Software Dev Lab" className="w-full h-full object-cover" loading="lazy" />
+              <img src="/images/selfhost/nnpwbSV.jpg" alt="Software Dev Lab" className="w-full h-full object-cover" loading="lazy" />
               <div className="absolute bottom-2 left-2 right-2 flex justify-between items-center">
                 <span className="text-[9px] text-white shadow-md bg-black/40 px-1.5 py-0.5 rounded">Software Dev Lab 02</span>
                 <span className="bg-[#0066FF] text-white text-[8px] font-bold px-1.5 py-0.5 rounded-sm uppercase">DEV</span>
@@ -74,7 +76,7 @@ export default function BSIT() {
           {/* Track 2: Cybersecurity & Networks */}
           <article className="border border-[#EDF2F7] rounded-xl overflow-hidden bg-white shadow-[0_4px_6px_-1px_rgba(0,0,0,0.03)] flex flex-col">
             <div className="h-[140px] relative">
-              <img src="https://iili.io/nnFwSp9.png" alt="Cybersecurity Team" className="w-full h-full object-cover" loading="lazy" />
+              <img src="/images/selfhost/nnFwSp9.png" alt="Cybersecurity Team" className="w-full h-full object-cover" loading="lazy" />
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-[11px] tracking-[2px] font-bold uppercase bg-black/50 px-3 py-1 rounded">
                 Cybersec & Networking
               </div>
@@ -134,7 +136,7 @@ export default function BSIT() {
               </div>
             </div>
             <div className="md:flex-[0.8] relative min-h-[180px]">
-              <img src="https://iili.io/nnFwgIe.png" alt="Tech Immersion" className="w-full h-full object-cover" loading="lazy" />
+              <img src="/images/selfhost/nnFwgIe.png" alt="Tech Immersion" className="w-full h-full object-cover" loading="lazy" />
               <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/70 text-white text-[8px] px-2 py-0.5 rounded-sm whitespace-nowrap">
                 Capstone Project Defense
               </div>

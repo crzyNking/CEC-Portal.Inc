@@ -1,3 +1,4 @@
+import { usePageTitle } from '../hooks/usePageTitle'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
@@ -90,6 +91,7 @@ const sections = [
 ]
 
 export default function Privacy() {
+  usePageTitle('Privacy Policy')
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0B1F3A] via-[#102A43] to-[#1E4E8C]">
       <Header />

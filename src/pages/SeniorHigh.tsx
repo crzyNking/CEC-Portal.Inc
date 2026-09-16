@@ -1,7 +1,9 @@
+import { usePageTitle } from '../hooks/usePageTitle'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
 export default function SeniorHigh() {
+  usePageTitle('Senior High School')
   return (
     <div className="min-h-screen bg-white text-[#222222] overflow-x-hidden">
       <Header />
@@ -20,7 +22,7 @@ export default function SeniorHigh() {
           </p>
         </div>
         <div className="flex-1 relative min-h-[280px] md:min-h-[340px]">
-          <img src="https://iili.io/nnFwMmX.png" alt="Senior High Students" className="w-full h-full object-cover" loading="lazy" />
+          <img src="/images/selfhost/nnFwMmX.png" alt="Senior High Students" className="w-full h-full object-cover" loading="lazy" />
           <div className="absolute bottom-2.5 right-3.5 text-[10px] text-white/80 z-10">
             Facebook.com/CEC...
           </div>
@@ -47,7 +49,7 @@ export default function SeniorHigh() {
                 </p>
               </div>
               <div className="flex-1 relative min-h-[160px]">
-                <img src="https://iili.io/nnFwWIn.png" alt="STEM Lab" className="w-full h-full object-cover" loading="lazy" />
+                <img src="/images/selfhost/nnFwWIn.png" alt="STEM Lab" className="w-full h-full object-cover" loading="lazy" />
                 <div className="absolute bottom-2 left-0 right-0 text-center text-[#8A90A0] font-bold text-[11px] tracking-[2px]">STEM</div>
               </div>
             </div>
@@ -55,7 +57,7 @@ export default function SeniorHigh() {
             {/* ABM Card */}
             <div className="bg-white rounded-md overflow-hidden flex flex-col md:flex-row shadow-[0_1px_4px_rgba(0,0,0,0.06)] min-h-[220px]">
               <div className="flex-1 relative min-h-[160px] order-1">
-                <img src="https://iili.io/nnFwhLG.png" alt="ABM" className="w-full h-full object-cover" loading="lazy" />
+                <img src="/images/selfhost/nnFwhLG.png" alt="ABM" className="w-full h-full object-cover" loading="lazy" />
                 <div className="absolute bottom-2 left-0 right-0 text-center text-[#8A90A0] font-bold text-[11px] tracking-[2px]">ABM</div>
               </div>
               <div className="flex-1 px-6 py-6 flex flex-col gap-2 order-2">
@@ -101,7 +103,7 @@ export default function SeniorHigh() {
                   </p>
                 </div>
                 <div className="flex-1 relative min-h-[160px]">
-                  <img src="https://iili.io/nnFwOrl.png" alt="Work Immersion" className="w-full h-full object-cover" loading="lazy" />
+                  <img src="/images/selfhost/nnFwOrl.png" alt="Work Immersion" className="w-full h-full object-cover" loading="lazy" />
                   <span className="absolute top-4 right-4 text-[18px] opacity-70">📺</span>
                 </div>
               </div>

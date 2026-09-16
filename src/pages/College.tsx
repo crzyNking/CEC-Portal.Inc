@@ -1,3 +1,4 @@
+import { usePageTitle } from '../hooks/usePageTitle'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
@@ -11,6 +12,7 @@ const programs = [
 ]
 
 export default function College() {
+  usePageTitle('College Programs')
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] overflow-x-hidden">
       <Header />

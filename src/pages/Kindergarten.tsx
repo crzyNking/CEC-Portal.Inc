@@ -1,7 +1,9 @@
+import { usePageTitle } from '../hooks/usePageTitle'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
 export default function Kindergarten() {
+  usePageTitle('Kindergarten')
   return (
     <div className="min-h-screen bg-[#EEF1F6] text-[#1C1C1C] overflow-x-hidden">
       <Header />
@@ -23,7 +25,7 @@ export default function Kindergarten() {
           </a>
         </div>
         <div className="w-full aspect-[4/3] rounded-lg overflow-hidden">
-          <img src="https://iili.io/nnFwKzu.png" alt="School Building" className="w-full h-full object-cover" loading="lazy" />
+          <img src="/images/selfhost/nnFwKzu.png" alt="School Building" className="w-full h-full object-cover" loading="lazy" />
         </div>
       </section>
 
@@ -52,14 +54,14 @@ export default function Kindergarten() {
             </ul>
           </div>
           <div className="min-h-[160px] md:min-h-0">
-            <img src="https://iili.io/nnFMCfS.jpg" alt="Classroom" className="w-full h-full object-cover" loading="lazy" />
+            <img src="/images/selfhost/nnFMCfS.jpg" alt="Classroom" className="w-full h-full object-cover" loading="lazy" />
           </div>
         </div>
 
         {/* Card 2 - Image Top */}
         <div className="bg-white rounded-[10px] overflow-hidden shadow-[0_2px_10px_rgba(0,0,0,0.05)]">
           <div className="h-[180px]">
-            <img src="https://iili.io/nnFk49V.jpg" alt="Playroom" className="w-full h-full object-cover" loading="lazy" />
+            <img src="/images/selfhost/nnFk49V.jpg" alt="Playroom" className="w-full h-full object-cover" loading="lazy" />
           </div>
           <div className="p-6">
             <span className="inline-block bg-[#FDF0DA] text-[#B8860B] text-[10px] font-bold tracking-wide px-2.5 py-1 rounded mb-2.5">
@@ -106,7 +108,7 @@ export default function Kindergarten() {
             </div>
           </div>
           <div className="min-h-[160px] md:min-h-0">
-            <img src="https://iili.io/nnFk49V.jpg" alt="Classroom" className="w-full h-full object-cover" loading="lazy" />
+            <img src="/images/selfhost/nnFk49V.jpg" alt="Classroom" className="w-full h-full object-cover" loading="lazy" />
           </div>
         </div>
 

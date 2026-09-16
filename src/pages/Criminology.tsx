@@ -1,7 +1,9 @@
+import { usePageTitle } from '../hooks/usePageTitle'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
 export default function Criminology() {
+  usePageTitle('BS in Criminology')
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-[#333333] overflow-x-hidden">
       <Header />
@@ -22,7 +24,7 @@ export default function Criminology() {
             </p>
           </div>
           <div className="md:flex-[1.1] relative bg-[#1A202C] min-h-[260px] md:min-h-[320px]">
-            <img src="https://iili.io/nnFNd4R.png" alt="Criminology Cadets Assembly" className="w-full h-full object-cover" loading="lazy" />
+            <img src="/images/selfhost/nnFNd4R.png" alt="Criminology Cadets Assembly" className="w-full h-full object-cover" loading="lazy" />
           </div>
         </header>
 
@@ -46,14 +48,14 @@ export default function Criminology() {
               </p>
             </div>
             <div className="md:flex-1 relative min-h-[180px]">
-              <img src="https://iili.io/nnFNFYN.png" alt="Physical Tactical Training" className="w-full h-full object-cover" loading="lazy" />
+              <img src="/images/selfhost/nnFNFYN.png" alt="Physical Tactical Training" className="w-full h-full object-cover" loading="lazy" />
             </div>
           </article>
 
           {/* Card 2: LEA */}
           <article className="border border-[#EDF2F7] rounded-xl overflow-hidden bg-white shadow-[0_4px_6px_-1px_rgba(0,0,0,0.03)] flex flex-col">
             <div className="h-[150px]">
-              <img src="https://iili.io/nnFNKvI.png" alt="Martial Arts / Defensive Tactics" className="w-full h-full object-cover" loading="lazy" />
+              <img src="/images/selfhost/nnFNKvI.png" alt="Martial Arts / Defensive Tactics" className="w-full h-full object-cover" loading="lazy" />
             </div>
             <div className="px-6 py-5 flex-1 flex flex-col">
               <div className="flex items-center gap-2 mb-1">
@@ -100,7 +102,7 @@ export default function Criminology() {
               </p>
             </div>
             <div className="md:flex-1 relative min-h-[180px]">
-              <img src="https://iili.io/nnFNfpt.png" alt="Crime Scene Investigation Demo" className="w-full h-full object-cover" loading="lazy" />
+              <img src="/images/selfhost/nnFNfpt.png" alt="Crime Scene Investigation Demo" className="w-full h-full object-cover" loading="lazy" />
             </div>
           </article>
         </section>
