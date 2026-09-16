@@ -23,10 +23,10 @@ const collegeData = [
 ]
 
 const enrollK12 = [
-  { title: 'KINDERGARTEN', desc: 'Ages 3-5', path: '/programs/kindergarten', img: 'https://iili.io/nnDWnGS.jpg' },
-  { title: 'ELEMENTARY', desc: 'Grades 1-6', path: '/programs/elementary', img: 'https://iili.io/nnDYFsa.jpg' },
-  { title: 'JUNIOR HIGH', desc: 'Grades 7-10', path: '/programs/junior-high', img: 'https://iili.io/nnDjlP2.jpg' },
-  { title: 'SENIOR HIGH', desc: 'Grades 11-12', path: '/programs/senior-high', img: 'https://iili.io/nnDhxku.jpg' },
+  { title: 'KINDERGARTEN', desc: 'Ages 3-5', path: '/enrollment/kindergarten', img: 'https://iili.io/nnDWnGS.jpg' },
+  { title: 'ELEMENTARY', desc: 'Grades 1-6', path: '/enrollment/elementary', img: 'https://iili.io/nnDYFsa.jpg' },
+  { title: 'JUNIOR HIGH', desc: 'Grades 7-10', path: '/enrollment/junior-high', img: 'https://iili.io/nnDjlP2.jpg' },
+  { title: 'SENIOR HIGH', desc: 'Grades 11-12', path: '/enrollment/senior-high', img: 'https://iili.io/nnDhxku.jpg' },
 ]
 
 const servicesData = [
@@ -304,7 +304,7 @@ export default function Header() {
                             onClick={() => navigateAndClose(card.path)}
                             className="group relative bg-gradient-to-b from-[#5b72cd] to-[#3a4b9c] rounded-xl h-[120px] border border-white/20 overflow-hidden shadow-[inset_0_0_15px_rgba(0,0,0,0.15)] hover:-translate-y-0.5 hover:border-white/50 hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] transition-all duration-200 flex flex-col justify-between items-start p-3 cursor-pointer"
                           >
-                            <img src={card.img} alt={card.title} className="absolute inset-0 w-full h-full object-cover" />
+                            <img src={card.img} alt={card.title} className="absolute inset-0 w-full h-full object-cover object-top" />
                             <span className="text-white text-[12px] font-extrabold tracking-wide uppercase leading-tight z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
                               {card.title}
                             </span>
@@ -331,7 +331,7 @@ export default function Header() {
                         onClick={() => navigateAndClose('/enrollment/college')}
                         className="group w-full bg-gradient-to-b from-[#8496db] to-[#4f61b3] rounded-xl h-full min-h-[260px] border border-white/20 overflow-hidden relative flex flex-col justify-between p-4 cursor-pointer hover:-translate-y-0.5 hover:border-white/50 hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] transition-all duration-200"
                       >
-                        <img src="https://iili.io/nnDl95l.jpg" alt="College" className="absolute inset-0 w-full h-full object-cover" />
+                        <img src="https://iili.io/nnDl95l.jpg" alt="College" className="absolute inset-0 w-full h-full object-cover object-top" />
                         <span className="text-[#fef08a] text-[20px] font-black tracking-wider uppercase z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                           COLLEGE
                         </span>
@@ -634,7 +634,7 @@ export default function Header() {
                               onClick={() => navigateAndClose(card.path)}
                               className="group relative bg-gradient-to-b from-[#5b72cd] to-[#3a4b9c] rounded-xl border border-white/20 overflow-hidden flex flex-col justify-between items-start p-2.5 cursor-pointer min-h-[80px]"
                             >
-                              <img src={card.img} alt={card.title} className="absolute inset-0 w-full h-full object-cover" />
+                              <img src={card.img} alt={card.title} className="absolute inset-0 w-full h-full object-cover object-top" />
                               <span className="text-white text-[11px] font-extrabold tracking-wide uppercase leading-tight z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
                                 {card.title}
                               </span>
@@ -651,7 +651,7 @@ export default function Header() {
                           onClick={() => navigateAndClose('/enrollment/college')}
                           className="group w-full bg-gradient-to-b from-[#8496db] to-[#4f61b3] rounded-xl border border-white/20 overflow-hidden relative flex flex-col justify-between p-3 cursor-pointer min-h-[80px]"
                         >
-                          <img src="https://iili.io/nnDl95l.jpg" alt="College" className="absolute inset-0 w-full h-full object-cover" />
+                          <img src="https://iili.io/nnDl95l.jpg" alt="College" className="absolute inset-0 w-full h-full object-cover object-top" />
                           <span className="text-[#fef08a] text-[16px] font-black tracking-wider uppercase z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                             COLLEGE
                           </span>
@@ -862,4 +862,5 @@ export default function Header() {
     </>
   )
 }
+
 
