@@ -22,7 +22,7 @@ export default function Criminology() {
             </p>
           </div>
           <div className="md:flex-[1.1] relative bg-[#1A202C] min-h-[260px] md:min-h-[320px]">
-            <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80" alt="Criminology Cadets Assembly" className="w-full h-full object-cover" loading="lazy" />
+            <img src="https://iili.io/nnFNd4R.png" alt="Criminology Cadets Assembly" className="w-full h-full object-cover" loading="lazy" />
           </div>
         </header>
 
@@ -46,14 +46,14 @@ export default function Criminology() {
               </p>
             </div>
             <div className="md:flex-1 relative min-h-[180px]">
-              <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=600&q=80" alt="Physical Tactical Training" className="w-full h-full object-cover" loading="lazy" />
+              <img src="https://iili.io/nnFNFYN.png" alt="Physical Tactical Training" className="w-full h-full object-cover" loading="lazy" />
             </div>
           </article>
 
           {/* Card 2: LEA */}
           <article className="border border-[#EDF2F7] rounded-xl overflow-hidden bg-white shadow-[0_4px_6px_-1px_rgba(0,0,0,0.03)] flex flex-col">
             <div className="h-[150px]">
-              <img src="https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&w=600&q=80" alt="Martial Arts / Defensive Tactics" className="w-full h-full object-cover" loading="lazy" />
+              <img src="https://iili.io/nnFNKvI.png" alt="Martial Arts / Defensive Tactics" className="w-full h-full object-cover" loading="lazy" />
             </div>
             <div className="px-6 py-5 flex-1 flex flex-col">
               <div className="flex items-center gap-2 mb-1">
@@ -100,7 +100,7 @@ export default function Criminology() {
               </p>
             </div>
             <div className="md:flex-1 relative min-h-[180px]">
-              <img src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=600&q=80" alt="Crime Scene Investigation Demo" className="w-full h-full object-cover" loading="lazy" />
+              <img src="https://iili.io/nnFNfpt.png" alt="Crime Scene Investigation Demo" className="w-full h-full object-cover" loading="lazy" />
             </div>
           </article>
         </section>
