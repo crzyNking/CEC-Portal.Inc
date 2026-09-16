@@ -23,10 +23,10 @@ const collegeData = [
 ]
 
 const enrollK12 = [
-  { title: 'KINDERGARTEN', desc: 'Ages 3-5', path: '/enrollment/kindergarten', img: 'https://iili.io/nnp5HHQ.png' },
-  { title: 'ELEMENTARY', desc: 'Grades 1-6', path: '/enrollment/elementary', img: 'https://iili.io/nnDYFsa.jpg' },
-  { title: 'JUNIOR HIGH', desc: 'Grades 7-10', path: '/enrollment/junior-high', img: 'https://iili.io/nnDjlP2.jpg' },
-  { title: 'SENIOR HIGH', desc: 'Grades 11-12', path: '/enrollment/senior-high', img: 'https://iili.io/nnDhxku.jpg' },
+  { title: 'KINDERGARTEN', path: '/enrollment/kindergarten', img: 'https://iili.io/nnp5HHQ.png' },
+  { title: 'ELEMENTARY', path: '/enrollment/elementary', img: 'https://iili.io/nnydKB9.png' },
+  { title: 'JUNIOR HIGH', path: '/enrollment/junior-high', img: 'https://iili.io/nnpDTy7.png' },
+  { title: 'SENIOR HIGH', path: '/enrollment/senior-high', img: 'https://iili.io/nnpmqg4.png' },
 ]
 
 const servicesData = [
@@ -286,7 +286,7 @@ export default function Header() {
                 onMouseEnter={() => openDropdown('enrollment')}
                 onMouseLeave={closeDropdownDelayed}
               >
-                <div className="relative w-[min(780px,calc(100vw-2rem))] bg-[#061830]/97 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 p-5 xl:p-7">
+                <div className="relative w-[min(860px,calc(100vw-2rem))] bg-[#061830]/97 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 p-5 xl:p-7">
                   <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-[#061830] border-l border-t border-white/10 rotate-45" />
                   <div className="grid grid-cols-[1.15fr_0.85fr] gap-6">
                     {/* K-12 */}
@@ -302,15 +302,15 @@ export default function Header() {
                           <button
                             key={card.title}
                             onClick={() => navigateAndClose(card.path)}
-                            className="group relative bg-gradient-to-b from-[#0B1F3A] to-[#0F2356] rounded-xl h-[120px] border border-white/20 overflow-hidden shadow-[inset_0_0_15px_rgba(0,0,0,0.15)] hover:-translate-y-0.5 hover:border-white/50 hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] transition-all duration-200 flex flex-col justify-between items-start p-3 cursor-pointer"
+                            className="group relative bg-gradient-to-b from-[#0B1F3A] to-[#0F2356] rounded-xl h-[150px] border border-white/20 overflow-hidden shadow-[inset_0_0_15px_rgba(0,0,0,0.15)] hover:-translate-y-0.5 hover:border-white/50 hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] transition-all duration-200 flex flex-col p-2.5 cursor-pointer"
                           >
-                            <img src={card.img} alt={card.title} className={`absolute inset-0 w-full h-full ${card.title === 'KINDERGARTEN' ? 'object-cover' : 'object-contain'}`} />
-                            {card.title !== 'KINDERGARTEN' && (
-                              <span className="text-white text-[12px] font-extrabold tracking-wide uppercase leading-tight z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
-                                {card.title}
-                              </span>
-                            )}
-                            <svg className="absolute bottom-3 right-3 w-3.5 h-3.5 text-white/0 group-hover:text-white/70 transition-all duration-200 translate-x-1 group-hover:translate-x-0 z-10" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                            <span className="text-[#F1EACA] text-[11px] font-extrabold tracking-wide uppercase text-center mb-1.5 relative z-10" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>
+                              {card.title}
+                            </span>
+                            <div className="relative flex-1 w-full overflow-hidden rounded-lg">
+                              <img src={card.img} alt={card.title} loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none' }} className="absolute inset-0 w-full h-full object-contain" />
+                            </div>
+                            <svg className="absolute bottom-2.5 right-2.5 w-3.5 h-3.5 text-white/0 group-hover:text-white/70 transition-all duration-200 translate-x-1 group-hover:translate-x-0 z-10" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                             </svg>
                           </button>
@@ -628,14 +628,14 @@ export default function Header() {
                             <button
                               key={card.title}
                               onClick={() => navigateAndClose(card.path)}
-                              className="group relative bg-gradient-to-b from-[#0B1F3A] to-[#0F2356] rounded-xl border border-white/20 overflow-hidden flex flex-col justify-between items-start p-2.5 cursor-pointer min-h-[80px]"
+                              className="group relative bg-gradient-to-b from-[#0B1F3A] to-[#0F2356] rounded-xl border border-white/20 overflow-hidden flex flex-col p-2.5 cursor-pointer min-h-[110px]"
                             >
-                              <img src={card.img} alt={card.title} className={`absolute inset-0 w-full h-full ${card.title === 'KINDERGARTEN' ? 'object-cover' : 'object-contain'}`} />
-                              {card.title !== 'KINDERGARTEN' && (
-                                <span className="text-white text-[11px] font-extrabold tracking-wide uppercase leading-tight z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
-                                  {card.title}
-                                </span>
-                              )}
+                              <span className="text-[#F1EACA] text-[10px] font-extrabold tracking-wide uppercase text-center mb-1.5 relative z-10" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>
+                                {card.title}
+                              </span>
+                              <div className="relative flex-1 w-full overflow-hidden rounded-md min-h-[70px]">
+                                <img src={card.img} alt={card.title} loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none' }} className="absolute inset-0 w-full h-full object-contain" />
+                              </div>
                             </button>
                           ))}
                         </div>
