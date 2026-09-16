@@ -23,7 +23,7 @@ const collegeData = [
 ]
 
 const enrollK12 = [
-  { title: 'KINDERGARTEN', path: '/enrollment/kindergarten', img: 'https://iili.io/nnp5HHQ.png' },
+  { title: 'KINDERGARTEN', path: '/enrollment/kindergarten', img: 'https://iili.io/nny9P3J.png' },
   { title: 'ELEMENTARY', path: '/enrollment/elementary', img: 'https://iili.io/nnydKB9.png' },
   { title: 'JUNIOR HIGH', path: '/enrollment/junior-high', img: 'https://iili.io/nnpDTy7.png' },
   { title: 'SENIOR HIGH', path: '/enrollment/senior-high', img: 'https://iili.io/nnpmqg4.png' },
@@ -308,7 +308,7 @@ export default function Header() {
                               {card.title}
                             </span>
                             <div className="relative flex-1 w-full overflow-hidden rounded-lg">
-                              <img src={card.img} alt={card.title} loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none' }} className="absolute inset-0 w-full h-full object-contain" />
+                              <img src={card.img} alt={card.title} loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none' }} className="absolute inset-0 w-full h-full object-cover" />
                             </div>
                             <svg className="absolute bottom-2.5 right-2.5 w-3.5 h-3.5 text-white/0 group-hover:text-white/70 transition-all duration-200 translate-x-1 group-hover:translate-x-0 z-10" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
@@ -330,7 +330,7 @@ export default function Header() {
                         onClick={() => navigateAndClose('/enrollment/college')}
                         className="group w-full bg-gradient-to-b from-[#0B1F3A] to-[#0F2356] rounded-xl h-full min-h-[260px] border border-white/20 overflow-hidden relative flex flex-col justify-between p-4 cursor-pointer hover:-translate-y-0.5 hover:border-white/50 hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] transition-all duration-200"
                       >
-                        <img src="https://iili.io/nnDl95l.jpg" alt="College" className="absolute inset-0 w-full h-full object-contain" />
+                        <img src="https://iili.io/nnyXJlp.png" alt="College" className="absolute inset-0 w-full h-full object-cover" />
                         <span className="text-[#fef08a] text-[20px] font-black tracking-wider uppercase z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                           COLLEGE
                         </span>
@@ -634,7 +634,7 @@ export default function Header() {
                                 {card.title}
                               </span>
                               <div className="relative flex-1 w-full overflow-hidden rounded-md min-h-[70px]">
-                                <img src={card.img} alt={card.title} loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none' }} className="absolute inset-0 w-full h-full object-contain" />
+                                <img src={card.img} alt={card.title} loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none' }} className="absolute inset-0 w-full h-full object-cover" />
                               </div>
                             </button>
                           ))}
@@ -646,7 +646,7 @@ export default function Header() {
                           onClick={() => navigateAndClose('/enrollment/college')}
                           className="group w-full bg-gradient-to-b from-[#0B1F3A] to-[#0F2356] rounded-xl border border-white/20 overflow-hidden relative flex flex-col justify-between p-3 cursor-pointer min-h-[80px]"
                         >
-                          <img src="https://iili.io/nnDl95l.jpg" alt="College" className="absolute inset-0 w-full h-full object-contain" />
+                          <img src="https://iili.io/nnyXJlp.png" alt="College" className="absolute inset-0 w-full h-full object-cover" />
                           <span className="text-[#fef08a] text-[16px] font-black tracking-wider uppercase z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                             COLLEGE
                           </span>
@@ -854,5 +854,6 @@ export default function Header() {
     </>
   )
 }
+
 
 
