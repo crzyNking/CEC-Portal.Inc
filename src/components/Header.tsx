@@ -23,8 +23,8 @@ const collegeData = [
 ]
 
 const enrollK12 = [
-  { title: 'KINDERGARTEN', path: '/enrollment/kindergarten', img: 'https://iili.io/nny9P3J.png' },
-  { title: 'ELEMENTARY', path: '/enrollment/elementary', img: 'https://iili.io/nnydKB9.png' },
+  { title: 'KINDERGARTEN', path: '/enrollment/kindergarten', img: '/images/enrollment/kindergarten.png' },
+  { title: 'ELEMENTARY', path: '/enrollment/elementary', img: '/images/enrollment/elementary.png' },
   { title: 'JUNIOR HIGH', path: '/enrollment/junior-high', img: 'https://iili.io/nnpDTy7.png' },
   { title: 'SENIOR HIGH', path: '/enrollment/senior-high', img: 'https://iili.io/nnpmqg4.png' },
 ]
