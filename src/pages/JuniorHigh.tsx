@@ -61,24 +61,6 @@ export default function JuniorHigh() {
           </div>
         </section>
 
-        {/* Stats Row */}
-        <section className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-12">
-          {[
-            { icon: '🏆', value: '100%', label: 'DepEd Aligned' },
-            { icon: '🌐', value: '3 Languages', label: 'English, Filipino & Mandarin' },
-            { icon: '🔬', value: 'Hands-on Labs', label: 'Science & Robotics' },
-            { icon: '📜', value: 'Since 1915', label: 'Over 100 Years of Education' },
-          ].map((s) => (
-            <div key={s.label} className="bg-white border border-[#E2E8F0] rounded-xl p-5 flex items-start gap-4 shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
-              <div className="w-10 h-10 bg-[#F1F5F9] rounded-lg flex items-center justify-center text-lg shrink-0">{s.icon}</div>
-              <div>
-                <h3 className="text-[18px] font-bold text-[#0F172A] leading-tight">{s.value}</h3>
-                <p className="text-[12px] text-[#475569] mt-0.5">{s.label}</p>
-              </div>
-            </div>
-          ))}
-        </section>
-
         {/* Curriculum Section */}
         <section className="mb-12">
           <div className="mb-8">

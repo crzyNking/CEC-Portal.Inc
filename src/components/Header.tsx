@@ -302,14 +302,11 @@ export default function Header() {
                           <button
                             key={card.title}
                             onClick={() => navigateAndClose(card.path)}
-                            className="group relative bg-gradient-to-b from-[#5b72cd] to-[#3a4b9c] rounded-xl h-[120px] border border-white/20 overflow-hidden shadow-[inset_0_0_15px_rgba(0,0,0,0.15)] hover:-translate-y-0.5 hover:border-white/50 hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] transition-all duration-200 flex flex-col justify-between items-start p-3 cursor-pointer"
+                            className="group relative bg-gradient-to-b from-[#0B1F3A] to-[#0F2356] rounded-xl h-[120px] border border-white/20 overflow-hidden shadow-[inset_0_0_15px_rgba(0,0,0,0.15)] hover:-translate-y-0.5 hover:border-white/50 hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] transition-all duration-200 flex flex-col justify-between items-start p-3 cursor-pointer"
                           >
-                            <img src={card.img} alt={card.title} className="absolute inset-0 w-full h-full object-cover object-top" />
+                            <img src={card.img} alt={card.title} className="absolute inset-0 w-full h-full object-contain" />
                             <span className="text-white text-[12px] font-extrabold tracking-wide uppercase leading-tight z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
                               {card.title}
-                            </span>
-                            <span className="text-white/70 text-[10px] font-medium z-10 relative" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.9)' }}>
-                              {card.desc}
                             </span>
                             <svg className="absolute bottom-3 right-3 w-3.5 h-3.5 text-white/0 group-hover:text-white/70 transition-all duration-200 translate-x-1 group-hover:translate-x-0 z-10" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
@@ -329,14 +326,11 @@ export default function Header() {
                       </div>
                       <button
                         onClick={() => navigateAndClose('/enrollment/college')}
-                        className="group w-full bg-gradient-to-b from-[#8496db] to-[#4f61b3] rounded-xl h-full min-h-[260px] border border-white/20 overflow-hidden relative flex flex-col justify-between p-4 cursor-pointer hover:-translate-y-0.5 hover:border-white/50 hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] transition-all duration-200"
+                        className="group w-full bg-gradient-to-b from-[#0B1F3A] to-[#0F2356] rounded-xl h-full min-h-[260px] border border-white/20 overflow-hidden relative flex flex-col justify-between p-4 cursor-pointer hover:-translate-y-0.5 hover:border-white/50 hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] transition-all duration-200"
                       >
-                        <img src="https://iili.io/nnDl95l.jpg" alt="College" className="absolute inset-0 w-full h-full object-cover object-top" />
+                        <img src="https://iili.io/nnDl95l.jpg" alt="College" className="absolute inset-0 w-full h-full object-contain" />
                         <span className="text-[#fef08a] text-[20px] font-black tracking-wider uppercase z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                           COLLEGE
-                        </span>
-                        <span className="text-white/45 text-[11px] font-medium z-10 relative">
-                          Bachelor's Degree Programs
                         </span>
                         <svg className="absolute bottom-4 right-4 w-4 h-4 text-white/0 group-hover:text-white/70 transition-all duration-200 translate-x-1 group-hover:translate-x-0 z-10" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
@@ -632,14 +626,11 @@ export default function Header() {
                             <button
                               key={card.title}
                               onClick={() => navigateAndClose(card.path)}
-                              className="group relative bg-gradient-to-b from-[#5b72cd] to-[#3a4b9c] rounded-xl border border-white/20 overflow-hidden flex flex-col justify-between items-start p-2.5 cursor-pointer min-h-[80px]"
+                              className="group relative bg-gradient-to-b from-[#0B1F3A] to-[#0F2356] rounded-xl border border-white/20 overflow-hidden flex flex-col justify-between items-start p-2.5 cursor-pointer min-h-[80px]"
                             >
-                              <img src={card.img} alt={card.title} className="absolute inset-0 w-full h-full object-cover object-top" />
+                              <img src={card.img} alt={card.title} className="absolute inset-0 w-full h-full object-contain" />
                               <span className="text-white text-[11px] font-extrabold tracking-wide uppercase leading-tight z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
                                 {card.title}
-                              </span>
-                              <span className="text-white/70 text-[9px] font-medium z-10 relative" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.9)' }}>
-                                {card.desc}
                               </span>
                             </button>
                           ))}
@@ -649,14 +640,11 @@ export default function Header() {
                         <div className="text-[10px] text-[#94a3b8] font-semibold mb-1.5 uppercase tracking-wider px-1">College Programs</div>
                         <button
                           onClick={() => navigateAndClose('/enrollment/college')}
-                          className="group w-full bg-gradient-to-b from-[#8496db] to-[#4f61b3] rounded-xl border border-white/20 overflow-hidden relative flex flex-col justify-between p-3 cursor-pointer min-h-[80px]"
+                          className="group w-full bg-gradient-to-b from-[#0B1F3A] to-[#0F2356] rounded-xl border border-white/20 overflow-hidden relative flex flex-col justify-between p-3 cursor-pointer min-h-[80px]"
                         >
-                          <img src="https://iili.io/nnDl95l.jpg" alt="College" className="absolute inset-0 w-full h-full object-cover object-top" />
+                          <img src="https://iili.io/nnDl95l.jpg" alt="College" className="absolute inset-0 w-full h-full object-contain" />
                           <span className="text-[#fef08a] text-[16px] font-black tracking-wider uppercase z-10 relative" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                             COLLEGE
-                          </span>
-                          <span className="text-white/45 text-[10px] font-medium z-10 relative">
-                            Bachelor's Degree Programs
                           </span>
                         </button>
                       </div>
