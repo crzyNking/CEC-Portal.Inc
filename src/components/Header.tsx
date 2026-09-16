@@ -18,7 +18,7 @@ const collegeData = [
   { name: 'BS in Hospitality Management', path: '/programs/bshm' },
   { name: 'BS in Criminology', path: '/programs/criminology' },
   { name: 'BS in Tourism Management', path: '/programs/bstm' },
-  { name: 'BS in Secondary Education', path: '/programs/college' },
+  { name: 'BS in Secondary Education', path: '/programs/bsed' },
   { name: 'BS in Elementary Education', path: '/programs/beed' },
 ]
 

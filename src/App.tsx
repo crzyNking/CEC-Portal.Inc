@@ -25,6 +25,7 @@ const BSHM = lazy(() => import('./pages/BSHM'))
 const BSTM = lazy(() => import('./pages/BSTM'))
 const Criminology = lazy(() => import('./pages/Criminology'))
 const BEED = lazy(() => import('./pages/BEED'))
+const BSED = lazy(() => import('./pages/BSED'))
 const KindergartenEnrollment = lazy(() => import('./pages/enrollment/KindergartenEnrollment'))
 const ElementaryEnrollment = lazy(() => import('./pages/enrollment/ElementaryEnrollment'))
 const JuniorHighEnrollment = lazy(() => import('./pages/enrollment/JuniorHighEnrollment'))
@@ -92,6 +93,7 @@ function App() {
 <Route path="/programs/bstm" element={<BSTM />} />
 <Route path="/programs/criminology" element={<Criminology />} />
 <Route path="/programs/beed" element={<BEED />} />
+<Route path="/programs/bsed" element={<BSED />} />
 <Route path="/campus/:campusId" element={<Campus />} />
             <Route path="/about" element={<About />} />
             <Route path="/news" element={<News />} />
