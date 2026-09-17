@@ -60,7 +60,6 @@ export default function AdminDashboard() {
     { label: 'Total Users', value: stats.users, color: 'bg-blue-500', link: '/admin/users' },
     { label: 'News', value: stats.news, color: 'bg-emerald-500', link: '/admin/news' },
     { label: 'Events', value: stats.events, color: 'bg-amber-500', link: '/admin/events' },
-    { label: 'Programs', value: stats.programs, color: 'bg-purple-500', link: '/admin/programs' },
     { label: 'Announcements', value: stats.announcements, color: 'bg-rose-500', link: '/admin/announcements' },
   ]
 
@@ -68,8 +67,6 @@ export default function AdminDashboard() {
     { label: 'New Announcement', path: '/admin/announcements', icon: 'M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z' },
     { label: 'Add News', path: '/admin/news', icon: 'M12 4v16m8-8H4' },
     { label: 'Add Event', path: '/admin/events', icon: 'M12 4v16m8-8H4' },
-    { label: 'Update Enrollment', path: '/admin/enrollment', icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' },
-    { label: 'Upload Gallery', path: '/admin/gallery', icon: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z' },
   ]
 
   return (
@@ -78,7 +75,7 @@ export default function AdminDashboard() {
       <p className="text-gray-500 text-sm mb-6">Manage your school website from here.</p>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         {statCards.map((s) => (
           <Link key={s.label} to={s.link} className="bg-white/90 backdrop-blur-sm rounded-xl p-4 border border-[rgba(11,31,58,0.08)] shadow-[0_4px_20px_rgba(11,31,58,0.06)] hover:shadow-md transition-shadow">
             <div className={`w-10 h-10 ${s.color} rounded-lg flex items-center justify-center mb-3`}>
