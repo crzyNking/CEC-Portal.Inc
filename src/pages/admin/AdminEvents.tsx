@@ -39,12 +39,17 @@ export default function AdminEvents() {
     }
     try {
       const slug = editing.slug || editing.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || ''
+      const payload = {
+        ...editing,
+        slug,
+        event_date: editing.event_date || null,
+      }
       if (editing.id) {
-        const { error } = await supabase.from('events').update({ ...editing, slug }).eq('id', editing.id)
+        const { error } = await supabase.from('events').update(payload).eq('id', editing.id)
         if (error) throw error
         await logAdminActivity('updated', 'event', editing.id, { title: editing.title })
       } else {
-        const { data, error } = await supabase.from('events').insert([{ ...editing, slug }]).select().single()
+        const { data, error } = await supabase.from('events').insert([payload]).select().single()
         if (error) throw error
         if (data) await logAdminActivity('created', 'event', data.id, { title: data.title })
       }

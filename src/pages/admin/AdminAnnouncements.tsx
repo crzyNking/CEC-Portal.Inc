@@ -63,13 +63,18 @@ export default function AdminAnnouncements() {
       setSaving(false)
       return
     }
+    const payload = {
+      ...editing,
+      start_date: editing.start_date || null,
+      end_date: editing.end_date || null,
+    }
     try {
       if (editing.id) {
-        const { error } = await supabase.from('announcements').update(editing).eq('id', editing.id)
+        const { error } = await supabase.from('announcements').update(payload).eq('id', editing.id)
         if (error) throw error
         await logAdminActivity('updated', 'announcement', editing.id, { title: editing.title })
       } else {
-        const { data, error } = await supabase.from('announcements').insert([editing]).select().single()
+        const { data, error } = await supabase.from('announcements').insert([payload]).select().single()
         if (error) throw error
         if (data) await logAdminActivity('created', 'announcement', data.id, { title: data.title })
       }
