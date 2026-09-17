@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../../store/authStore'
+import { useSettings } from '../../hooks/useSettings'
+import { CEC_LOGO } from '../../lib/constants'
 
 const navItems = [
   { label: 'Dashboard', path: '/admin', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
@@ -23,6 +25,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const location = useLocation()
   const navigate = useNavigate()
   const { profile, signOut } = useAuthStore()
+  const { school } = useSettings()
 
   const handleLogout = async () => {
     await signOut()
@@ -39,11 +42,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Sidebar */}
       <aside className={`fixed top-0 left-0 h-full w-[260px] bg-[#0B1F3A] backdrop-blur-xl z-50 transform transition-transform duration-200 lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="flex items-center gap-3 px-5 py-4 border-b border-white/10">
-          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#f2545b] via-[#f7b32b] to-[#6dd5ed] flex items-center justify-center shrink-0">
-            <div className="w-6 h-6 rounded-full bg-[#0B1F3A]" />
-          </div>
+          <img
+            src={school?.website_logo || CEC_LOGO}
+            alt="CEC Logo"
+            onError={(e) => { e.currentTarget.style.visibility = 'hidden' }}
+            className="w-9 h-9 rounded-full object-cover bg-white shrink-0"
+          />
           <div>
-            <div className="text-white font-bold text-sm leading-tight">Cebu Eastern College</div>
+            <div className="text-white font-bold text-sm leading-tight">{school?.school_name || 'Cebu Eastern College'}</div>
             <div className="text-white/40 text-[11px]">Admin Panel</div>
           </div>
         </div>
