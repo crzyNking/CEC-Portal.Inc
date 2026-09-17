@@ -10,7 +10,40 @@ interface Permission { id: string; label: string; description: string | null }
 interface RolePermission { role_id: string; permission_id: string }
 interface UserRole { user_id: string; role_id: string }
 interface ProfileRow { id: string; email: string | null; full_name: string | null; role: string; created_at: string }
-interface EnrollmentRow { student_id: string | null; id_number: string | null; claimed_at: string | null; level: string }
+interface EnrollmentRow {
+  id: string; level: string; first_name: string; middle_name: string; last_name: string;
+  id_number: string | null; student_id: string | null; claimed_at: string | null;
+  degree_program: string | null; grade_level: string | null; status: string; created_at: string;
+  age: string; dob: string; gender: string; civil_status: string;
+  high_school: string; year_graduated: string; lrn: string;
+  parent_name: string; parent_email: string; parent_contact: string;
+  parent_occupation: string; address: string;
+  emergency_contact: string; emergency_phone: string;
+  requirements: Record<string, boolean>;
+}
+
+interface AcademicRecord {
+  id: string; student_id: string; enrollment_id: string; subject: string; grade: string;
+  semester: string; school_year: string; remarks: string; created_at: string;
+}
+
+interface DocumentRequest {
+  id: string; student_id: string; enrollment_id: string; student_name: string;
+  doc_type: string; status: string; notes: string; requested_at: string; processed_at: string | null;
+}
+
+interface BillingAccount {
+  id: string; student_id: string | null; enrollment_id: string | null;
+  student_name: string; level: string; school_year: string; semester: string;
+  tuition_fee: number; misc_fees: number; discount: number; total_due: number;
+  balance: number; status: string; created_at: string;
+}
+
+interface Payment {
+  id: string; billing_id: string; amount: number; method: string;
+  reference_no: string; paid_at: string; verified: boolean;
+  verified_by: string | null; verified_at: string | null;
+}
 
 const ROLE_COLORS: Record<string, string> = {
   super_admin: 'bg-purple-100 text-purple-700',
@@ -38,6 +71,7 @@ export default function AdminSuper() {
   const [creating, setCreating] = useState(false)
   const [assigning, setAssigning] = useState<string | null>(null)
   const [confirmState, setConfirmState] = useState<{ open: boolean; title: string; message: string; onConfirm: () => void }>({ open: false, title: '', message: '', onConfirm: () => {} })
+  const [detailView, setDetailView] = useState<EnrollmentRow | null>(null)
   const addNotification = useNotificationStore((s) => s.addNotification)
   const { user } = useAuthStore()
 
@@ -50,7 +84,7 @@ export default function AdminSuper() {
         supabase.from('role_permissions').select('*'),
         supabase.from('user_roles').select('*'),
         supabase.from('profiles').select('id, email, full_name, role, created_at').order('created_at', { ascending: false }),
-        supabase.from('enrollment_submissions').select('student_id, id_number, claimed_at, level').order('created_at', { ascending: false }),
+        supabase.from('enrollment_submissions').select('*').order('created_at', { ascending: false }),
       ])
       if (rolesRes.error) throw rolesRes.error
       if (permRes.error) throw permRes.error
@@ -72,6 +106,11 @@ export default function AdminSuper() {
   }, [addNotification])
 
   useEffect(() => { load() }, [load])
+
+  const loadDetail = async (enrollment: EnrollmentRow) => {
+    // Reuse the same detail view logic from AdminRegistrar
+    setDetailView(enrollment)
+  }
 
   const userCountFor = (roleId: string) =>
     users.filter((u) => u.role === roleId).length + userRoles.filter((ur) => ur.role_id === roleId && !users.some((u) => u.id === ur.user_id && u.role === roleId)).length
@@ -281,6 +320,7 @@ export default function AdminSuper() {
                         ) : <span className="text-xs text-gray-400">—</span>}
                       </td>
                       <td className="px-4 py-3 text-right">
+                        <button onClick={() => enr && loadDetail(enr)} className="text-[#1E4E8C] hover:text-[#0B1F3A] text-xs font-medium mr-2">View Details</button>
                         <button onClick={() => setAssigning(assigning === u.id ? null : u.id)} className="text-[#1E4E8C] hover:text-[#0B1F3A] text-xs font-medium">
                           {assigning === u.id ? 'Cancel' : 'Assign Role'}
                         </button>
@@ -362,6 +402,18 @@ export default function AdminSuper() {
         </div>
       )}
 
+      {detailView && (
+        <DetailViewModal
+          enrollment={detailView}
+          loading={false}
+          academic={[]}
+          documents={[]}
+          billing={[]}
+          payments={[]}
+          onClose={() => setDetailView(null)}
+        />
+      )}
+
       <ConfirmModal
         open={confirmState.open}
         title={confirmState.title}
@@ -370,6 +422,149 @@ export default function AdminSuper() {
         onConfirm={confirmState.onConfirm}
         onCancel={() => setConfirmState({ open: false, title: '', message: '', onConfirm: () => {} })}
       />
+    </div>
+  )
+}
+
+interface DetailViewModalProps {
+  enrollment: EnrollmentRow
+  loading: boolean
+  academic: AcademicRecord[]
+  documents: DocumentRequest[]
+  billing: BillingAccount[]
+  payments: Payment[]
+  onClose: () => void
+}
+
+function DetailViewModal({ enrollment, loading, academic: _academic, documents: _documents, billing: _billing, payments: _payments, onClose }: DetailViewModalProps) {
+  const fullName = `${enrollment.first_name} ${enrollment.middle_name || ''} ${enrollment.last_name}`.trim()
+  const isClaimed = !!enrollment.student_id
+
+  useEffect(() => {
+    if (loading) document.body.style.overflow = 'hidden'
+    else document.body.style.overflow = ''
+    return () => { document.body.style.overflow = '' }
+  }, [loading])
+
+  if (!enrollment) return null
+
+  const requirementLabels: Record<string, string> = {
+    birthCert: 'PSA Birth Certificate',
+    Form137: 'Form 137 / Transcript',
+    goodMoral: 'Good Moral Character Certificate',
+    medicalCert: 'Medical Certificate',
+    idPhotos: '2x2 ID Photos (4 copies)',
+    shsDiploma: 'SHS Diploma / Certificate of Graduation',
+    ncaeResult: 'NCAE Result',
+  }
+
+  return (
+    <div
+      className="fixed inset-0 z-[2000] flex items-center justify-center p-4"
+      style={{ background: 'rgba(11, 31, 58, 0.7)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)' }}
+      onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
+      role="dialog"
+      aria-modal="true"
+    >
+      <div className="bg-white rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)]" style={{ animation: 'modalIn 0.2s cubic-bezier(0.16,1,0.3,1) forwards' }}>
+        <div className="flex items-center justify-between p-5 border-b border-gray-200 sticky top-0 bg-white z-10 rounded-t-2xl">
+          <div>
+            <h2 className="text-xl font-bold text-[#0B1F3A]">{fullName}</h2>
+            <div className="flex items-center gap-3 mt-1 text-sm">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-blue-100 text-blue-700">{enrollment.level}</span>
+              <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${isClaimed ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
+                {isClaimed ? 'Claimed' : 'Unclaimed'}
+              </span>
+              <span className="text-gray-500">ID: {enrollment.id_number || '—'}</span>
+            </div>
+          </div>
+          <button onClick={onClose} className="p-2 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-gray-700 transition-colors">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+          </button>
+        </div>
+
+        <div className="p-5 space-y-6">
+          {loading ? (
+            <div className="flex justify-center py-8"><div className="w-8 h-8 border-2 border-[#1E4E8C]/30 border-t-[#1E4E8C] rounded-full animate-spin" /></div>
+          ) : (
+            <>
+              <div className="bg-gray-50 rounded-xl p-5">
+                <h3 className="font-bold text-[#0B1F3A] mb-4 flex items-center gap-2"><svg className="w-5 h-5 text-[#1E4E8C]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg> Student Information</h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                  <div><span className="text-gray-500 block">ID Number</span><span className="font-mono font-bold text-[#0B1F3A] text-lg">{enrollment.id_number || '—'}</span></div>
+                  <div><span className="text-gray-500 block">Level</span><span className="font-medium">{enrollment.level}</span></div>
+                  <div><span className="text-gray-500 block">Status</span><span className="font-medium capitalize">{enrollment.status}</span></div>
+                  <div><span className="text-gray-500 block">Claimed</span><span className="font-medium">{isClaimed ? 'Yes' : 'No'}</span></div>
+                  <div className="md:col-span-2"><span className="text-gray-500 block">Full Name</span><span className="font-medium text-lg">{fullName}</span></div>
+                  <div><span className="text-gray-500 block">Age</span><span className="font-medium">{enrollment.age || '—'}</span></div>
+                  <div><span className="text-gray-500 block">Date of Birth</span><span className="font-medium">{enrollment.dob ? new Date(enrollment.dob).toLocaleDateString() : '—'}</span></div>
+                  <div><span className="text-gray-500 block">Gender</span><span className="font-medium capitalize">{enrollment.gender || '—'}</span></div>
+                  <div><span className="text-gray-500 block">Civil Status</span><span className="font-medium capitalize">{enrollment.civil_status || '—'}</span></div>
+                  <div className="md:col-span-2"><span className="text-gray-500 block">Address</span><span className="font-medium">{enrollment.address}</span></div>
+                </div>
+              </div>
+
+              <div className="bg-gray-50 rounded-xl p-5">
+                <h3 className="font-bold text-[#0B1F3A] mb-4 flex items-center gap-2"><svg className="w-5 h-5 text-[#1E4E8C]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg> Parent / Guardian</h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                  <div className="md:col-span-2"><span className="text-gray-500 block">Name</span><span className="font-medium">{enrollment.parent_name}</span></div>
+                  <div><span className="text-gray-500 block">Contact</span><span className="font-medium">{enrollment.parent_contact}</span></div>
+                  <div><span className="text-gray-500 block">Email</span><span className="font-medium">{enrollment.parent_email || '—'}</span></div>
+                  <div><span className="text-gray-500 block">Occupation</span><span className="font-medium">{enrollment.parent_occupation || '—'}</span></div>
+                </div>
+              </div>
+
+              <div className="bg-gray-50 rounded-xl p-5">
+                <h3 className="font-bold text-[#0B1F3A] mb-4 flex items-center gap-2"><svg className="w-5 h-5 text-[#1E4E8C]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" /></svg> Emergency Contact</h3>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div><span className="text-gray-500 block">Contact Person</span><span className="font-medium">{enrollment.emergency_contact}</span></div>
+                  <div><span className="text-gray-500 block">Phone</span><span className="font-medium">{enrollment.emergency_phone}</span></div>
+                </div>
+              </div>
+
+              {(enrollment.level === 'college' || enrollment.level === 'senior-high') && (
+                <div className="bg-gray-50 rounded-xl p-5">
+                  <h3 className="font-bold text-[#0B1F3A] mb-4 flex items-center gap-2"><svg className="w-5 h-5 text-[#1E4E8C]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" /></svg> Academic Background</h3>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                    <div className="md:col-span-2"><span className="text-gray-500 block">{enrollment.level === 'college' ? 'Degree Program' : 'Strand'}</span><span className="font-medium">{enrollment.degree_program || enrollment.grade_level || '—'}</span></div>
+                    <div><span className="text-gray-500 block">High School</span><span className="font-medium">{enrollment.high_school || '—'}</span></div>
+                    <div><span className="text-gray-500 block">Year Graduated</span><span className="font-medium">{enrollment.year_graduated || '—'}</span></div>
+                    <div><span className="text-gray-500 block">LRN</span><span className="font-mono text-sm">{enrollment.lrn || '—'}</span></div>
+                  </div>
+                </div>
+              )}
+
+              <div className="bg-gray-50 rounded-xl p-5">
+                <h3 className="font-bold text-[#0B1F3A] mb-4 flex items-center gap-2"><svg className="w-5 h-5 text-[#1E4E8C]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Requirements Checklist</h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  {Object.entries(enrollment.requirements || {}).map(([key, value]) => (
+                    <div key={key} className="flex items-center gap-2 p-2 bg-white rounded-lg border border-gray-200">
+                      <div className={`w-5 h-5 rounded border-2 flex items-center justify-center ${value ? 'border-green-500 bg-green-500' : 'border-gray-300'}`}>
+                        {value && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M4.5 12.75l6 6 9-13.5" /></svg>}
+                      </div>
+                      <span className="text-sm text-gray-700">{requirementLabels[key] || key}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-gray-50 rounded-xl p-5 border-t-4 border-[#1E4E8C]">
+                <h3 className="font-bold text-[#0B1F3A] mb-3">Submission Details</h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                  <div><span className="text-gray-500 block">Submitted</span><span className="font-medium">{new Date(enrollment.created_at).toLocaleString()}</span></div>
+                  <div><span className="text-gray-500 block">Enrollment ID</span><span className="font-mono text-sm">{enrollment.id}</span></div>
+                  {isClaimed && (
+                    <>
+                      <div><span className="text-gray-500 block">Claimed At</span><span className="font-medium">{enrollment.claimed_at ? new Date(enrollment.claimed_at).toLocaleString() : '—'}</span></div>
+                      <div><span className="text-gray-500 block">User ID</span><span className="font-mono text-sm">{enrollment.student_id}</span></div>
+                    </>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
     </div>
   )
 }
