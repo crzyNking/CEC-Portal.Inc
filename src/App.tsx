@@ -43,6 +43,10 @@ const Campus = lazy(() => import('./pages/Campus'))
 const About = lazy(() => import('./pages/About'))
 const News = lazy(() => import('./pages/News'))
 const Privacy = lazy(() => import('./pages/Privacy'))
+const Enroll = lazy(() => import('./pages/Enroll'))
+const Signup = lazy(() => import('./pages/Signup'))
+const Login = lazy(() => import('./pages/Login'))
+const Unauthorized = lazy(() => import('./components/Unauthorized'))
 
 // Admin pages
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'))
@@ -52,6 +56,12 @@ const AdminEvents = lazy(() => import('./pages/admin/AdminEvents'))
 const AdminSettings = lazy(() => import('./pages/admin/AdminSettings'))
 const AdminUsers = lazy(() => import('./pages/admin/AdminUsers'))
 const AdminLogs = lazy(() => import('./pages/admin/AdminLogs'))
+const AdminSuper = lazy(() => import('./pages/admin/AdminSuper'))
+const AdminRegistrar = lazy(() => import('./pages/admin/AdminRegistrar'))
+const AdminEdp = lazy(() => import('./pages/admin/AdminEdp'))
+const AdminAccounting = lazy(() => import('./pages/admin/AdminAccounting'))
+const AdminFaculty = lazy(() => import('./pages/admin/AdminFaculty'))
+const AdminOther = lazy(() => import('./pages/admin/AdminOther'))
 
 function PageSpinner() {
   return (
@@ -78,7 +88,7 @@ function App() {
         <MaintenanceMode>
         <ErrorBoundary>
         <Suspense fallback={<PageSpinner />}>
-          <Routes>
+<Routes>
             <Route path="/" element={<Home />} />
             <Route path="/programs" element={<Programs />} />
 <Route path="/programs/senior-high" element={<SeniorHigh />} />
@@ -97,14 +107,26 @@ function App() {
             <Route path="/news" element={<News />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/share" element={<ShareHandler />} />
+            <Route path="/enroll" element={<Enroll />} />
             <Route path="/enrollment/kindergarten" element={<KindergartenEnrollment />} />
             <Route path="/enrollment/elementary" element={<ElementaryEnrollment />} />
             <Route path="/enrollment/junior-high" element={<JuniorHighEnrollment />} />
             <Route path="/enrollment/senior-high" element={<SeniorHighEnrollment />} />
             <Route path="/enrollment/college" element={<CollegeEnrollment />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/unauthorized" element={<Unauthorized />} />
             <Route path="/auth/callback" element={<AuthCallback />} />
             <Route
               path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/student"
               element={
                 <ProtectedRoute>
                   <Dashboard />
@@ -154,9 +176,57 @@ function App() {
               }
             />
             <Route
+              path="/admin/super"
+              element={
+                <ProtectedRoute permission="manage_users">
+                  <AdminLayout><AdminSuper /></AdminLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/registrar"
+              element={
+                <ProtectedRoute permissions={['manage_enrollment', 'manage_id_numbers', 'manage_academic_records', 'manage_documents']}>
+                  <AdminLayout><AdminRegistrar /></AdminLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/edp"
+              element={
+                <ProtectedRoute permissions={['manage_users', 'manage_system_settings', 'view_activity_logs']}>
+                  <AdminLayout><AdminEdp /></AdminLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/accounting"
+              element={
+                <ProtectedRoute permissions={['manage_payments', 'view_students']}>
+                  <AdminLayout><AdminAccounting /></AdminLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/faculty"
+              element={
+                <ProtectedRoute permissions={['manage_classes', 'manage_grades', 'manage_attendance']}>
+                  <AdminLayout><AdminFaculty /></AdminLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/other"
+              element={
+                <ProtectedRoute permissions={['manage_news', 'manage_events', 'manage_announcements']}>
+                  <AdminLayout><AdminOther /></AdminLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/admin/announcements"
               element={
-                <ProtectedRoute adminOnly>
+                <ProtectedRoute permission="manage_announcements">
                   <AdminLayout><AdminAnnouncements /></AdminLayout>
                 </ProtectedRoute>
               }
@@ -164,7 +234,7 @@ function App() {
             <Route
               path="/admin/news"
               element={
-                <ProtectedRoute adminOnly>
+                <ProtectedRoute permission="manage_news">
                   <AdminLayout><AdminNews /></AdminLayout>
                 </ProtectedRoute>
               }
@@ -172,7 +242,7 @@ function App() {
             <Route
               path="/admin/events"
               element={
-                <ProtectedRoute adminOnly>
+                <ProtectedRoute permission="manage_events">
                   <AdminLayout><AdminEvents /></AdminLayout>
                 </ProtectedRoute>
               }
@@ -180,7 +250,7 @@ function App() {
             <Route
               path="/admin/settings"
               element={
-                <ProtectedRoute adminOnly>
+                <ProtectedRoute permission="manage_system_settings">
                   <AdminLayout><AdminSettings /></AdminLayout>
                 </ProtectedRoute>
               }
@@ -188,7 +258,7 @@ function App() {
             <Route
               path="/admin/users"
               element={
-                <ProtectedRoute adminOnly>
+                <ProtectedRoute permission="manage_users">
                   <AdminLayout><AdminUsers /></AdminLayout>
                 </ProtectedRoute>
               }
@@ -196,13 +266,13 @@ function App() {
             <Route
               path="/admin/logs"
               element={
-                <ProtectedRoute adminOnly>
+                <ProtectedRoute permission="view_activity_logs">
                   <AdminLayout><AdminLogs /></AdminLayout>
                 </ProtectedRoute>
               }
             />
 
-            <Route path="*" element={<Navigate to="/" replace />} />
+<Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Suspense>
         </ErrorBoundary>

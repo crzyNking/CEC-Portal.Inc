@@ -6,6 +6,15 @@ import { useNotificationStore } from '../store/notificationStore'
 import { useSettings } from '../hooks/useSettings'
 import { supabase } from '../lib/supabase'
 import { CEC_LOGO } from '../lib/constants'
+import {
+  checkIdStatus,
+  claimStudentAccount,
+  syncStudentProfileName,
+  setPendingClaim,
+  ID_NUMBER_MESSAGES,
+  isValidIdNumber,
+  dashboardPathFor,
+} from '../lib/studentAuth'
 
 const modalBackdrop = { background: 'rgba(11, 31, 58, 0.6)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)' }
 
@@ -20,6 +29,7 @@ export function AuthModal() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [fullName, setFullName] = useState('')
+  const [idNumber, setIdNumber] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
   useEffect(() => {
@@ -27,6 +37,7 @@ export function AuthModal() {
       setAuthTab(mode)
       setSubmitting(false)
       setError(null)
+      setIdNumber('')
     }
   }, [open, mode, setError])
 
@@ -49,19 +60,50 @@ export function AuthModal() {
         const success = await signInWithEmail(email, password)
         if (success) {
           closeAuth()
-          navigate('/dashboard', { replace: true })
+          navigate(dashboardPathFor(useAuthStore.getState().profile?.role), { replace: true })
         }
       } else {
+        // Signup requires a valid, unclaimed Student ID Number
+        if (!isValidIdNumber(idNumber.trim())) {
+          setError(ID_NUMBER_MESSAGES.invalid)
+          setSubmitting(false)
+          return
+        }
+        const status = await checkIdStatus(idNumber.trim())
+        if (status === 'not_found') {
+          setError(ID_NUMBER_MESSAGES.not_found)
+          setSubmitting(false)
+          return
+        }
+        if (status === 'claimed') {
+          setError(ID_NUMBER_MESSAGES.claimed)
+          setSubmitting(false)
+          return
+        }
+
         const result = await signUpWithEmail(email, password, fullName)
         if (result.success) {
           if (result.message.includes('check your email')) {
-            addNotification({ type: 'info', title: 'Check your email', message: 'We sent you a confirmation link to finish creating your account.' })
+            // Email confirmation enabled — claim after confirmation via AuthCallback
+            setPendingClaim(idNumber.trim())
+            addNotification({ type: 'info', title: 'Check your email', message: 'We sent you a confirmation link. Your ID Number will be linked automatically.' })
             closeAuth()
           } else {
+            const ok = await claimStudentAccount(idNumber.trim())
+            if (ok) {
+              await syncStudentProfileName()
+              await useAuthStore.getState().fetchProfile(useAuthStore.getState().user?.id || '')
+            }
             closeAuth()
+            navigate(dashboardPathFor(useAuthStore.getState().profile?.role), { replace: true })
           }
+        } else {
+          setSubmitting(false)
         }
       }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Authentication failed')
+      setSubmitting(false)
     } finally {
       setSubmitting(false)
     }
@@ -121,10 +163,16 @@ export function AuthModal() {
 
           <form onSubmit={handleAuth} className="flex flex-col gap-3.5">
             {authTab === 'signup' && (
-              <div className="relative">
-                <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} className="w-full bg-white/7 border border-white/15 rounded-lg px-3.5 py-3 pr-10 text-[13px] text-white placeholder-[#94a3b8] outline-none focus:border-[#3B82F6] transition-colors" placeholder="Full Name" required />
-                <svg className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94a3b8]" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>
-              </div>
+              <>
+                <div className="relative">
+                  <input type="text" inputMode="numeric" maxLength={6} value={idNumber} onChange={(e) => setIdNumber(e.target.value.replace(/[^0-9]/g, ''))} className="w-full bg-white/7 border border-white/15 rounded-lg px-3.5 py-3 pr-10 text-[15px] text-white placeholder-[#94a3b8] outline-none focus:border-[#3B82F6] transition-colors tracking-[0.3em] font-bold text-center" placeholder="000000" required />
+                  <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[10px] text-[#94a3b8] font-medium">ID No.</span>
+                </div>
+                <div className="relative">
+                  <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} className="w-full bg-white/7 border border-white/15 rounded-lg px-3.5 py-3 pr-10 text-[13px] text-white placeholder-[#94a3b8] outline-none focus:border-[#3B82F6] transition-colors" placeholder="Full Name" required />
+                  <svg className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#94a3b8]" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>
+                </div>
+              </>
             )}
             <div className="relative">
               <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-white/7 border border-white/15 rounded-lg px-3.5 py-3 pr-10 text-[13px] text-white placeholder-[#94a3b8] outline-none focus:border-[#3B82F6] transition-colors" placeholder="Email Address" required />

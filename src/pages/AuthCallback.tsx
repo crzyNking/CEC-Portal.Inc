@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import { processPendingClaim, dashboardPathFor } from '../lib/studentAuth'
+import { useAuthStore } from '../store/authStore'
 
 function AuthCallback() {
   const [searchParams] = useSearchParams()
@@ -42,8 +44,12 @@ function AuthCallback() {
           setStatus('Verifying credentials...')
           const { error } = await supabase.auth.exchangeCodeForSession(code)
           if (error) throw error
-          setStatus('Email confirmed! Redirecting...')
-          delayedNavigate('/dashboard', 500, true)
+          setStatus('Confirming your email...')
+          // Link a pending Student ID Number claim if one was saved at signup
+          const claimed = await processPendingClaim()
+          if (claimed) setStatus('ID Number linked! Redirecting...')
+          else setStatus('Email confirmed! Redirecting...')
+          delayedNavigate(dashboardPathFor(useAuthStore.getState().profile?.role), 800, true)
         } catch (err) {
           setError(err instanceof Error ? err.message : 'Authentication failed')
           setStatus('Redirecting...')
@@ -57,8 +63,10 @@ function AuthCallback() {
           setStatus('Redirecting...')
           delayedNavigate('/', 3000)
         } else {
-          setStatus('Success! Redirecting...')
-          delayedNavigate('/dashboard', 500, true)
+          const claimed = await processPendingClaim()
+          if (claimed) setStatus('ID Number linked! Redirecting...')
+          else setStatus('Success! Redirecting...')
+          delayedNavigate(dashboardPathFor(useAuthStore.getState().profile?.role), 800, true)
         }
       }
     }

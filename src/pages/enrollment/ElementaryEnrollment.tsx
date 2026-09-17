@@ -12,6 +12,7 @@ export default function ElementaryEnrollment() {
   })
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [generatedId, setGeneratedId] = useState('')
   const [error, setError] = useState('')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -27,31 +28,34 @@ export default function ElementaryEnrollment() {
     setSubmitting(true)
     setError('')
 
-    const { error: insertError } = await supabase.from('enrollment_submissions').insert({
-      level: 'elementary',
-      first_name: formData.firstName,
-      middle_name: formData.middleName,
-      last_name: formData.lastName,
-      age: formData.age,
-      dob: formData.dob,
-      gender: formData.gender,
-      grade_level: formData.gradeLevel,
-      parent_name: formData.parentName,
-      parent_contact: formData.parentContact,
-      parent_email: formData.parentEmail,
-      parent_occupation: formData.parentOccupation,
-      address: formData.address,
-      emergency_contact: formData.emergencyContact,
-      emergency_phone: formData.emergencyPhone,
-      requirements: formData.requirements,
+    const { data: newId, error: insertError } = await supabase.rpc('submit_enrollment', {
+      p_data: {
+        level: 'elementary',
+        first_name: formData.firstName,
+        middle_name: formData.middleName,
+        last_name: formData.lastName,
+        age: formData.age,
+        dob: formData.dob,
+        gender: formData.gender,
+        grade_level: formData.gradeLevel,
+        parent_name: formData.parentName,
+        parent_contact: formData.parentContact,
+        parent_email: formData.parentEmail,
+        parent_occupation: formData.parentOccupation,
+        address: formData.address,
+        emergency_contact: formData.emergencyContact,
+        emergency_phone: formData.emergencyPhone,
+        requirements: formData.requirements,
+      },
     })
 
-    if (insertError) {
+    if (insertError || !newId) {
       setError('Submission failed. Please try again.')
       setSubmitting(false)
       return
     }
 
+    setGeneratedId(newId)
     setSubmitted(true)
     setSubmitting(false)
   }
@@ -80,9 +84,19 @@ export default function ElementaryEnrollment() {
             </div>
             <h2 className="text-xl font-bold text-[#0B1F3A] mb-2">Enrollment Submitted!</h2>
             <p className="text-sm text-gray-600 mb-6">Your elementary enrollment application has been received. We will review it and contact you soon.</p>
-            <a href="/" className="inline-block bg-[#1E4E8C] hover:bg-[#0B1F3A] text-white font-semibold py-3 px-6 rounded-xl text-sm transition-all duration-200">
-              Back to Home
-            </a>
+            <div className="bg-[#0B1F3A] rounded-xl px-6 py-5 mb-6 inline-block min-w-[280px]">
+              <p className="text-[11px] text-white/70 uppercase tracking-wide mb-1.5">Your Student ID Number</p>
+              <p className="text-3xl font-bold text-white tracking-[0.3em]">{generatedId}</p>
+              <p className="text-[11px] text-white/50 mt-2.5">Keep this number safe — you'll need it to sign up and log in.</p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <a href="/signup" className="inline-block bg-[#1E4E8C] hover:bg-[#0B1F3A] text-white font-semibold py-3 px-6 rounded-xl text-sm transition-all duration-200">
+                Sign Up Now
+              </a>
+              <a href="/" className="inline-block bg-gray-100 hover:bg-gray-200 text-[#0B1F3A] font-semibold py-3 px-6 rounded-xl text-sm transition">
+                Back to Home
+              </a>
+            </div>
           </div>
         ) : (
         <form onSubmit={handleSubmit} className="space-y-8">

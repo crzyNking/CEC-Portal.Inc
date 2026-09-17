@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuthStore } from '../../store/authStore'
 import { supabase } from '../../lib/supabase'
 
 interface Stats {
@@ -11,6 +12,25 @@ interface Stats {
 }
 
 export default function AdminDashboard() {
+  const { profile, hasRole } = useAuthStore()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    // Redirect non-super admins to their department panel
+    if (!hasRole('super_admin')) {
+      const role = profile?.role
+      const departmentRoutes: Record<string, string> = {
+        registrar: '/admin/registrar',
+        edp: '/admin/edp',
+        accounting: '/admin/accounting',
+        faculty: '/admin/faculty',
+        other_admin: '/admin/other',
+      }
+      const target = departmentRoutes[role || '']
+      if (target) navigate(target, { replace: true })
+    }
+  }, [profile, hasRole, navigate])
+
   const [stats, setStats] = useState<Stats>({ users: 0, news: 0, events: 0, programs: 0, announcements: 0 })
   const [recentNews, setRecentNews] = useState<any[]>([])
   const [recentEvents, setRecentEvents] = useState<any[]>([])
@@ -48,10 +68,17 @@ export default function AdminDashboard() {
     setLoading(false)
   }
 
-  if (loading) {
+  useEffect(() => {
+    loadDashboard()
+  }, [])
+
+  if (loading || !hasRole('super_admin')) {
     return (
-      <div className="flex items-center justify-center py-20">
-        <div className="w-8 h-8 border-2 border-[#1E4E8C]/30 border-t-[#1E4E8C] rounded-full animate-spin" />
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-2 border-[#1E4E8C]/30 border-t-[#1E4E8C] rounded-full animate-spin" />
+          <p className="text-[#0B1F3A] font-medium text-sm">Redirecting...</p>
+        </div>
       </div>
     )
   }
@@ -154,4 +181,12 @@ export default function AdminDashboard() {
       </div>
     </div>
   )
+}
+
+interface Stats {
+  users: number
+  news: number
+  events: number
+  programs: number
+  announcements: number
 }

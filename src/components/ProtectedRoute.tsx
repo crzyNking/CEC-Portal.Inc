@@ -5,10 +5,13 @@ import { useAuthStore } from '../store/authStore'
 interface ProtectedRouteProps {
   children: ReactNode
   adminOnly?: boolean
+  permission?: string
+  permissions?: string[]
+  superOnly?: boolean
 }
 
-export function ProtectedRoute({ children, adminOnly = false }: ProtectedRouteProps) {
-  const { user, loading, isAdmin } = useAuthStore()
+export function ProtectedRoute({ children, adminOnly = false, permission, permissions, superOnly = false }: ProtectedRouteProps) {
+  const { user, loading, isAdmin, hasPermission, hasRole } = useAuthStore()
   const location = useLocation()
 
   if (loading) {
@@ -30,11 +33,20 @@ export function ProtectedRoute({ children, adminOnly = false }: ProtectedRoutePr
   }
 
   if (!user) {
-    return <Navigate to="/" state={{ from: location }} replace />
+    return <Navigate to="/login" state={{ from: location }} replace />
+  }
+
+  if (superOnly && !hasRole('super_admin')) {
+    return <Navigate to="/unauthorized" replace />
+  }
+
+  const requiredPerms = permissions ?? (permission ? [permission] : [])
+  if (requiredPerms.length > 0 && !requiredPerms.some((p) => hasPermission(p))) {
+    return <Navigate to="/unauthorized" replace />
   }
 
   if (adminOnly && !isAdmin()) {
-    return <Navigate to="/dashboard" replace />
+    return <Navigate to="/unauthorized" replace />
   }
 
   return <>{children}</>
