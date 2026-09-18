@@ -47,9 +47,6 @@ const Enroll = lazy(() => import('./pages/Enroll'))
 const Signup = lazy(() => import('./pages/Signup'))
 const Login = lazy(() => import('./pages/Login'))
 const Unauthorized = lazy(() => import('./components/Unauthorized'))
-const PaymentsPage = lazy(() => import('./pages/Payments'))
-const AppointmentsPage = lazy(() => import('./pages/Appointments'))
-const ChangePassword = lazy(() => import('./pages/ChangePassword'))
 
 // Admin pages
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'))
@@ -165,30 +162,6 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Reports />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/payments"
-              element={
-                <ProtectedRoute>
-                  <PaymentsPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/appointments"
-              element={
-                <ProtectedRoute>
-                  <AppointmentsPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/change-password"
-              element={
-                <ProtectedRoute>
-                  <ChangePassword />
                 </ProtectedRoute>
               }
             />

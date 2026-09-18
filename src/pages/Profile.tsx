@@ -1,67 +1,46 @@
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
-import { supabase } from '../lib/supabase'
+import { useActivityStore } from '../store/activityStore'
 import { useNotification } from '../hooks/useNotification'
-import StudentLayout from '../components/StudentLayout'
-
-interface EnrollmentRecord {
-  id_number: string
-  program: string
-  level: string
-  first_name: string
-  last_name: string
-  email: string
-  phone: string
-  address: string
-  date_of_birth: string
-  gender: string
-  civil_status: string
-  guardian_name: string
-  guardian_phone: string
-}
 
 export function Profile() {
-  const user = useAuthStore((s) => s.user)
-  const profile = useAuthStore((s) => s.profile)
-  const uploadAvatar = useAuthStore((s) => s.uploadAvatar)
+  const { user, profile, uploadAvatar } = useAuthStore()
+  const { logActivity } = useActivityStore()
   const notify = useNotification()
   const navigate = useNavigate()
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const [enrollment, setEnrollment] = useState<EnrollmentRecord | null>(null)
   const [fullName, setFullName] = useState('')
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState(false)
 
   useEffect(() => {
-    if (profile) setFullName(profile.full_name || '')
-  }, [profile])
-
-  useEffect(() => {
-    if (!user) return
-    const load = async () => {
-      const { data } = await supabase.from('enrollment_submissions').select('*').eq('student_id', user.id).order('claimed_at', { ascending: false }).limit(1)
-      if (data?.[0]) setEnrollment(data[0])
+    if (profile) {
+      setFullName(profile.full_name || '')
     }
-    load()
-  }, [user])
+  }, [profile])
 
   const handleAvatarChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (!file || !user) return
+
     if (!file.type.startsWith('image/')) {
       notify.error({ title: 'Invalid file', message: 'Please select an image file.' })
       return
     }
+
     if (file.size > 5 * 1024 * 1024) {
       notify.error({ title: 'File too large', message: 'Image must be less than 5MB.' })
       return
     }
+
     setUploading(true)
     const avatarUrl = await uploadAvatar(file)
     setUploading(false)
+
     if (avatarUrl) {
+      await logActivity(user.id, 'avatar_updated')
       notify.success({ title: 'Avatar updated', message: 'Your profile picture has been changed.' })
     }
   }
@@ -69,109 +48,153 @@ export function Profile() {
   const handleSaveProfile = async () => {
     if (!user) return
     setSaving(true)
+
     try {
-      const { error } = await supabase.from('profiles').update({ full_name: fullName, updated_at: new Date().toISOString() }).eq('id', user.id)
+      const { error } = await import('../lib/supabase').then(m => m.supabase
+        .from('profiles')
+        .update({ full_name: fullName, updated_at: new Date().toISOString() })
+        .eq('id', user.id)
+      )
+
       if (error) throw error
+
+      await logActivity(user.id, 'profile_updated', { full_name: fullName })
       notify.success({ title: 'Profile saved', message: 'Your profile has been updated.' })
-    } catch {
+    } catch (error) {
       notify.error({ title: 'Error', message: 'Failed to save profile.' })
     } finally {
       setSaving(false)
     }
   }
 
-  const displayName = profile?.full_name || user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email?.split('@')[0] || 'Student'
-  const avatarUrl = profile?.avatar_url || user?.user_metadata?.avatar_url
+  const userMetadata = user?.user_metadata
+  const displayName = profile?.full_name || userMetadata?.full_name || userMetadata?.name || user?.email?.split('@')[0] || 'User'
+  const avatarUrl = profile?.avatar_url || userMetadata?.avatar_url
   const email = profile?.email || user?.email
-  const studentId = enrollment?.id_number || user?.id?.slice(0, 8) || '—'
+  const initials = displayName.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
 
   return (
-    <StudentLayout title="Student Profile">
-      <div className="max-w-3xl mx-auto">
-        {/* Profile Header */}
-        <div className="bg-white rounded-xl p-6 border border-[#E6E8EE] mb-5">
-          <div className="flex flex-col sm:flex-row items-center gap-5">
-            <div className="relative group">
-              <input ref={fileInputRef} type="file" accept="image/*" onChange={handleAvatarChange} className="hidden" />
-              <button onClick={() => fileInputRef.current?.click()} disabled={uploading} className="relative">
-                {avatarUrl ? (
-                  <img src={avatarUrl} alt="" className="w-20 h-20 rounded-full object-cover border-3 border-[#E6E8EE]" />
-                ) : (
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#14213D] to-[#2F5DD4] flex items-center justify-center text-white text-[22px] font-bold border-3 border-[#E6E8EE]">
-                    {displayName.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)}
-                  </div>
-                )}
-                <div className="absolute inset-0 rounded-full bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  {uploading ? (
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  ) : (
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"/><circle cx="16.5" cy="12.75" r="4.5"/></svg>
-                  )}
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0B1F3A] relative overflow-hidden transition-colors">
+      <div className="pointer-events-none absolute inset-0 dark:block hidden">
+        <div className="absolute top-0 left-1/4 h-[600px] w-[600px] rounded-full bg-purple-600/6 blur-[180px]" />
+        <div className="absolute bottom-0 right-1/4 h-[500px] w-[500px] rounded-full bg-cyan-500/5 blur-[150px]" />
+      </div>
+
+      <header className="sticky top-0 z-40 border-b border-gray-200/50 dark:border-white/[0.06] bg-[#F8FAFC]/80 dark:bg-[#0B1F3A]/80 backdrop-blur-2xl transition-colors">
+        <div className="mx-auto max-w-2xl px-4 sm:px-6">
+          <div className="flex items-center justify-between py-4">
+            <button
+              onClick={() => navigate('/dashboard')}
+              className="flex items-center gap-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors group"
+            >
+              <svg className="h-5 w-5 group-hover:-translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+              </svg>
+              Back
+            </button>
+            <h1 className="text-lg font-semibold text-gray-900 dark:text-white">Profile</h1>
+            <div className="w-16"></div>
+          </div>
+        </div>
+      </header>
+
+      <main className="relative mx-auto max-w-2xl px-4 sm:px-6 py-8">
+        <div className="relative overflow-hidden rounded-2xl bg-white/90 backdrop-blur-sm border border-[rgba(11,31,58,0.08)] dark:bg-[#102A43]/80 dark:backdrop-blur-sm dark:border-white/[0.08] shadow-[0_4px_20px_rgba(11,31,58,0.06)] p-6 sm:p-8">
+          <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-purple-500/8 blur-[80px]" />
+          <div className="absolute -bottom-20 -left-20 h-40 w-40 rounded-full bg-cyan-500/8 blur-[80px]" />
+
+          <div className="relative flex flex-col items-center mb-8">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleAvatarChange}
+              className="hidden"
+            />
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploading}
+              className="relative group mb-4"
+            >
+              <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-purple-500 to-cyan-500 opacity-40 blur-md group-hover:opacity-60 transition-opacity" />
+              {avatarUrl ? (
+                <img
+                  className="relative h-24 w-24 sm:h-28 sm:w-28 rounded-2xl object-cover ring-4 ring-white dark:ring-[#0B1F3A]"
+                  src={avatarUrl}
+                  alt={displayName}
+                />
+              ) : (
+                <div className="relative flex h-24 w-24 sm:h-28 sm:w-28 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 to-cyan-500 text-3xl sm:text-4xl font-bold text-white ring-4 ring-white dark:ring-[#0B1F3A]">
+                  {initials}
                 </div>
-              </button>
-            </div>
-            <div className="text-center sm:text-left">
-              <h2 className="text-[18px] font-bold text-[#14213D]">{displayName}</h2>
-              <div className="text-[12px] text-[#7A8299] mt-0.5">Student ID: <span className="font-medium text-[#14213D]">{studentId}</span></div>
-            </div>
-          </div>
-        </div>
-
-        {/* Personal Info Grid */}
-        <div className="bg-white rounded-xl p-5 border border-[#E6E8EE] mb-5">
-          <h3 className="text-[14px] font-bold text-[#14213D] mb-4">Personal Information</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {[
-              { label: 'Full Name', value: enrollment ? `${enrollment.first_name} ${enrollment.last_name}` : displayName, field: 'name' },
-              { label: 'Student ID', value: studentId, field: 'id' },
-              { label: 'Program / Course', value: enrollment?.program || '—', field: 'program' },
-              { label: 'Year / Level', value: enrollment?.level || '—', field: 'level' },
-              { label: 'Email', value: email || '—', field: 'email' },
-              { label: 'Phone', value: enrollment?.phone || '—', field: 'phone' },
-              { label: 'Address', value: enrollment?.address || '—', field: 'address', full: true },
-              { label: 'Date of Birth', value: enrollment?.date_of_birth ? new Date(enrollment.date_of_birth).toLocaleDateString() : '—', field: 'dob' },
-              { label: 'Gender', value: enrollment?.gender || '—', field: 'gender' },
-              { label: 'Civil Status', value: enrollment?.civil_status || '—', field: 'civil' },
-              { label: 'Guardian Name', value: enrollment?.guardian_name || '—', field: 'guardian' },
-              { label: 'Guardian Phone', value: enrollment?.guardian_phone || '—', field: 'gphone' },
-            ].map(item => (
-              <div key={item.field} className={item.full ? 'sm:col-span-2' : ''}>
-                <label className="text-[11px] font-medium text-[#7A8299] mb-1 block">{item.label}</label>
-                <div className="text-[13px] text-[#14213D] font-medium">{item.value}</div>
+              )}
+              <div className="absolute inset-0 rounded-2xl bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                {uploading ? (
+                  <svg className="animate-spin h-6 w-6 text-white" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                ) : (
+                  <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
+                  </svg>
+                )}
               </div>
-            ))}
+            </button>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Click to change avatar</p>
           </div>
-        </div>
 
-        {/* Edit Name */}
-        <div className="bg-white rounded-xl p-5 border border-[#E6E8EE] mb-5">
-          <h3 className="text-[14px] font-bold text-[#14213D] mb-4">Edit Display Name</h3>
-          <div className="flex gap-3 items-end">
-            <div className="flex-1">
-              <label className="text-[11px] font-medium text-[#7A8299] mb-1 block">Full Name</label>
-              <input type="text" value={fullName} onChange={e => setFullName(e.target.value)}
-                className="w-full px-3 py-2 rounded-lg bg-[#F8F9FB] border border-[#E6E8EE] text-[13px] text-[#14213D] focus:outline-none focus:border-[#2F5DD4]"
-                placeholder="Enter your name" />
+          <div className="relative space-y-5">
+            <div>
+              <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Full Name</label>
+              <input
+                type="text"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl bg-gray-50/80 dark:bg-white/[0.04] border border-gray-200 dark:border-white/[0.08] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-[#1E4E8C] focus:ring-2 focus:ring-[#1E4E8C]/20 transition-all"
+                placeholder="Enter your name"
+              />
             </div>
-            <button onClick={handleSaveProfile} disabled={saving || fullName === (profile?.full_name || '')}
-              className="px-5 py-2 rounded-lg bg-[#2F5DD4] hover:bg-[#1E4E8C] text-white text-[12.5px] font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap">
-              {saving ? 'Saving...' : 'Save'}
+
+            <div>
+              <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Email</label>
+              <input
+                type="email"
+                value={email || ''}
+                disabled
+                className="w-full px-4 py-3 rounded-xl bg-gray-100/80 dark:bg-white/[0.02] border border-gray-200/80 dark:border-white/[0.04] text-gray-500 dark:text-gray-500 cursor-not-allowed"
+              />
+            </div>
+          </div>
+
+          <div className="relative mt-8 flex items-center justify-end gap-3">
+            <button
+              onClick={() => navigate('/dashboard')}
+              className="px-5 py-2.5 rounded-xl border border-gray-200 dark:border-white/[0.08] text-gray-600 dark:text-gray-400 text-sm font-medium hover:bg-gray-100 dark:hover:bg-white/[0.04] transition-all"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSaveProfile}
+              disabled={saving || fullName === (profile?.full_name || '')}
+              className="px-5 py-2.5 rounded-xl bg-[#1E4E8C] hover:bg-[#0B1F3A] text-white text-sm font-semibold shadow-lg shadow-purple-500/25 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/30 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center gap-2"
+            >
+              {saving ? (
+                <>
+                  <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                  Saving...
+                </>
+              ) : (
+                'Save'
+              )}
             </button>
           </div>
         </div>
-
-        {/* Actions */}
-        <div className="flex gap-3">
-          <button onClick={() => navigate('/dashboard')} className="px-5 py-2 rounded-lg border border-[#E6E8EE] text-[12.5px] font-medium text-[#525A6E] hover:bg-[#F8F9FB] transition-colors">
-            Back to Dashboard
-          </button>
-          <button onClick={() => navigate('/change-password')} className="px-5 py-2 rounded-lg bg-[#14213D] hover:bg-[#1E4E8C] text-white text-[12.5px] font-semibold transition-colors">
-            Change Password
-          </button>
-        </div>
-      </div>
-    </StudentLayout>
+      </main>
+    </div>
   )
 }
-
-export default Profile
