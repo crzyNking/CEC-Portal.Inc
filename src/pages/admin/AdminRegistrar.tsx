@@ -10,6 +10,7 @@ interface EnrollmentRow {
   id_number: string | null; student_id: string | null; claimed_at: string | null;
   degree_program: string | null; grade_level: string | null; status: string; created_at: string;
   parent_name: string; parent_email: string; parent_contact: string;
+  is_archived: boolean; archived_at: string | null;
 }
 
 interface AcademicRecord {
@@ -39,13 +40,13 @@ export default function AdminRegistrar() {
   const [docForm, setDocForm] = useState({ student_id: '', enrollment_id: '', student_name: '', doc_type: '', notes: '' })
   const [confirmState, setConfirmState] = useState<{ open: boolean; title: string; message: string; onConfirm: () => void }>({ open: false, title: '', message: '', onConfirm: () => {} })
   const addNotification = useNotificationStore((s) => s.addNotification)
-  const { user } = useAuthStore()
+  const { user, profile } = useAuthStore()
 
   const load = useCallback(async () => {
     setLoading(true)
     try {
       const [enrRes, acRes, docRes, stuRes] = await Promise.all([
-        supabase.from('enrollment_submissions').select('*').order('created_at', { ascending: false }),
+        supabase.from('enrollment_submissions').select('*').eq('is_archived', false).order('created_at', { ascending: false }),
         supabase.from('academic_records').select('*').order('created_at', { ascending: false }),
         supabase.from('document_requests').select('*').order('requested_at', { ascending: false }),
         supabase.from('profiles').select('id, email, full_name, role').eq('role', 'student'),
@@ -84,6 +85,37 @@ export default function AdminRegistrar() {
   const safePage = Math.min(page, totalPages)
   const pagedEnrollments = filteredEnrollments.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE)
   const resetPage = () => setPage(1)
+
+  const [archiveTarget, setArchiveTarget] = useState<EnrollmentRow | null>(null)
+
+  // Soft-delete (archive) a student record: keeps enrollment history & academic
+  // records safe; withdraws class registrations; revokes portal role if super admin.
+  const archiveStudent = async (target: EnrollmentRow) => {
+    try {
+      const fullName = `${target.first_name} ${target.middle_name || ''} ${target.last_name}`.trim()
+      const { error } = await supabase.from('enrollment_submissions').update({
+        is_archived: true,
+        archived_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      }).eq('id', target.id)
+      if (error) throw error
+
+      if (target.student_id) {
+        await supabase.from('class_rosters').update({ status: 'withdrawn' }).eq('student_id', target.student_id)
+        const { data: { user: current } } = await supabase.auth.getUser()
+        if (current && profile?.role === 'super_admin') {
+          await supabase.from('profiles').update({ role: 'student' }).eq('id', target.student_id)
+        }
+      }
+
+      await logAdminActivity('archived', 'student_record', target.id, { student: fullName })
+      addNotification({ type: 'success', title: 'Student record archived', message: `${fullName}'s record was archived. Academic history is preserved.` })
+      setArchiveTarget(null)
+      load()
+    } catch (err) {
+      addNotification({ type: 'error', title: 'Failed to archive student record', message: err instanceof Error ? err.message : 'Unknown error' })
+    }
+  }
 
   const regenerateId = async (enrollmentId: string) => {
     try {
@@ -279,12 +311,13 @@ export default function AdminRegistrar() {
                       </select>
                     </td>
                     <td className="px-4 py-3 text-gray-500 text-xs">{new Date(e.created_at).toLocaleDateString()}</td>
-                    <td className="px-4 py-3 text-right">
+                    <td className="px-4 py-3 text-right whitespace-nowrap">
                       {e.id_number && !e.student_id && (
                         <button onClick={() => {
                           setConfirmState({ open: true, title: 'Regenerate ID Number', message: `Generate a new 6-digit ID for this unclaimed record? The old ID will be invalidated.`, onConfirm: () => { setConfirmState({ open: false, title: '', message: '', onConfirm: () => {} }); regenerateId(e.id) } })
                         }} className="text-[#1E4E8C] hover:text-[#0B1F3A] text-xs font-medium mr-2">Regenerate ID</button>
                       )}
+                      <button onClick={() => setArchiveTarget(e)} className="text-red-500 hover:text-red-700 text-xs font-medium">Delete</button>
                     </td>
                   </tr>
                 ))}
@@ -498,6 +531,12 @@ export default function AdminRegistrar() {
         message={confirmState.message}
         onConfirm={confirmState.onConfirm}
         onCancel={() => setConfirmState({ open: false, title: '', message: '', onConfirm: () => {} })}
+      />
+
+      <ConfirmModal open={!!archiveTarget} title="Delete Student Record"
+        message={`Are you sure you want to delete this student record? This action cannot be easily undone. The record will be archived and academic history preserved, but the student's class registrations will be withdrawn.`}
+        confirmLabel="Delete" danger onConfirm={() => archiveTarget && archiveStudent(archiveTarget)}
+        onCancel={() => setArchiveTarget(null)}
       />
     </div>
   )

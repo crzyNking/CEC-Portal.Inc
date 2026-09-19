@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import { supabase } from '../../lib/supabase'
+import { useAuthModalStore } from '../../store/authModalStore'
 
 export default function KindergartenEnrollment() {
   const [formData, setFormData] = useState({
@@ -90,9 +91,9 @@ export default function KindergartenEnrollment() {
               <p className="text-[11px] text-white/50 mt-2.5">Keep this number safe — you'll need it to sign up and log in.</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <a href="/signup" className="inline-block bg-[#1E4E8C] hover:bg-[#0B1F3A] text-white font-semibold py-3 px-6 rounded-xl text-sm transition-all duration-200">
+              <button type="button" onClick={() => useAuthModalStore.getState().openSignupPrefilled(generatedId, formData.parentEmail)} className="inline-block bg-[#1E4E8C] hover:bg-[#0B1F3A] text-white font-semibold py-3 px-6 rounded-xl text-sm transition-all duration-200">
                 Sign Up Now
-              </a>
+              </button>
               <a href="/" className="inline-block bg-gray-100 hover:bg-gray-200 text-[#0B1F3A] font-semibold py-3 px-6 rounded-xl text-sm transition">
                 Back to Home
               </a>

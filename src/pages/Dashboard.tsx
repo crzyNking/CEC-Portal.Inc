@@ -97,7 +97,7 @@ export function Dashboard() {
         }))
       }
 
-      const { data: rosterRows } = await supabase.from('class_rosters').select('class_id').eq('student_id', user.id)
+      const { data: rosterRows } = await supabase.from('class_rosters').select('class_id').eq('student_id', user.id).eq('status', 'enrolled')
       const classIds = [...new Set((rosterRows || []).map(r => r.class_id))]
       if (classIds.length) {
         const today = new Date().toISOString().split('T')[0]

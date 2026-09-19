@@ -19,7 +19,7 @@ import {
 const modalBackdrop = { background: 'rgba(11, 31, 58, 0.6)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)' }
 
 export function AuthModal() {
-  const { open, mode, closeAuth } = useAuthModalStore()
+  const { open, mode, presetIdNumber, presetEmail, closeAuth } = useAuthModalStore()
   const { signInWithEmail, signUpWithEmail, signInWithGoogle, error, setError } = useAuthStore()
   const addNotification = useNotificationStore((s) => s.addNotification)
   const { school } = useSettings()
@@ -37,9 +37,10 @@ export function AuthModal() {
       setAuthTab(mode)
       setSubmitting(false)
       setError(null)
-      setIdNumber('')
+      setIdNumber(presetIdNumber || '')
+      setEmail(presetEmail || '')
     }
-  }, [open, mode, setError])
+  }, [open, mode, presetIdNumber, presetEmail, setError])
 
   useEffect(() => {
     if (open) {

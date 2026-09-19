@@ -131,7 +131,26 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       }
       return false
     } catch (error) {
-      set({ error: error instanceof Error ? error.message : 'Failed to sign in' })
+      let message = error instanceof Error ? error.message : 'Failed to sign in'
+      // Distinguish unregistered email from wrong password / unconfirmed account
+      const errCode = (error as { code?: string })?.code || ''
+      if (errCode === 'user_not_found' || /user not found/i.test(message)) {
+        message = 'This email is not registered in the school portal. Please sign up first.'
+      } else if (/email not confirmed/i.test(message)) {
+        message = 'Please confirm your email address before logging in.'
+      } else if (/invalid login credentials/i.test(message)) {
+        try {
+          const { data: registered } = await supabase.rpc('check_email_registered', { p_email: email })
+          if (registered === false) {
+            message = 'This email is not registered in the school portal. Please sign up first.'
+          } else {
+            message = 'Incorrect password for this account.'
+          }
+        } catch {
+          message = 'Incorrect email or password.'
+        }
+      }
+      set({ error: message })
       return false
     }
   },

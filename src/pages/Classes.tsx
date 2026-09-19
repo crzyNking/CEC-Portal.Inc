@@ -120,6 +120,7 @@ export function Classes() {
         .from('class_rosters')
         .select('*, classes(*)')
         .eq('student_id', user.id)
+        .eq('status', 'enrolled')
       if (error || !data) { setLoading(false); return }
 
       const aids = [...new Set(data.map(r => r.classes?.adviser_id).filter(Boolean))] as string[]
@@ -247,9 +248,25 @@ export function Classes() {
 
   const confirmUn = async () => {
     if (!unTarget) return
-    const { error } = await supabase.from('class_rosters').delete().eq('id', unTarget.roster_id)
-    if (error) notify.error({ title: 'Could not unenroll. Only administrators can manage enrollment.' })
-    else {
+    // Mark as withdrawn in the actual database (persists across refresh/devices)
+    const { error } = await supabase
+      .from('class_rosters')
+      .update({ status: 'withdrawn' })
+      .eq('id', unTarget.roster_id)
+      .eq('student_id', user?.id || '')
+    if (error) {
+      // Fallback: hard delete if the status update is not permitted
+      const { error: delErr } = await supabase.from('class_rosters')
+        .delete()
+        .eq('id', unTarget.roster_id)
+        .eq('student_id', user?.id || '')
+      if (delErr) notify.error({ title: 'Could not unenroll. Only administrators can manage enrollment.' })
+      else {
+        setClasses(p => p.filter(c => c.roster_id !== unTarget.roster_id))
+        notify.success({ title: 'Unenrolled from class' })
+        if (sel?.roster_id === unTarget.roster_id) goBack()
+      }
+    } else {
       setClasses(p => p.filter(c => c.roster_id !== unTarget.roster_id))
       notify.success({ title: 'Unenrolled from class' })
       if (sel?.roster_id === unTarget.roster_id) goBack()

@@ -537,7 +537,7 @@ export default function AdminFaculty() {
                 <select value={gradeForm.student_id} onChange={(ev) => setGradeForm({ ...gradeForm, student_id: ev.target.value })}
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#1E4E8C]/20 focus:border-[#1E4E8C]" required>
                   <option value="">Select student</option>
-                  {rosters.filter(r => r.class_id === selectedClass?.id).map((r) => {
+                  {rosters.filter(r => r.class_id === selectedClass?.id && r.status === 'enrolled').map((r) => {
                     const s = getStudent(r.student_id)
                     return <option key={r.student_id} value={r.student_id}>{s?.full_name || r.student_name}</option>
                   })}
@@ -618,7 +618,7 @@ export default function AdminFaculty() {
                 <select value={attForm.student_id} onChange={(ev) => setAttForm({ ...attForm, student_id: ev.target.value })}
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#1E4E8C]/20 focus:border-[#1E4E8C]" required>
                   <option value="">Select student</option>
-                  {rosters.filter(r => r.class_id === selectedClass?.id).map((r) => {
+                  {rosters.filter(r => r.class_id === selectedClass?.id && r.status === 'enrolled').map((r) => {
                     const s = getStudent(r.student_id)
                     return <option key={r.student_id} value={r.student_id}>{s?.full_name || r.student_name}</option>
                   })}
