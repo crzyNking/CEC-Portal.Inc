@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import { useChatStore, getWelcomeMessages, getSystemPrompt } from '../store/chatStore'
 import { useAuthStore } from '../store/authStore'
+import { supabase } from '../lib/supabase'
 
 const CHAT_API_URL = '/api/chat'
 
@@ -93,9 +94,13 @@ export function Chatbot() {
         { role: 'user' as const, content: userMessage },
       ]
 
+      const { data: { session } } = await supabase.auth.getSession()
       const response = await fetch(CHAT_API_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
+        },
         body: JSON.stringify({
           model: 'z-ai/glm-5.2:free',
           messages: conversationHistory,

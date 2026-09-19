@@ -105,11 +105,11 @@ export default function AdminRegistrar() {
   const addAcademicRecord = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const { error } = await supabase.from('academic_records').insert({
+      const { data: rec, error } = await supabase.from('academic_records').insert({
         ...academicForm, created_by: user?.id,
-      })
+      }).select().single()
       if (error) throw error
-      await logAdminActivity('created', 'academic_record', undefined, { subject: academicForm.subject })
+      await logAdminActivity('created', 'academic_record', rec?.id ?? null, { subject: academicForm.subject })
       addNotification({ type: 'success', title: 'Academic record added' })
       setAcademicForm({ student_id: '', enrollment_id: '', subject: '', grade: '', semester: '', school_year: '', remarks: '' })
       load()
@@ -121,11 +121,11 @@ export default function AdminRegistrar() {
   const addDocument = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const { error } = await supabase.from('document_requests').insert({
+      const { data: doc, error } = await supabase.from('document_requests').insert({
         ...docForm, requested_at: new Date().toISOString(),
-      })
+      }).select().single()
       if (error) throw error
-      await logAdminActivity('created', 'document_request', undefined, { doc_type: docForm.doc_type })
+      await logAdminActivity('created', 'document_request', doc?.id ?? null, { doc_type: docForm.doc_type })
       addNotification({ type: 'success', title: 'Document request created' })
       setDocForm({ student_id: '', enrollment_id: '', student_name: '', doc_type: '', notes: '' })
       load()

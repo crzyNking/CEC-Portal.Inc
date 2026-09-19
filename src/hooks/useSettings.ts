@@ -89,10 +89,9 @@ function setupRealtime() {
 
   realtimeChannel = supabase
     .channel('cec-content-realtime')
-    .on('postgres_changes', { event: '*', schema: 'public' }, () => {
-      if (reloadTimer) clearTimeout(reloadTimer)
-      reloadTimer = setTimeout(() => { reloadSettings() }, 500)
-    })
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'school_settings' }, scheduleReload)
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'website_settings' }, scheduleReload)
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'homepage_content' }, scheduleReload)
     .subscribe((status) => {
       if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
         supabase.removeChannel(realtimeChannel!)
@@ -100,6 +99,11 @@ function setupRealtime() {
         setTimeout(() => setupRealtime(), 5000)
       }
     })
+}
+
+function scheduleReload() {
+  if (reloadTimer) clearTimeout(reloadTimer)
+  reloadTimer = setTimeout(() => { reloadSettings() }, 500)
 }
 
 async function reloadSettings() {

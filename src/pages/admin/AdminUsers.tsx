@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import { logAdminActivity } from '../../lib/activityLog'
 import { useNotificationStore } from '../../store/notificationStore'
+import ConfirmModal from '../../components/ConfirmModal'
 
 interface UserProfile { id: string; email: string | null; full_name: string | null; avatar_url: string | null; role: string; created_at: string }
 
@@ -9,6 +10,7 @@ export default function AdminUsers() {
   const [users, setUsers] = useState<UserProfile[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
+  const [roleTarget, setRoleTarget] = useState<UserProfile | null>(null)
   const addNotification = useNotificationStore((s) => s.addNotification)
 
   useEffect(() => { load() }, [])
@@ -28,12 +30,12 @@ export default function AdminUsers() {
 
   async function toggleRole(user: UserProfile) {
     const newRole = user.role === 'admin' ? 'user' : 'admin'
-    if (!confirm(`Change ${user.full_name || user.email} to ${newRole}?`)) return
     try {
       const { error } = await supabase.from('profiles').update({ role: newRole }).eq('id', user.id)
       if (error) throw error
       await logAdminActivity('toggled', 'user', user.id, { full_name: user.full_name, email: user.email, new_role: newRole })
       addNotification({ type: 'success', title: 'Role updated' })
+      setRoleTarget(null)
       load()
     } catch (err) {
       addNotification({ type: 'error', title: 'Failed to update', message: err instanceof Error ? err.message : 'Unknown error' })
@@ -83,7 +85,7 @@ export default function AdminUsers() {
                   </td>
                   <td className="px-4 py-3 text-gray-500 text-xs">{new Date(u.created_at).toLocaleDateString()}</td>
                   <td className="px-4 py-3 text-right">
-                    <button onClick={() => toggleRole(u)} className="text-[#1E4E8C] hover:text-[#0B1F3A] hover:underline text-xs font-medium">
+                    <button onClick={() => setRoleTarget(u)} className="text-[#1E4E8C] hover:text-[#0B1F3A] hover:underline text-xs font-medium">
                       {u.role === 'admin' ? 'Remove Admin' : 'Make Admin'}
                     </button>
                   </td>
@@ -93,6 +95,11 @@ export default function AdminUsers() {
           </table>
         </div>
       )}
+
+      <ConfirmModal open={!!roleTarget} title="Change User Role"
+        message={`Are you sure you want to change ${roleTarget?.full_name || roleTarget?.email || 'this user'}'s role to ${roleTarget?.role === 'admin' ? 'user' : 'admin'}?`}
+        confirmLabel="Confirm" onConfirm={() => roleTarget && toggleRole(roleTarget)}
+        onCancel={() => setRoleTarget(null)} />
     </div>
   )
 }

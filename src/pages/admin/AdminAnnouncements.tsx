@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import { logAdminActivity } from '../../lib/activityLog'
 import { useNotificationStore } from '../../store/notificationStore'
+import ConfirmModal from '../../components/ConfirmModal'
 
 interface Announcement {
   id: string
@@ -38,6 +39,7 @@ export default function AdminAnnouncements() {
   const [loading, setLoading] = useState(true)
   const [editing, setEditing] = useState<Partial<Announcement> | null>(null)
   const [saving, setSaving] = useState(false)
+  const [deleteTarget, setDeleteTarget] = useState<Announcement | null>(null)
   const addNotification = useNotificationStore((s) => s.addNotification)
 
   useEffect(() => { load() }, [])
@@ -89,13 +91,13 @@ export default function AdminAnnouncements() {
   }
 
   async function remove(id: string) {
-    if (!confirm('Delete this announcement?')) return
     try {
       const item = items.find((a) => a.id === id)
       const { error } = await supabase.from('announcements').delete().eq('id', id)
       if (error) throw error
       await logAdminActivity('deleted', 'announcement', id, { title: item?.title })
       addNotification({ type: 'success', title: 'Deleted' })
+      setDeleteTarget(null)
       load()
     } catch (err) {
       addNotification({ type: 'error', title: 'Failed to delete', message: err instanceof Error ? err.message : 'Unknown error' })
@@ -218,7 +220,7 @@ export default function AdminAnnouncements() {
                   </td>
                   <td className="px-4 py-3 text-right space-x-2">
                     <button onClick={() => setEditing(a)} className="text-[#1E4E8C] hover:text-[#0B1F3A] hover:underline text-xs font-medium">Edit</button>
-                    <button onClick={() => remove(a.id)} className="text-red-500 hover:underline text-xs font-medium">Delete</button>
+                    <button onClick={() => setDeleteTarget(a)} className="text-red-500 hover:underline text-xs font-medium">Delete</button>
                   </td>
                 </tr>
               ))}
@@ -226,6 +228,11 @@ export default function AdminAnnouncements() {
           </table>
         </div>
       )}
+
+      <ConfirmModal open={!!deleteTarget} title="Delete Announcement"
+        message={`Are you sure you want to delete "${deleteTarget?.title || deleteTarget?.message?.slice(0, 50) || 'this announcement'}"? This cannot be undone.`}
+        confirmLabel="Delete" danger onConfirm={() => remove(deleteTarget!.id)}
+        onCancel={() => setDeleteTarget(null)} />
     </div>
   )
 }

@@ -27,15 +27,16 @@ export default function AdminSettings() {
   async function save() {
     setSaving(true)
     try {
+      let entityId = settings.id || null
       if (settings.id) {
         const { error } = await supabase.from('website_settings').update(settings).eq('id', settings.id)
         if (error) throw error
       } else {
         const { data, error } = await supabase.from('website_settings').insert([settings]).select().single()
         if (error) throw error
-        if (data) setSettings(data)
+        if (data) { setSettings(data); entityId = data.id }
       }
-      await logAdminActivity('saved', 'website_settings', settings.id)
+      await logAdminActivity('saved', 'website_settings', entityId ?? undefined)
       addNotification({ type: 'success', title: 'Website settings saved' })
     } catch (err) {
       addNotification({ type: 'error', title: 'Failed to save', message: err instanceof Error ? err.message : 'Unknown error' })

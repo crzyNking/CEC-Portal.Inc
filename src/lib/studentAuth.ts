@@ -70,14 +70,6 @@ export async function loginWithIdNumber(idNumber: string, password: string): Pro
   }
   const ok = await useAuthStore.getState().signInWithEmail(email, password)
   if (!ok) {
-    const userId = useAuthStore.getState().user?.id
-    if (userId) {
-      await supabase.from('activity_logs').insert({
-        user_id: userId,
-        action: 'login_failed',
-        details: { method: 'id_number', id_number: idNumber },
-      })
-    }
     return { success: false, message: 'Incorrect password for this ID Number.' }
   }
   const userId = useAuthStore.getState().user?.id
