@@ -122,11 +122,15 @@ export default function Payments() {
       notify.warning({ title: 'Nothing to settle', message: 'Your balance is fully settled.' })
       return
     }
+    if (!currentBilling?.id) {
+      notify.warning({ title: 'No billing account', message: 'No active billing account found. Please contact the registrar.' })
+      return
+    }
     setSubmitting(true)
     try {
       const refNo = `CEC-PAY-${new Date().getFullYear()}-${Math.floor(10000 + Math.random() * 90000)}`
       const { error } = await supabase.from('payments').insert({
-        billing_id: currentBilling?.id || '',
+        billing_id: currentBilling.id,
         amount: settleAmount,
         method: selectedMethod === 'banking' ? 'Online Banking' : selectedMethod === 'ewallet' ? 'GCash / Maya' : 'Over-the-Counter',
         reference_no: refNo,

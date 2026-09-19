@@ -68,10 +68,6 @@ export default function AdminDashboard() {
     setLoading(false)
   }
 
-  useEffect(() => {
-    loadDashboard()
-  }, [])
-
   if (loading || !hasRole('super_admin')) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
@@ -181,12 +177,4 @@ export default function AdminDashboard() {
       </div>
     </div>
   )
-}
-
-interface Stats {
-  users: number
-  news: number
-  events: number
-  programs: number
-  announcements: number
 }

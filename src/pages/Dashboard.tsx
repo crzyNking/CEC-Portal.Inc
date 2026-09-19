@@ -25,8 +25,8 @@ interface GradeRecord {
 interface AnnouncementRecord {
   id: string
   title: string
-  content: string
-  priority: string
+  message: string
+  priority: number
   created_at: string
 }
 
@@ -50,7 +50,7 @@ function timeAgo(dateStr: string) {
 export function Dashboard() {
   const user = useAuthStore((s) => s.user)
   const profile = useAuthStore((s) => s.profile)
-  const isAdmin = profile?.role === 'admin' || profile?.role === 'super_admin'
+  const isAdmin = ['admin', 'super_admin', 'registrar', 'edp', 'accounting', 'faculty', 'other_admin'].includes(profile?.role || '')
   const notify = useNotification()
   const location = useLocation()
 
@@ -195,8 +195,8 @@ export function Dashboard() {
             {announcements.length > 0 ? announcements.slice(0, 5).map(a => (
               <div key={a.id} className="py-[11px] border-b border-[#EEF0F5] last:border-0">
                 <div className="text-[12px] text-[#3B4256] leading-[1.45]">
-                  {a.priority === 'urgent' && <span className="text-[#E4483F] font-bold">[URGENT] </span>}
-                  {a.content || a.title}
+                  {a.priority >= 3 && <span className="text-[#E4483F] font-bold">[URGENT] </span>}
+                  {a.message || a.title}
                 </div>
                 <div className="text-[10.5px] text-[#9AA1B5] mt-[5px]">{timeAgo(a.created_at)}</div>
               </div>

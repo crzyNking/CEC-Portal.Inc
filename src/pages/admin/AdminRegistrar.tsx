@@ -188,9 +188,9 @@ export default function AdminRegistrar() {
             <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="border border-gray-300 rounded-lg px-3 py-2 text-sm">
               <option value="all">All Status</option>
               <option value="pending">Pending</option>
-              <option value="approved">Approved</option>
+              <option value="reviewed">Reviewed</option>
+              <option value="accepted">Accepted</option>
               <option value="rejected">Rejected</option>
-              <option value="enrolled">Enrolled</option>
             </select>
             <select value={claimFilter} onChange={(e) => setClaimFilter(e.target.value)} className="border border-gray-300 rounded-lg px-3 py-2 text-sm">
               <option value="all">All Claims</option>
@@ -233,9 +233,9 @@ export default function AdminRegistrar() {
                     <td className="px-4 py-3">
                       <select value={e.status} onChange={(ev) => updateEnrollmentStatus(e.id, ev.target.value)} className="border border-gray-300 rounded-lg px-2 py-1 text-xs text-gray-700">
                         <option value="pending">Pending</option>
-                        <option value="approved">Approved</option>
+                        <option value="reviewed">Reviewed</option>
+                        <option value="accepted">Accepted</option>
                         <option value="rejected">Rejected</option>
-                        <option value="enrolled">Enrolled</option>
                       </select>
                     </td>
                     <td className="px-4 py-3 text-gray-500 text-xs">{new Date(e.created_at).toLocaleDateString()}</td>

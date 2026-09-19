@@ -25,6 +25,19 @@ interface EnrolledClass {
   teacher_name: string
 }
 
+interface Classmate {
+  student_id: string
+  full_name: string
+}
+
+interface Announcement {
+  id: string
+  title: string
+  message: string
+  priority: number
+  created_at: string
+}
+
 type View = 'grid' | 'stream' | 'classwork' | 'people' | 'assignment'
 
 const BANNERS = [
@@ -51,27 +64,6 @@ const CLASSWORK_ITEMS = [
   { type: 'material' as const, title: 'Real-World IT Project Management \u2013 NOTES', due: 'Posted Jul 4' },
   { type: 'material' as const, title: 'Strategic IT Integration: Building the Connected En\u2026', due: 'Posted Jun 27' },
 ]
-
-const DEMO_CLASSMATES = [
-  { name: 'Neyasser', color: '#8a94a8' },
-  { name: 'Alexander Abadiano', color: '#7c3fae' },
-  { name: 'jhonrash abella', color: '#8a94a8' },
-  { name: 'Christian rich Acal', color: '#c0562f' },
-  { name: 'aubriemhar arbol', color: '#1f4fa3' },
-  { name: 'Zedrych Arenal', color: '#2e5c9c' },
-  { name: 'Feb Ashrey Arroyo', color: '#c0562f' },
-  { name: 'Jerome Baculta', color: '#8a94a8' },
-]
-
-function getStreamItems() {
-  return [
-    { type: 'material' as const, title: 'Midterm Requirements', date: 'Aug 14' },
-    { type: 'quiz' as const, title: 'MIDTERMS Discussion', date: 'Aug 5' },
-    { type: 'material' as const, title: 'Week 1 2 and 3 Module', date: 'Jul 11' },
-    { type: 'material' as const, title: 'Week 3 \u2013 Foundations of System Design', date: 'Jul 10' },
-    { type: 'material' as const, title: 'Week 3 \u2013 Foundations of System Design', date: 'Jul 10' },
-  ]
-}
 
 function init(name: string) {
   return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase() || '?'
@@ -116,6 +108,8 @@ export function Classes() {
   const [done, setDone] = useState(false)
   const [unTarget, setUnTarget] = useState<EnrolledClass | null>(null)
   const [showUn, setShowUn] = useState(false)
+  const [classmates, setClassmates] = useState<Classmate[]>([])
+  const [announcements, setAnnouncements] = useState<Announcement[]>([])
 
   useEffect(() => {
     if (!user?.id) return
@@ -148,6 +142,30 @@ export function Classes() {
         adviser_id: r.classes?.adviser_id ?? null,
         teacher_name: r.classes?.adviser_id ? (tm[r.classes.adviser_id] ?? 'Teacher') : 'Teacher',
       })))
+
+      const classIds = data.map(r => r.class_id).filter(Boolean) as string[]
+      if (classIds.length) {
+        const { data: rosterData } = await supabase
+          .from('class_rosters')
+          .select('student_id')
+          .in('class_id', classIds)
+        const sids = [...new Set((rosterData || []).map(r => r.student_id).filter(sid => sid !== user.id))]
+        if (sids.length) {
+          const { data: profiles } = await supabase
+            .from('profiles')
+            .select('id, full_name')
+            .in('id', sids)
+          setClassmates((profiles || []).map(p => ({ student_id: p.id, full_name: p.full_name || 'Student' })))
+        }
+      }
+
+      const { data: annData } = await supabase
+        .from('announcements')
+        .select('id, title, message, priority, created_at')
+        .eq('is_active', true)
+        .order('created_at', { ascending: false })
+        .limit(10)
+      if (annData) setAnnouncements(annData as Announcement[])
       setLoading(false)
     })()
   }, [user?.id])
@@ -298,12 +316,14 @@ export function Classes() {
                   <MessageCircle size={15} /> New announcement
                 </button>
                 <div className="bg-white border border-[#e1e5ec] rounded-xl overflow-hidden">
-                  {getStreamItems().map((item, i) => (
-                    <div key={i} onClick={() => item.type === 'material' ? openWork(item.title) : goTab('classwork')}
+                  {announcements.length === 0 ? (
+                    <div className="px-[18px] py-6 text-center text-[13px] text-[#6b7486]">No announcements yet.</div>
+                  ) : announcements.map((item) => (
+                    <div key={item.id} onClick={() => goTab('classwork')}
                       className="flex items-center gap-3 px-[18px] py-3.5 border-b border-[#e1e5ec] text-[13.5px] last:border-b-0 hover:bg-[rgba(31,79,163,.04)] cursor-pointer">
-                      <ItemIcon type={item.type} />
-                      <div className="flex-1 min-w-0"><b>{sel.teacher_name}</b> posted a new {item.type}: {item.title}</div>
-                      <div className="text-[11.5px] text-[#6b7486] whitespace-nowrap">{item.date}</div>
+                      <ItemIcon type={item.priority >= 3 ? 'quiz' : 'material'} />
+                      <div className="flex-1 min-w-0"><b>{item.title}</b>{item.message ? `: ${item.message}` : ''}</div>
+                      <div className="text-[11.5px] text-[#6b7486] whitespace-nowrap">{new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
                       <span className="text-[#6b7486] text-base px-1 select-none">{'\u22EE'}</span>
                     </div>
                   ))}
@@ -433,14 +453,16 @@ export function Classes() {
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <h3 className="text-[13px] font-bold m-0">Classmates</h3>
-                  <span className="text-xs text-[#6b7486] font-medium">{DEMO_CLASSMATES.length} students</span>
+                  <span className="text-xs text-[#6b7486] font-medium">{classmates.length} students</span>
                 </div>
-                {DEMO_CLASSMATES.map((m, i) => (
-                  <div key={i} className="flex items-center gap-3.5 py-[11px] border-b border-[#e1e5ec] text-[13.5px] last:border-b-0">
-                    <div className="w-8 h-8 rounded-full text-white flex items-center justify-center text-xs font-bold shrink-0" style={{ background: m.color }}>
-                      {m.name[0].toUpperCase()}
+                {classmates.length === 0 ? (
+                  <div className="py-4 text-center text-[13px] text-[#6b7486]">No classmates found.</div>
+                ) : classmates.map((m, i) => (
+                  <div key={m.student_id} className="flex items-center gap-3.5 py-[11px] border-b border-[#e1e5ec] text-[13.5px] last:border-b-0">
+                    <div className="w-8 h-8 rounded-full text-white flex items-center justify-center text-xs font-bold shrink-0" style={{ background: AVATAR_COLORS[i % AVATAR_COLORS.length] }}>
+                      {init(m.full_name)}
                     </div>
-                    {m.name}
+                    {m.full_name}
                   </div>
                 ))}
               </div>

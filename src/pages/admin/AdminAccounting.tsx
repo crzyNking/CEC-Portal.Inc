@@ -123,8 +123,16 @@ export default function AdminAccounting() {
 
   const unverifyPayment = async (paymentId: string) => {
     try {
+      const { data: pay } = await supabase.from('payments').select('billing_id, amount').eq('id', paymentId).single()
       const { error } = await supabase.from('payments').update({ verified: false, verified_by: null, verified_at: null }).eq('id', paymentId)
       if (error) throw error
+      if (pay?.billing_id) {
+        const { data: bill } = await supabase.from('billing_accounts').select('balance').eq('id', pay.billing_id).single()
+        if (bill) {
+          const newBal = bill.balance + pay.amount
+          await supabase.from('billing_accounts').update({ balance: newBal, status: 'partial' }).eq('id', pay.billing_id)
+        }
+      }
       await logAdminActivity('unverified', 'payment', paymentId)
       addNotification({ type: 'success', title: 'Payment unverified' })
       load()
