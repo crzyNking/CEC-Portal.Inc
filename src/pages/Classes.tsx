@@ -1,9 +1,9 @@
 import { useState, useEffect, useMemo } from 'react'
-import { useAuthStore } from '@/store/authStore'
-import { useNotification } from '@/hooks/useNotification'
-import { supabase } from '@/lib/supabase'
-import StudentLayout from '@/components/StudentLayout'
-import ConfirmModal from '@/components/ConfirmModal'
+import { useAuthStore } from '../store/authStore'
+import { useNotification } from '../hooks/useNotification'
+import { supabase } from '../lib/supabase'
+import StudentLayout from '../components/StudentLayout'
+import ConfirmModal from '../components/ConfirmModal'
 import {
   Search, Pencil, Copy, MoreHorizontal, FileText,
   CheckCircle, AlignJustify, ChevronDown, MessageCircle,
@@ -102,14 +102,13 @@ function Tabs({ active, onTab }: { active: string; onTab: (t: 'stream' | 'classw
 }
 
 export function Classes() {
-  const { notify } = useNotification()
+  const notify = useNotification()
   const user = useAuthStore(s => s.user)
 
   const [classes, setClasses] = useState<EnrolledClass[]>([])
   const [loading, setLoading] = useState(true)
   const [view, setView] = useState<View>('grid')
   const [sel, setSel] = useState<EnrolledClass | null>(null)
-  const [tab, setTab] = useState<'stream' | 'classwork' | 'people'>('stream')
   const [q, setQ] = useState('')
   const [nicks, setNicks] = useState<Record<string, string>>({})
   const [menu, setMenu] = useState<string | null>(null)
@@ -163,8 +162,8 @@ export function Classes() {
   const termDisplay = first?.semester ? `${first.semester}, A.Y. ${first.school_year ?? '2026\u20132027'}` : '1st Semester, A.Y. 2026\u20132027'
   const termPill = first?.school_year ? `Current Term (A.Y. ${first.school_year.split('-').map(y => y.slice(2)).join('\u2013')})` : 'Current Term (A.Y. 26\u201327)'
 
-  const openClass = (c: EnrolledClass, v: View = 'stream') => { setSel(c); setTab(v as 'stream' | 'classwork' | 'people'); setView(v); setWork(null); setDone(false); setMenu(null) }
-  const goTab = (t: 'stream' | 'classwork' | 'people') => { setTab(t); setView(t); setWork(null); setDone(false) }
+  const openClass = (c: EnrolledClass, v: View = 'stream') => { setSel(c); setView(v); setWork(null); setDone(false); setMenu(null) }
+  const goTab = (t: 'stream' | 'classwork' | 'people') => { setView(t); setWork(null); setDone(false) }
   const openWork = (t: string) => { setWork(t); setDone(false); setView('assignment') }
   const goBack = () => { setView('grid'); setSel(null); setWork(null) }
 
@@ -175,13 +174,13 @@ export function Classes() {
   const handleEdit = (c: EnrolledClass, e: React.MouseEvent) => {
     e.stopPropagation(); setMenu(null)
     const n = window.prompt('Rename class nickname:', nicks[c.class_id] || c.name)
-    if (n?.trim()) { setNicks(p => ({ ...p, [c.class_id]: n.trim() })); notify.success('Nickname updated') }
+    if (n?.trim()) { setNicks(p => ({ ...p, [c.class_id]: n.trim() })); notify.success({ title: 'Nickname updated' }) }
   }
 
   const handleCopy = (c: EnrolledClass, e: React.MouseEvent) => {
     e.stopPropagation(); setMenu(null)
     const code = `k3f-${c.class_id.slice(0, 4)}`
-    navigator.clipboard?.writeText(code).then(() => notify.success(`Class code "${code}" copied`)).catch(() => notify.info(`Class code: ${code}`))
+    navigator.clipboard?.writeText(code).then(() => notify.success({ title: `Class code "${code}" copied` })).catch(() => notify.info({ title: `Class code: ${code}` }))
   }
 
   const handleUn = (c: EnrolledClass, e: React.MouseEvent) => {
@@ -191,10 +190,10 @@ export function Classes() {
   const confirmUn = async () => {
     if (!unTarget) return
     const { error } = await supabase.from('class_rosters').delete().eq('id', unTarget.roster_id)
-    if (error) notify.error('Could not unenroll. Only administrators can manage enrollment.')
+    if (error) notify.error({ title: 'Could not unenroll. Only administrators can manage enrollment.' })
     else {
       setClasses(p => p.filter(c => c.roster_id !== unTarget.roster_id))
-      notify.success('Unenrolled from class')
+      notify.success({ title: 'Unenrolled from class' })
       if (sel?.roster_id === unTarget.roster_id) goBack()
     }
     setShowUn(false); setUnTarget(null)
@@ -229,7 +228,7 @@ export function Classes() {
                     className="border-none outline-none bg-transparent text-[12.5px] text-[#1c2536] w-full placeholder:text-[#6b7486]" />
                 </div>
                 <div className="border border-[#e1e5ec] bg-white rounded-lg px-3.5 py-2 text-[12.5px] whitespace-nowrap">{termPill}</div>
-                <button onClick={() => notify.info('Class enrollment is handled by your teachers or the school admin.')}
+                <button onClick={() => notify.info({ title: 'Class enrollment is handled by your teachers or the school admin.' })}
                   className="bg-[#1f4fa3] text-white border-none rounded-lg px-4 py-[9px] text-[12.5px] font-semibold flex items-center gap-1.5 whitespace-nowrap hover:bg-[#1a4590] transition-colors">
                   + Join class
                 </button>
@@ -294,7 +293,7 @@ export function Classes() {
             <Tabs active="stream" onTab={goTab} />
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-[22px] items-start mt-[22px]">
               <div>
-                <button onClick={() => notify.info('Only teachers can post announcements in this class.')}
+                <button onClick={() => notify.info({ title: 'Only teachers can post announcements in this class.' })}
                   className="flex items-center gap-2 bg-white border border-[#e1e5ec] rounded-full px-[18px] py-2.5 text-[13px] font-semibold text-[#1f4fa3] mb-4 w-fit hover:bg-[rgba(31,79,163,.06)] transition-colors">
                   <MessageCircle size={15} /> New announcement
                 </button>
@@ -389,7 +388,7 @@ export function Classes() {
                 </div>
                 <div className="border-t border-[#e1e5ec] pt-3.5 flex flex-col gap-2.5">
                   <div className="text-[12.5px] font-semibold text-[#6b7486]">Class comments</div>
-                  <button onClick={() => notify.info('Comments are managed by your teacher.')} className="bg-transparent border-none text-[13px] text-[#1f4fa3] font-semibold cursor-pointer hover:underline">+ Add comment</button>
+                  <button onClick={() => notify.info({ title: 'Comments are managed by your teacher.' })} className="bg-transparent border-none text-[13px] text-[#1f4fa3] font-semibold cursor-pointer hover:underline">+ Add comment</button>
                 </div>
               </div>
               <div>
@@ -401,14 +400,14 @@ export function Classes() {
                   <button className="flex items-center justify-center gap-1.5 w-full border border-[#e1e5ec] rounded-lg py-2.5 text-[13px] font-semibold text-[#1c2536] bg-white mb-2.5 hover:bg-[rgba(31,79,163,.06)] transition-colors">
                     + Add or create
                   </button>
-                  <button onClick={() => { setDone(!done); notify.success(done ? 'Unsubmitted' : 'Marked as done') }}
+                  <button onClick={() => { setDone(!done); notify.success({ title: done ? 'Unsubmitted' : 'Marked as done' }) }}
                     className="flex items-center justify-center w-full bg-[#1f4fa3] text-white border-none rounded-lg py-2.5 text-[13px] font-bold hover:bg-[#1a4590] transition-colors">
                     {done ? 'Unsubmit' : 'Mark as done'}
                   </button>
                 </div>
                 <div className="bg-white border border-[#e1e5ec] rounded-xl p-4">
                   <div className="text-[12.5px] font-semibold text-[#6b7486] mb-2">Private comments</div>
-                  <button onClick={() => notify.info('Comments are managed by your teacher.')} className="bg-transparent border-none text-[12.5px] text-[#1f4fa3] cursor-pointer hover:underline">
+                  <button onClick={() => notify.info({ title: 'Comments are managed by your teacher.' })} className="bg-transparent border-none text-[12.5px] text-[#1f4fa3] cursor-pointer hover:underline">
                     + Add comment to {sel.teacher_name.split(' ')[0]}...
                   </button>
                 </div>
