@@ -158,7 +158,7 @@ export default function StudentLayout({ children, title = 'Student Campus Portal
           ))}
 
           <div className="mt-[14px] border-t border-[#E6E8EE] pt-[14px]">
-            <Link to="/programs" className="flex items-center gap-2.5 px-2.5 py-[9px] rounded-lg text-[13px] font-medium text-[#525A6E] hover:bg-[#F5F7FC] transition-colors">
+            <Link to="/help" className="flex items-center gap-2.5 px-2.5 py-[9px] rounded-lg text-[13px] font-medium text-[#525A6E] hover:bg-[#F5F7FC] transition-colors">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 2-3 4"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
               Help
             </Link>

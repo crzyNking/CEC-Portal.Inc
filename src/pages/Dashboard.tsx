@@ -30,11 +30,21 @@ interface AnnouncementRecord {
   created_at: string
 }
 
+interface ClassworkRecord {
+  id: string
+  class_id: string
+  type: string
+  title: string
+  due_date: string | null
+  created_at: string
+}
+
 const CLASS_TRACKS = [
   { title: 'Project Milestone I', sub: '(UI Design)', due: 'Oct 23' },
   { title: 'Assignment', sub: '(Research Paper)', due: 'Nov 5' },
   { title: 'Extracurricular', sub: "(Student Gov't Planning)", due: 'Nov 12' },
 ]
+// Fallback used only when no real classwork exists
 
 function timeAgo(dateStr: string) {
   const diff = Date.now() - new Date(dateStr).getTime()
@@ -58,6 +68,7 @@ export function Dashboard() {
   const [billing, setBilling] = useState<BillingRecord[]>([])
   const [grades, setGrades] = useState<GradeRecord[]>([])
   const [announcements, setAnnouncements] = useState<AnnouncementRecord[]>([])
+  const [classwork, setClasswork] = useState<ClassworkRecord[]>([])
 
   useEffect(() => {
     if (location.state?.scrollTo) {
@@ -84,6 +95,20 @@ export function Dashboard() {
           if (a.end_date && new Date(a.end_date) < now) return false
           return true
         }))
+      }
+
+      const { data: rosterRows } = await supabase.from('class_rosters').select('class_id').eq('student_id', user.id)
+      const classIds = [...new Set((rosterRows || []).map(r => r.class_id))]
+      if (classIds.length) {
+        const today = new Date().toISOString().split('T')[0]
+        const { data: cwData } = await supabase
+          .from('classwork')
+          .select('id, class_id, type, title, due_date, created_at')
+          .in('class_id', classIds)
+          .gte('due_date', today)
+          .order('due_date', { ascending: true })
+          .limit(3)
+        if (cwData) setClasswork(cwData)
       }
     }
     load()
@@ -144,7 +169,13 @@ export function Dashboard() {
 
           <div id="tracks" className="text-[11.5px] text-[#9AA1B5] font-semibold mb-2.5">Class Tracks</div>
           <div className="flex flex-col sm:flex-row gap-3">
-            {CLASS_TRACKS.map(t => (
+            {classwork.length > 0 ? classwork.map(t => (
+              <div key={t.id} className="flex-1 border border-[#E6E8EE] rounded-[9px] px-3.5 py-3">
+                <div className="font-bold text-[12.6px] text-[#1F2433]">{t.title}</div>
+                <div className="text-[11px] text-[#7A8299] mt-0.5 mb-3.5 capitalize">{t.type}</div>
+                <div className="text-[11px] text-[#9AA1B5]">Due: <b className="text-[#4A5066] font-semibold">{t.due_date ? new Date(t.due_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'No date'}</b></div>
+              </div>
+            )) : CLASS_TRACKS.map(t => (
               <div key={t.title} className="flex-1 border border-[#E6E8EE] rounded-[9px] px-3.5 py-3">
                 <div className="font-bold text-[12.6px] text-[#1F2433]">{t.title}</div>
                 <div className="text-[11px] text-[#7A8299] mt-0.5 mb-3.5">{t.sub}</div>

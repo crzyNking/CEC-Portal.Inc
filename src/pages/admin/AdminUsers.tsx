@@ -47,6 +47,12 @@ export default function AdminUsers() {
     return !q || u.email?.toLowerCase().includes(q) || u.full_name?.toLowerCase().includes(q)
   })
 
+  const [page, setPage] = useState(1)
+  const PAGE_SIZE = 25
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
+  const safePage = Math.min(page, totalPages)
+  const pagedUsers = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE)
+
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
@@ -67,7 +73,9 @@ export default function AdminUsers() {
               </tr>
             </thead>
             <tbody>
-              {filtered.map((u) => (
+              {pagedUsers.length === 0 ? (
+                <tr><td colSpan={4} className="px-4 py-12 text-center text-gray-400">No users found.</td></tr>
+              ) : pagedUsers.map((u) => (
                 <tr key={u.id} className="border-b border-gray-50 hover:bg-gray-50/50">
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
@@ -93,6 +101,18 @@ export default function AdminUsers() {
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {totalPages > 1 && (
+        <div className="flex items-center justify-between px-4 py-3 border-t border-[rgba(11,31,58,0.08)]">
+          <span className="text-xs text-gray-500">Page {safePage} of {totalPages} · {filtered.length} users</span>
+          <div className="flex gap-2">
+            <button onClick={() => setPage(Math.max(1, safePage - 1))} disabled={safePage === 1}
+              className="px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-40">Prev</button>
+            <button onClick={() => setPage(Math.min(totalPages, safePage + 1))} disabled={safePage === totalPages}
+              className="px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-40">Next</button>
+          </div>
         </div>
       )}
 

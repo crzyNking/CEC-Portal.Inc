@@ -78,6 +78,13 @@ export default function AdminRegistrar() {
     )
   })
 
+  const [page, setPage] = useState(1)
+  const PAGE_SIZE = 25
+  const totalPages = Math.max(1, Math.ceil(filteredEnrollments.length / PAGE_SIZE))
+  const safePage = Math.min(page, totalPages)
+  const pagedEnrollments = filteredEnrollments.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE)
+  const resetPage = () => setPage(1)
+
   const regenerateId = async (enrollmentId: string) => {
     try {
       const { data: newId, error } = await supabase.rpc('regenerate_student_id_number', { p_submission_id: enrollmentId })
@@ -95,6 +102,37 @@ export default function AdminRegistrar() {
       const { error } = await supabase.from('enrollment_submissions').update({ status, updated_at: new Date().toISOString() }).eq('id', id)
       if (error) throw error
       await logAdminActivity('updated', 'enrollment_status', id, { status })
+
+      // On acceptance, auto-create a billing account for the student if none exists
+      if (status === 'accepted') {
+        const { data: sub } = await supabase.from('enrollment_submissions').select('student_id, first_name, last_name, level, grade_level, degree_program').eq('id', id).single()
+        if (sub?.student_id) {
+          const { data: existing } = await supabase.from('billing_accounts').select('id').eq('student_id', sub.student_id).limit(1)
+          if (!existing || existing.length === 0) {
+            const fullName = `${sub.first_name || ''} ${sub.last_name || ''}`.trim()
+            const { error: billErr } = await supabase.from('billing_accounts').insert({
+              student_id: sub.student_id,
+              enrollment_id: id,
+              student_name: fullName,
+              level: sub.degree_program || sub.level || '',
+              school_year: new Date().getFullYear() + '-' + (new Date().getFullYear() + 1),
+              semester: '1st Semester',
+              tuition_fee: 0,
+              misc_fees: 0,
+              discount: 0,
+              total_due: 0,
+              balance: 0,
+              status: 'pending',
+            })
+            if (billErr) {
+              addNotification({ type: 'warning', title: 'Billing account creation failed', message: billErr.message })
+            } else {
+              await logAdminActivity('created', 'billing_account', sub.student_id, { student: fullName })
+            }
+          }
+        }
+      }
+
       addNotification({ type: 'success', title: 'Status updated' })
       load()
     } catch (err) {
@@ -177,7 +215,7 @@ export default function AdminRegistrar() {
         <div>
           <div className="flex flex-wrap gap-3 mb-4">
             <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by name, ID, or parent..." className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-64" />
-            <select value={levelFilter} onChange={(e) => setLevelFilter(e.target.value)} className="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+            <select value={levelFilter} onChange={(e) => { setLevelFilter(e.target.value); resetPage() }} className="border border-gray-300 rounded-lg px-3 py-2 text-sm">
               <option value="all">All Levels</option>
               <option value="kindergarten">Kindergarten</option>
               <option value="elementary">Elementary</option>
@@ -185,14 +223,14 @@ export default function AdminRegistrar() {
               <option value="senior-high">Senior High</option>
               <option value="college">College</option>
             </select>
-            <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+            <select value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); resetPage() }} className="border border-gray-300 rounded-lg px-3 py-2 text-sm">
               <option value="all">All Status</option>
               <option value="pending">Pending</option>
               <option value="reviewed">Reviewed</option>
               <option value="accepted">Accepted</option>
               <option value="rejected">Rejected</option>
             </select>
-            <select value={claimFilter} onChange={(e) => setClaimFilter(e.target.value)} className="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+            <select value={claimFilter} onChange={(e) => { setClaimFilter(e.target.value); resetPage() }} className="border border-gray-300 rounded-lg px-3 py-2 text-sm">
               <option value="all">All Claims</option>
               <option value="claimed">Claimed</option>
               <option value="unclaimed">Unclaimed</option>
@@ -213,7 +251,9 @@ export default function AdminRegistrar() {
                 </tr>
               </thead>
               <tbody>
-                {filteredEnrollments.map((e) => (
+                {pagedEnrollments.length === 0 ? (
+                  <tr><td colSpan={7} className="px-4 py-12 text-center text-gray-400">No enrollments found.</td></tr>
+                ) : pagedEnrollments.map((e) => (
                   <tr key={e.id} className="border-b border-gray-50 hover:bg-gray-50/50">
                     <td className="px-4 py-3">
                       <div className="font-medium text-gray-800">{e.first_name} {e.middle_name || ''} {e.last_name}</div>
@@ -251,6 +291,17 @@ export default function AdminRegistrar() {
               </tbody>
             </table>
           </div>
+          {totalPages > 1 && (
+            <div className="flex items-center justify-between px-4 py-3 border-t border-[rgba(11,31,58,0.08)]">
+              <span className="text-xs text-gray-500">Page {safePage} of {totalPages} · {filteredEnrollments.length} records</span>
+              <div className="flex gap-2">
+                <button onClick={() => setPage(Math.max(1, safePage - 1))} disabled={safePage === 1}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-40">Prev</button>
+                <button onClick={() => setPage(Math.min(totalPages, safePage + 1))} disabled={safePage === totalPages}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-40">Next</button>
+              </div>
+            </div>
+          )}
         </div>
       )}
 

@@ -7,6 +7,7 @@ interface AnalyticsData {
   totalSessions: number
   lastActive: string
   loginCount: number
+  dailyCounts: Array<{ date: string; count: number }>
 }
 
 export function Analytics() {
@@ -33,10 +34,30 @@ export function Analytics() {
           .limit(1)
           .single()
 
+        // Activity per day for the last 14 days
+        const fourteenDaysAgo = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString()
+        const { data: recent } = await supabase
+          .from('activity_logs')
+          .select('created_at')
+          .eq('user_id', user.id)
+          .gte('created_at', fourteenDaysAgo)
+
+        const counts = new Map<string, number>()
+        for (let i = 13; i >= 0; i--) {
+          const d = new Date(Date.now() - i * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+          counts.set(d, 0)
+        }
+        ;(recent || []).forEach(r => {
+          const d = new Date(r.created_at).toISOString().split('T')[0]
+          if (counts.has(d)) counts.set(d, (counts.get(d) || 0) + 1)
+        })
+        const dailyCounts = Array.from(counts.entries()).map(([date, count]) => ({ date, count }))
+
         setAnalytics({
           totalSessions: activityCount || 0,
           lastActive: lastActivity?.created_at || user.created_at,
-          loginCount: activityCount || 0
+          loginCount: activityCount || 0,
+          dailyCounts,
         })
       } catch (error) {
         console.error('Error fetching analytics:', error)
@@ -142,17 +163,34 @@ export function Analytics() {
           })}
         </div>
 
-        {/* Activity Chart Placeholder */}
+        {/* Activity Chart */}
         <div className="rounded-2xl bg-white/90 backdrop-blur-sm border border-[rgba(11,31,58,0.08)] dark:bg-[#102A43]/80 dark:backdrop-blur-sm dark:border-white/[0.08] shadow-[0_4px_20px_rgba(11,31,58,0.06)] p-6 mb-8 transition-colors">
-          <h2 className="text-lg font-semibold text-[#0B1F3A] dark:text-white mb-4">Activity Overview</h2>
-          <div className="h-64 flex items-center justify-center border border-dashed border-gray-300 dark:border-white/[0.1] rounded-xl">
-            <div className="text-center">
-              <svg className="h-12 w-12 text-gray-400 mx-auto mb-3" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
-              </svg>
-              <p className="text-gray-500">Activity chart coming soon</p>
-            </div>
-          </div>
+          <h2 className="text-lg font-semibold text-[#0B1F3A] dark:text-white mb-4">Activity Overview (Last 14 Days)</h2>
+          {(() => {
+            const daily = analytics?.dailyCounts || []
+            const max = Math.max(...daily.map(d => d.count), 1)
+            if (daily.length === 0) {
+              return (
+                <div className="h-64 flex items-center justify-center border border-dashed border-gray-300 dark:border-white/[0.1] rounded-xl">
+                  <p className="text-gray-500">No activity in the last 14 days</p>
+                </div>
+              )
+            }
+            return (
+              <div className="flex items-end gap-1.5 h-64">
+                {daily.map(d => (
+                  <div key={d.date} className="flex-1 flex flex-col items-center justify-end h-full group relative">
+                    <span className="text-[10px] text-gray-500 mb-1 opacity-0 group-hover:opacity-100 transition-opacity">{d.count}</span>
+                    <div
+                      className="w-full rounded-t-md bg-[#1E4E8C]/70 hover:bg-[#1E4E8C] transition-colors min-h-[3px]"
+                      style={{ height: `${(d.count / max) * 85}%` }}
+                    />
+                    <span className="text-[9px] text-gray-400 mt-1.5">{new Date(d.date + 'T00:00:00').toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })}</span>
+                  </div>
+                ))}
+              </div>
+            )
+          })()}
         </div>
 
         {/* Usage Stats */}

@@ -11,9 +11,15 @@ export default function AdminLogs() {
 
   async function load() {
     setLoading(true)
-    const { data } = await supabase.from('admin_activity_logs').select('*').order('created_at', { ascending: false }).limit(100)
+    const { data } = await supabase.from('admin_activity_logs').select('*').order('created_at', { ascending: false }).limit(500)
     setLogs(data || []); setLoading(false)
   }
+
+  const [page, setPage] = useState(1)
+  const PAGE_SIZE = 50
+  const totalPages = Math.max(1, Math.ceil(logs.length / PAGE_SIZE))
+  const safePage = Math.min(page, totalPages)
+  const pagedLogs = logs.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE)
 
   return (
     <div>
@@ -36,7 +42,7 @@ export default function AdminLogs() {
               </tr>
             </thead>
             <tbody>
-              {logs.map((log) => (
+              {pagedLogs.map((log) => (
                 <tr key={log.id} className="border-b border-gray-50 hover:bg-gray-50/50">
                   <td className="px-4 py-3">
                     <span className={`px-2 py-0.5 rounded text-xs font-medium ${
@@ -53,6 +59,18 @@ export default function AdminLogs() {
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {totalPages > 1 && (
+        <div className="flex items-center justify-between px-4 py-3 border-t border-[rgba(11,31,58,0.08)]">
+          <span className="text-xs text-gray-500">Page {safePage} of {totalPages} · {logs.length} logs</span>
+          <div className="flex gap-2">
+            <button onClick={() => setPage(Math.max(1, safePage - 1))} disabled={safePage === 1}
+              className="px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-40">Prev</button>
+            <button onClick={() => setPage(Math.min(totalPages, safePage + 1))} disabled={safePage === totalPages}
+              className="px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-40">Next</button>
+          </div>
         </div>
       )}
     </div>

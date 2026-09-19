@@ -38,6 +38,18 @@ interface Announcement {
   created_at: string
 }
 
+interface ClassworkItem {
+  id: string
+  class_id: string
+  type: 'material' | 'assignment' | 'quiz' | 'doc'
+  title: string
+  description: string
+  due_date: string | null
+  points: number
+  created_at: string
+  done?: boolean
+}
+
 type View = 'grid' | 'stream' | 'classwork' | 'people' | 'assignment'
 
 const BANNERS = [
@@ -52,18 +64,6 @@ const BANNERS = [
 ]
 
 const AVATAR_COLORS = ['#1f4fa3', '#8a94a8', '#7c3fae', '#c0562f', '#1f4fa3', '#2e5c9c', '#c0562f', '#8a94a8']
-
-const CLASSWORK_ITEMS = [
-  { type: 'material' as const, title: 'Midterm Requirements', due: 'Posted Aug 14' },
-  { type: 'quiz' as const, title: 'MIDTERMS Discussion', due: 'No due date' },
-  { type: 'material' as const, title: 'Week 1 2 and 3 Module', due: 'Posted Jul 11' },
-  { type: 'material' as const, title: 'Week 3 \u2013 Foundations of System Design', due: 'Posted Jul 10' },
-  { type: 'material' as const, title: 'Week 3 \u2013 Foundations of System Design', due: 'Posted Jul 10' },
-  { type: 'doc' as const, title: 'Week 2 Activity', due: 'No due date' },
-  { type: 'quiz' as const, title: 'Real-World IT Project Management Week 2 Discus\u2026', due: 'No due date' },
-  { type: 'material' as const, title: 'Real-World IT Project Management \u2013 NOTES', due: 'Posted Jul 4' },
-  { type: 'material' as const, title: 'Strategic IT Integration: Building the Connected En\u2026', due: 'Posted Jun 27' },
-]
 
 function init(name: string) {
   return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase() || '?'
@@ -104,12 +104,13 @@ export function Classes() {
   const [q, setQ] = useState('')
   const [nicks, setNicks] = useState<Record<string, string>>({})
   const [menu, setMenu] = useState<string | null>(null)
-  const [work, setWork] = useState<string | null>(null)
+  const [workItem, setWorkItem] = useState<ClassworkItem | null>(null)
   const [done, setDone] = useState(false)
   const [unTarget, setUnTarget] = useState<EnrolledClass | null>(null)
   const [showUn, setShowUn] = useState(false)
   const [classmates, setClassmates] = useState<Classmate[]>([])
   const [announcements, setAnnouncements] = useState<Announcement[]>([])
+  const [classwork, setClasswork] = useState<ClassworkItem[]>([])
 
   useEffect(() => {
     if (!user?.id) return
@@ -166,6 +167,18 @@ export function Classes() {
         .order('created_at', { ascending: false })
         .limit(10)
       if (annData) setAnnouncements(annData as Announcement[])
+
+      const { data: cwData } = await supabase
+        .from('classwork')
+        .select('*')
+        .in('class_id', classIds)
+        .order('created_at', { ascending: false })
+      const { data: subData } = await supabase
+        .from('classwork_submissions')
+        .select('classwork_id')
+        .eq('student_id', user.id)
+      const doneIds = new Set((subData || []).map(s => s.classwork_id))
+      if (cwData) setClasswork((cwData as ClassworkItem[]).map(cw => ({ ...cw, done: doneIds.has(cw.id) })))
       setLoading(false)
     })()
   }, [user?.id])
@@ -180,10 +193,37 @@ export function Classes() {
   const termDisplay = first?.semester ? `${first.semester}, A.Y. ${first.school_year ?? '2026\u20132027'}` : '1st Semester, A.Y. 2026\u20132027'
   const termPill = first?.school_year ? `Current Term (A.Y. ${first.school_year.split('-').map(y => y.slice(2)).join('\u2013')})` : 'Current Term (A.Y. 26\u201327)'
 
-  const openClass = (c: EnrolledClass, v: View = 'stream') => { setSel(c); setView(v); setWork(null); setDone(false); setMenu(null) }
-  const goTab = (t: 'stream' | 'classwork' | 'people') => { setView(t); setWork(null); setDone(false) }
-  const openWork = (t: string) => { setWork(t); setDone(false); setView('assignment') }
-  const goBack = () => { setView('grid'); setSel(null); setWork(null) }
+  const openClass = (c: EnrolledClass, v: View = 'stream') => { setSel(c); setView(v); setWorkItem(null); setDone(false); setMenu(null) }
+  const goTab = (t: 'stream' | 'classwork' | 'people') => { setView(t); setWorkItem(null); setDone(false) }
+  const openWork = (item: ClassworkItem) => { setWorkItem(item); setDone(!!item.done); setView('assignment') }
+  const goBack = () => { setView('grid'); setSel(null); setWorkItem(null) }
+
+  const classworkFor = (classId: string) => classwork.filter(cw => cw.class_id === classId)
+
+  const toggleDone = async () => {
+    if (!workItem || !user) return
+    const markingDone = !done
+    try {
+      if (markingDone) {
+        const { error } = await supabase.from('classwork_submissions').upsert(
+          { classwork_id: workItem.id, student_id: user.id, status: 'done' },
+          { onConflict: 'classwork_id,student_id' }
+        )
+        if (error) throw error
+      } else {
+        const { error } = await supabase.from('classwork_submissions')
+          .delete()
+          .eq('classwork_id', workItem.id)
+          .eq('student_id', user.id)
+        if (error) throw error
+      }
+      setDone(markingDone)
+      setClasswork(prev => prev.map(cw => cw.id === workItem.id ? { ...cw, done: markingDone } : cw))
+      notify.success({ title: markingDone ? 'Marked as done' : 'Unsubmitted' })
+    } catch (err) {
+      notify.error({ title: markingDone ? 'Could not mark as done' : 'Could not unsubmit', message: err instanceof Error ? err.message : 'Unknown error' })
+    }
+  }
 
   const bnr = (c: EnrolledClass) => BANNERS[classes.indexOf(c) % BANNERS.length] || BANNERS[0]
   const dName = (c: EnrolledClass) => nicks[c.class_id] || (c.schedule_day ? `${c.name} (${c.schedule_day}...)` : c.name)
@@ -316,26 +356,70 @@ export function Classes() {
                   <MessageCircle size={15} /> New announcement
                 </button>
                 <div className="bg-white border border-[#e1e5ec] rounded-xl overflow-hidden">
-                  {announcements.length === 0 ? (
-                    <div className="px-[18px] py-6 text-center text-[13px] text-[#6b7486]">No announcements yet.</div>
-                  ) : announcements.map((item) => (
-                    <div key={item.id} onClick={() => goTab('classwork')}
-                      className="flex items-center gap-3 px-[18px] py-3.5 border-b border-[#e1e5ec] text-[13.5px] last:border-b-0 hover:bg-[rgba(31,79,163,.04)] cursor-pointer">
-                      <ItemIcon type={item.priority >= 3 ? 'quiz' : 'material'} />
-                      <div className="flex-1 min-w-0"><b>{item.title}</b>{item.message ? `: ${item.message}` : ''}</div>
-                      <div className="text-[11.5px] text-[#6b7486] whitespace-nowrap">{new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
-                      <span className="text-[#6b7486] text-base px-1 select-none">{'\u22EE'}</span>
-                    </div>
-                  ))}
+                  {(() => {
+                    const cwItems = classworkFor(sel.class_id).map(cw => ({
+                      key: cw.id,
+                      type: cw.type as string,
+                      title: cw.title,
+                      date: new Date(cw.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+                      isClasswork: true,
+                      item: cw,
+                    }))
+                    const annItems = announcements.map(a => ({
+                      key: a.id,
+                      type: (a.priority >= 3 ? 'quiz' : 'material') as string,
+                      title: a.title,
+                      date: new Date(a.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+                      isClasswork: false,
+                      item: null as ClassworkItem | null,
+                    }))
+                    const stream = [...cwItems, ...annItems]
+                    if (stream.length === 0) {
+                      return <div className="px-[18px] py-6 text-center text-[13px] text-[#6b7486]">No announcements or classwork yet.</div>
+                    }
+                    return stream.map(s => (
+                      <div key={s.key} onClick={() => (s.isClasswork && s.item ? openWork(s.item) : goTab('classwork'))}
+                        className="flex items-center gap-3 px-[18px] py-3.5 border-b border-[#e1e5ec] text-[13.5px] last:border-b-0 hover:bg-[rgba(31,79,163,.04)] cursor-pointer">
+                        <ItemIcon type={s.type} />
+                        <div className="flex-1 min-w-0">
+                          {s.isClasswork
+                            ? <><b>{sel.teacher_name}</b> posted a new {s.type}: {s.title}</>
+                            : <><b>{s.title}</b></>}
+                        </div>
+                        <div className="text-[11.5px] text-[#6b7486] whitespace-nowrap">{s.date}</div>
+                        <span className="text-[#6b7486] text-base px-1 select-none">{'\u22EE'}</span>
+                      </div>
+                    ))
+                  })()}
                 </div>
               </div>
               <div>
-                <div className="bg-white border border-[#e1e5ec] rounded-xl p-4">
-                  <div className="text-[11.5px] text-[#6b7486] mb-1">Upcoming</div>
-                  <div className="text-[13.5px] font-medium">Woohoo, no work due soon!</div>
-                  <button onClick={() => goTab('classwork')}
-                    className="text-xs text-[#1f4fa3] font-semibold float-right -mt-4 bg-transparent border-none cursor-pointer hover:underline">View all</button>
-                </div>
+                {(() => {
+                  const today = new Date().toISOString().split('T')[0]
+                  const upcoming = classworkFor(sel.class_id)
+                    .filter(cw => cw.due_date && cw.due_date >= today && !cw.done)
+                    .sort((a, b) => (a.due_date || '').localeCompare(b.due_date || ''))
+                  return (
+                    <div className="bg-white border border-[#e1e5ec] rounded-xl p-4">
+                      <div className="text-[11.5px] text-[#6b7486] mb-1">Upcoming</div>
+                      {upcoming.length === 0 ? (
+                        <div className="text-[13.5px] font-medium">Woohoo, no work due soon!</div>
+                      ) : upcoming.slice(0, 3).map(cw => (
+                        <div key={cw.id} onClick={() => openWork(cw)}
+                          className="py-1.5 border-b border-[#f0f1f6] last:border-0 cursor-pointer hover:bg-[rgba(31,79,163,.04)] -mx-1 px-1 rounded">
+                          <div className="text-[12.5px] font-medium truncate">{cw.title}</div>
+                          <div className="text-[10.5px] text-[#c0562f] font-semibold">
+                            Due {new Date(cw.due_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                          </div>
+                        </div>
+                      ))}
+                      {upcoming.length > 0 && (
+                        <button onClick={() => goTab('classwork')}
+                          className="text-xs text-[#1f4fa3] font-semibold float-right -mt-4 bg-transparent border-none cursor-pointer hover:underline">View all</button>
+                      )}
+                    </div>
+                  )
+                })()}
               </div>
             </div>
           </>
@@ -359,26 +443,30 @@ export function Classes() {
               No topic <ChevronDown size={16} className="text-[#6b7486]" />
             </div>
             <div className="bg-white border border-[#e1e5ec] rounded-xl overflow-hidden">
-              {CLASSWORK_ITEMS.map((item, i) => (
-                <div key={i} onClick={() => openWork(item.title)}
+              {classworkFor(sel.class_id).length === 0 ? (
+                <div className="px-[18px] py-6 text-center text-[13px] text-[#6b7486]">No classwork posted yet.</div>
+              ) : classworkFor(sel.class_id).map((item) => (
+                <div key={item.id} onClick={() => openWork(item)}
                   className="flex items-center gap-3 px-[18px] py-3.5 border-b border-[#e1e5ec] text-[13.5px] last:border-b-0 hover:bg-[rgba(31,79,163,.04)] cursor-pointer">
                   <ItemIcon type={item.type} />
-                  <div className="flex-1 min-w-0">{item.title}</div>
-                  <div className="text-[11.5px] text-[#6b7486] whitespace-nowrap">{item.due}</div>
+                  <div className="flex-1 min-w-0">{item.title}{item.done && <span className="ml-2 text-[10px] text-emerald-600 font-semibold">✓ Done</span>}</div>
+                  <div className="text-[11.5px] text-[#6b7486] whitespace-nowrap">
+                    {item.due_date ? `Due ${new Date(item.due_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}` : `Posted ${new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`}
+                  </div>
                 </div>
               ))}
             </div>
           </>
         )}
 
-        {view === 'assignment' && sel && work && (
+        {view === 'assignment' && sel && workItem && (
           <>
             <div className="text-[12px] text-[#6b7486] mb-1.5">
               <button onClick={() => goTab('stream')} className="bg-transparent border-none text-[#6b7486] cursor-pointer hover:underline text-xs">{bTitle(sel)}</button>
               <span className="mx-1.5 opacity-60">&rsaquo;</span>
               <button onClick={() => goTab('classwork')} className="bg-transparent border-none text-[#6b7486] cursor-pointer hover:underline text-xs">Classwork</button>
               <span className="mx-1.5 opacity-60">&rsaquo;</span>
-              {work}
+              {workItem?.title}
             </div>
             <div className="flex gap-[26px] border-b border-[#e1e5ec] mt-2 px-1">
               {(['stream', 'classwork', 'people'] as const).map(t => (
@@ -393,18 +481,19 @@ export function Classes() {
                 <div className="flex gap-3.5 items-start pb-3.5 border-b border-[#e1e5ec] mb-3.5">
                   <div className="w-[46px] h-[46px] rounded-full bg-[#e8edf9] text-[#1f4fa3] flex items-center justify-center shrink-0"><FileText size={22} /></div>
                   <div>
-                    <h3 className="m-0 mb-1 text-[17px] font-bold">{work}</h3>
-                    <div className="text-[12.5px] text-[#6b7486]">{sel.teacher_name} &middot; Jul 4 &middot; 100 points</div>
+                    <h3 className="m-0 mb-1 text-[17px] font-bold">{workItem?.title}</h3>
+                    <div className="text-[12.5px] text-[#6b7486]">
+                      {sel.teacher_name} &middot; {workItem?.created_at ? new Date(workItem.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : ''} &middot; {workItem?.points ?? 100} points
+                    </div>
                   </div>
                 </div>
-                <div className="text-[13.5px] leading-relaxed mb-[18px]">Please submit a hard copy to the faculty before Saturday, July 11, as per the guidelines.</div>
-                <div className="flex items-center gap-3 border border-[#e1e5ec] rounded-[10px] p-2.5 mb-2.5">
-                  <div className="w-[38px] h-[38px] rounded-md flex items-center justify-center shrink-0 text-white bg-[#c0562f]"><FileText size={18} /></div>
-                  <div><div className="text-[13px] font-semibold">Build_Your_Own_IT_Pr...</div><div className="text-[11.5px] text-[#6b7486]">Microsoft PowerPoint</div></div>
-                </div>
-                <div className="flex items-center gap-3 border border-[#e1e5ec] rounded-[10px] p-2.5 mb-2.5">
-                  <div className="w-[38px] h-[38px] rounded-md flex items-center justify-center shrink-0 text-white bg-[#2a2f3b]"><FileText size={18} /></div>
-                  <div><div className="text-[13px] font-semibold">Sample Paper Activity.</div><div className="text-[11.5px] text-[#6b7486]">PDF</div></div>
+                <div className="text-[13.5px] leading-relaxed mb-[18px]">
+                  {workItem?.description || 'Please follow the guidelines provided by your teacher for this item.'}
+                  {workItem?.due_date && (
+                    <div className="mt-2 text-[12.5px] font-semibold text-[#c0562f]">
+                      Due: {new Date(workItem.due_date + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
+                    </div>
+                  )}
                 </div>
                 <div className="border-t border-[#e1e5ec] pt-3.5 flex flex-col gap-2.5">
                   <div className="text-[12.5px] font-semibold text-[#6b7486]">Class comments</div>
@@ -420,7 +509,7 @@ export function Classes() {
                   <button className="flex items-center justify-center gap-1.5 w-full border border-[#e1e5ec] rounded-lg py-2.5 text-[13px] font-semibold text-[#1c2536] bg-white mb-2.5 hover:bg-[rgba(31,79,163,.06)] transition-colors">
                     + Add or create
                   </button>
-                  <button onClick={() => { setDone(!done); notify.success({ title: done ? 'Unsubmitted' : 'Marked as done' }) }}
+                  <button onClick={toggleDone}
                     className="flex items-center justify-center w-full bg-[#1f4fa3] text-white border-none rounded-lg py-2.5 text-[13px] font-bold hover:bg-[#1a4590] transition-colors">
                     {done ? 'Unsubmit' : 'Mark as done'}
                   </button>

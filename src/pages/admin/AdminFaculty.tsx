@@ -20,19 +20,22 @@ interface Attendance { id: string; class_id: string; student_id: string; att_dat
 
 interface StudentRow { id: string; email: string | null; full_name: string | null; }
 interface AdviserRow { id: string; full_name: string | null; }
+interface ClassworkRow { id: string; class_id: string; type: string; title: string; description: string; due_date: string | null; points: number; created_at: string; }
 
 export default function AdminFaculty() {
-  const [tab, setTab] = useState<'classes' | 'rosters' | 'grades' | 'attendance'>('classes')
+  const [tab, setTab] = useState<'classes' | 'rosters' | 'classwork' | 'grades' | 'attendance'>('classes')
   const [classes, setClasses] = useState<Class[]>([])
   const [rosters, setRosters] = useState<ClassRoster[]>([])
   const [grades, setGrades] = useState<Grade[]>([])
   const [attendance, setAttendance] = useState<Attendance[]>([])
+  const [classwork, setClasswork] = useState<ClassworkRow[]>([])
   const [students, setStudents] = useState<StudentRow[]>([])
   const [advisers, setAdvisers] = useState<AdviserRow[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedClass, setSelectedClass] = useState<Class | null>(null)
   const [classForm, setClassForm] = useState({ name: '', subject: '', section: '', adviser_id: '', room: '', schedule_day: '', schedule_time: '', school_year: '', semester: '' })
   const [rosterForm, setRosterForm] = useState({ class_id: '', student_id: '', student_name: '' })
+  const [cwForm, setCwForm] = useState({ class_id: '', type: 'material', title: '', description: '', due_date: '', points: '100' })
   const [gradeForm, setGradeForm] = useState({ class_id: '', student_id: '', grade: '', remarks: '' })
   const [attForm, setAttForm] = useState({ class_id: '', student_id: '', att_date: '', status: 'present' })
   const [confirmState, setConfirmState] = useState<{ open: boolean; title: string; message: string; onConfirm: () => void }>({ open: false, title: '', message: '', onConfirm: () => {} })
@@ -42,11 +45,12 @@ export default function AdminFaculty() {
   const load = useCallback(async () => {
     setLoading(true)
     try {
-      const [clsRes, rosRes, grdRes, attRes, stuRes, advRes] = await Promise.all([
+      const [clsRes, rosRes, grdRes, attRes, cwRes, stuRes, advRes] = await Promise.all([
         supabase.from('classes').select('*').order('created_at', { ascending: false }),
         supabase.from('class_rosters').select('*').order('enrolled_at', { ascending: false }),
         supabase.from('grades').select('*').order('created_at', { ascending: false }),
         supabase.from('attendance').select('*').order('att_date', { ascending: false }),
+        supabase.from('classwork').select('*').order('created_at', { ascending: false }),
         supabase.from('profiles').select('id, email, full_name, role').eq('role', 'student'),
         supabase.from('profiles').select('id, full_name').in('role', ['faculty', 'super_admin', 'admin', 'registrar', 'edp', 'accounting', 'other_admin']),
       ])
@@ -54,12 +58,14 @@ export default function AdminFaculty() {
       if (rosRes.error) throw rosRes.error
       if (grdRes.error) throw grdRes.error
       if (attRes.error) throw attRes.error
+      if (cwRes.error) throw cwRes.error
       if (stuRes.error) throw stuRes.error
       if (advRes.error) throw advRes.error
       setClasses(clsRes.data || [])
       setRosters(rosRes.data || [])
       setGrades(grdRes.data || [])
       setAttendance(attRes.data || [])
+      setClasswork(cwRes.data || [])
       setStudents(stuRes.data || [])
       setAdvisers(advRes.data || [])
     } catch (err) {
@@ -99,6 +105,45 @@ export default function AdminFaculty() {
     }
   }
 
+  const [cwDeleteTarget, setCwDeleteTarget] = useState<ClassworkRow | null>(null)
+
+  const addClasswork = async (e: React.FormEvent) => {
+    e.preventDefault()
+    try {
+      const classId = selectedClass?.id || cwForm.class_id
+      if (!classId) throw new Error('Select a class first')
+      const { error } = await supabase.from('classwork').insert({
+        class_id: classId,
+        created_by: user?.id,
+        type: cwForm.type,
+        title: cwForm.title.trim(),
+        description: cwForm.description.trim(),
+        due_date: cwForm.due_date || null,
+        points: parseInt(cwForm.points) || 100,
+      })
+      if (error) throw error
+      await logAdminActivity('created', 'classwork', classId, { title: cwForm.title.trim(), class: selectedClass?.name })
+      addNotification({ type: 'success', title: 'Classwork posted' })
+      setCwForm({ class_id: '', type: 'material', title: '', description: '', due_date: '', points: '100' })
+      load()
+    } catch (err) {
+      addNotification({ type: 'error', title: 'Failed to post classwork', message: err instanceof Error ? err.message : 'Unknown error' })
+    }
+  }
+
+  const deleteClasswork = async (id: string) => {
+    try {
+      const { error } = await supabase.from('classwork').delete().eq('id', id)
+      if (error) throw error
+      await logAdminActivity('deleted', 'classwork', id)
+      addNotification({ type: 'success', title: 'Classwork deleted' })
+      setCwDeleteTarget(null)
+      load()
+    } catch (err) {
+      addNotification({ type: 'error', title: 'Failed to delete', message: err instanceof Error ? err.message : 'Unknown error' })
+    }
+  }
+
   const addGrade = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
@@ -130,6 +175,7 @@ export default function AdminFaculty() {
   const tabs = [
     { key: 'classes' as const, label: 'Classes & Schedules' },
     { key: 'rosters' as const, label: 'Rosters' },
+    { key: 'classwork' as const, label: 'Classwork' },
     { key: 'grades' as const, label: 'Grades' },
     { key: 'attendance' as const, label: 'Attendance' },
   ]
@@ -346,6 +392,97 @@ export default function AdminFaculty() {
         </div>
       )}
 
+      {tab === 'classwork' && (
+        <div className="grid lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <h2 className="font-bold text-gray-800 mb-3">Classwork {selectedClass ? `— ${selectedClass.name}` : ''} ({classwork.filter(cw => cw.class_id === selectedClass?.id).length})</h2>
+            {selectedClass ? (
+              <div className="bg-white/90 backdrop-blur-sm rounded-xl border border-[rgba(11,31,58,0.08)] shadow-[0_4px_20px_rgba(11,31,58,0.06)] overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead className="bg-[#F8FAFC] border-b border-[rgba(11,31,58,0.08)]">
+                    <tr>
+                      <th className="text-left px-4 py-3 font-medium text-gray-600">Type</th>
+                      <th className="text-left px-4 py-3 font-medium text-gray-600">Title</th>
+                      <th className="text-left px-4 py-3 font-medium text-gray-600">Due Date</th>
+                      <th className="text-left px-4 py-3 font-medium text-gray-600">Points</th>
+                      <th className="text-right px-4 py-3 font-medium text-gray-600">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {classwork.filter(cw => cw.class_id === selectedClass?.id).length === 0 ? (
+                      <tr><td colSpan={5} className="px-4 py-8 text-center text-gray-400">No classwork posted yet.</td></tr>
+                    ) : classwork.filter(cw => cw.class_id === selectedClass?.id).map((cw) => (
+                      <tr key={cw.id} className="border-b border-gray-50 hover:bg-gray-50/50">
+                        <td className="px-4 py-3"><span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-blue-100 text-blue-700 capitalize">{cw.type}</span></td>
+                        <td className="px-4 py-3">
+                          <div className="font-medium text-gray-800">{cw.title}</div>
+                          {cw.description && <div className="text-xs text-gray-500 truncate max-w-xs">{cw.description}</div>}
+                        </td>
+                        <td className="px-4 py-3 text-gray-600 text-sm">{cw.due_date ? new Date(cw.due_date + 'T00:00:00').toLocaleDateString() : '—'}</td>
+                        <td className="px-4 py-3 text-gray-600 text-sm">{cw.points}</td>
+                        <td className="px-4 py-3 text-right">
+                          <button onClick={() => setCwDeleteTarget(cw)} className="text-red-500 hover:text-red-700 text-xs font-medium">Delete</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className="bg-white/90 backdrop-blur-sm rounded-xl p-8 text-center text-gray-500 border border-[rgba(11,31,58,0.08)]">
+                Select a class from the Classes tab to post classwork.
+              </div>
+            )}
+          </div>
+          <div>
+            <h2 className="font-bold text-gray-800 mb-3">Post Classwork</h2>
+            <form onSubmit={addClasswork} className="bg-white/90 backdrop-blur-sm rounded-xl p-5 border border-[rgba(11,31,58,0.08)] shadow-[0_4px_20px_rgba(11,31,58,0.06)] space-y-3">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Class</label>
+                <select value={cwForm.class_id} onChange={(ev) => { setCwForm({ ...cwForm, class_id: ev.target.value }); setSelectedClass(classes.find(c => c.id === ev.target.value) ?? null) }}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#1E4E8C]/20 focus:border-[#1E4E8C]" required>
+                  <option value="">Select class</option>
+                  {classes.map((c) => <option key={c.id} value={c.id}>{c.name} ({c.section})</option>)}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                <select value={cwForm.type} onChange={(ev) => setCwForm({ ...cwForm, type: ev.target.value })}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#1E4E8C]/20 focus:border-[#1E4E8C]">
+                  <option value="material">Material</option>
+                  <option value="assignment">Assignment</option>
+                  <option value="quiz">Quiz</option>
+                  <option value="doc">Document</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                <input value={cwForm.title} onChange={(ev) => setCwForm({ ...cwForm, title: ev.target.value })}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="e.g. Week 3 Module" required />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <textarea value={cwForm.description} onChange={(ev) => setCwForm({ ...cwForm, description: ev.target.value })}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" rows={2} placeholder="Instructions for students..." />
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Due Date</label>
+                  <input type="date" value={cwForm.due_date} onChange={(ev) => setCwForm({ ...cwForm, due_date: ev.target.value })}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Points</label>
+                  <input type="number" min="0" value={cwForm.points} onChange={(ev) => setCwForm({ ...cwForm, points: ev.target.value })}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" />
+                </div>
+              </div>
+              <button type="submit" className="w-full py-2 bg-[#1E4E8C] text-white rounded-lg text-sm font-medium hover:bg-[#0B1F3A] transition-colors">Post Classwork</button>
+            </form>
+          </div>
+        </div>
+      )}
+
       {tab === 'grades' && (
         <div className="grid lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
@@ -516,6 +653,12 @@ export default function AdminFaculty() {
         message={confirmState.message}
         onConfirm={confirmState.onConfirm}
         onCancel={() => setConfirmState({ open: false, title: '', message: '', onConfirm: () => {} })}
+      />
+
+      <ConfirmModal open={!!cwDeleteTarget} title="Delete Classwork"
+        message={`Are you sure you want to delete "${cwDeleteTarget?.title || 'this classwork'}"? Students will no longer see it.`}
+        confirmLabel="Delete" danger onConfirm={() => cwDeleteTarget && deleteClasswork(cwDeleteTarget.id)}
+        onCancel={() => setCwDeleteTarget(null)}
       />
     </div>
   )
