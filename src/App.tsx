@@ -50,6 +50,7 @@ const Unauthorized = lazy(() => import('./components/Unauthorized'))
 const ChangePassword = lazy(() => import('./pages/ChangePassword'))
 const PaymentsPage = lazy(() => import('./pages/Payments'))
 const ClassesPage = lazy(() => import('./pages/Classes'))
+const AppointmentsPage = lazy(() => import('./pages/Appointments'))
 
 // Admin pages
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'))
@@ -65,6 +66,7 @@ const AdminEdp = lazy(() => import('./pages/admin/AdminEdp'))
 const AdminAccounting = lazy(() => import('./pages/admin/AdminAccounting'))
 const AdminFaculty = lazy(() => import('./pages/admin/AdminFaculty'))
 const AdminOther = lazy(() => import('./pages/admin/AdminOther'))
+const AdminAppointments = lazy(() => import('./pages/admin/AdminAppointments'))
 
 function PageSpinner() {
   return (
@@ -192,6 +194,14 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/appointments"
+              element={
+                <ProtectedRoute>
+                  <AppointmentsPage />
+                </ProtectedRoute>
+              }
+            />
 
             {/* Admin Routes */}
             <Route
@@ -295,6 +305,14 @@ function App() {
               element={
                 <ProtectedRoute permission="view_activity_logs">
                   <AdminLayout><AdminLogs /></AdminLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/appointments"
+              element={
+                <ProtectedRoute permissions={['manage_appointments']}>
+                  <AdminLayout><AdminAppointments /></AdminLayout>
                 </ProtectedRoute>
               }
             />
