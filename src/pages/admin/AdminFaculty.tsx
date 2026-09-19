@@ -8,7 +8,7 @@ import ConfirmModal from '../../components/ConfirmModal'
 interface Class {
   id: string; name: string; subject: string; section: string;
   adviser_id: string | null; room: string; schedule_day: string;
-  schedule_time: string; school_year: string; semester: string;
+  schedule_time: string; school_year: string; semester: string; units: number | null;
 }
 
 interface ClassRoster {
@@ -33,7 +33,7 @@ export default function AdminFaculty() {
   const [advisers, setAdvisers] = useState<AdviserRow[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedClass, setSelectedClass] = useState<Class | null>(null)
-  const [classForm, setClassForm] = useState({ name: '', subject: '', section: '', adviser_id: '', room: '', schedule_day: '', schedule_time: '', school_year: '', semester: '' })
+  const [classForm, setClassForm] = useState({ name: '', subject: '', section: '', adviser_id: '', room: '', schedule_day: '', schedule_time: '', school_year: '', semester: '', units: '3' })
   const [rosterForm, setRosterForm] = useState({ class_id: '', student_id: '', student_name: '' })
   const [cwForm, setCwForm] = useState({ class_id: '', type: 'material', title: '', description: '', due_date: '', points: '100' })
   const [gradeForm, setGradeForm] = useState({ class_id: '', student_id: '', grade: '', remarks: '' })
@@ -80,11 +80,12 @@ export default function AdminFaculty() {
   const addClass = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const { error } = await supabase.from('classes').insert({ ...classForm })
+      const { units, ...rest } = classForm
+      const { data: cls, error } = await supabase.from('classes').insert({ ...rest, units: parseFloat(units) || 3 }).select().single()
       if (error) throw error
-      await logAdminActivity('created', 'class', undefined, { name: classForm.name })
+      await logAdminActivity('created', 'class', cls?.id ?? undefined, { name: classForm.name })
       addNotification({ type: 'success', title: 'Class created' })
-      setClassForm({ name: '', subject: '', section: '', adviser_id: '', room: '', schedule_day: '', schedule_time: '', school_year: '', semester: '' })
+      setClassForm({ name: '', subject: '', section: '', adviser_id: '', room: '', schedule_day: '', schedule_time: '', school_year: '', semester: '', units: '3' })
       load()
     } catch (err) {
       addNotification({ type: 'error', title: 'Failed to add', message: err instanceof Error ? err.message : 'Unknown error' })
@@ -314,6 +315,11 @@ export default function AdminFaculty() {
                     <option value="Summer">Summer</option>
                   </select>
                 </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Units</label>
+                <input type="number" step="0.1" min="0" value={classForm.units} onChange={(ev) => setClassForm({ ...classForm, units: ev.target.value })}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="e.g. 3" />
               </div>
               <button type="submit" className="w-full py-2 bg-[#1E4E8C] text-white rounded-lg text-sm font-medium hover:bg-[#0B1F3A] transition-colors">Create Class</button>
             </form>

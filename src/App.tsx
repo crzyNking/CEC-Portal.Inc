@@ -52,6 +52,7 @@ const PaymentsPage = lazy(() => import('./pages/Payments'))
 const ClassesPage = lazy(() => import('./pages/Classes'))
 const AppointmentsPage = lazy(() => import('./pages/Appointments'))
 const HelpPage = lazy(() => import('./pages/Help'))
+const SchedulePage = lazy(() => import('./pages/Schedule'))
 
 // Admin pages
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'))
@@ -209,6 +210,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <HelpPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/schedule"
+              element={
+                <ProtectedRoute>
+                  <SchedulePage />
                 </ProtectedRoute>
               }
             />
