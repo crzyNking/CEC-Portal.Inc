@@ -49,6 +49,7 @@ const Login = lazy(() => import('./pages/Login'))
 const Unauthorized = lazy(() => import('./components/Unauthorized'))
 const ChangePassword = lazy(() => import('./pages/ChangePassword'))
 const PaymentsPage = lazy(() => import('./pages/Payments'))
+const ClassesPage = lazy(() => import('./pages/Classes'))
 
 // Admin pages
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'))
@@ -180,6 +181,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <PaymentsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/classes"
+              element={
+                <ProtectedRoute>
+                  <ClassesPage />
                 </ProtectedRoute>
               }
             />
