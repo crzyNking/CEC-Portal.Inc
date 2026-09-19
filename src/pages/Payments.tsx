@@ -146,8 +146,8 @@ export default function Payments() {
       if (billingRes.data) setBilling(billingRes.data)
       const billingIds = (billingRes.data || []).map((b: BillingRecord) => b.id)
       if (payRes.data) setPayments((payRes.data as PaymentRecord[]).filter((p) => billingIds.includes(p.billing_id)))
-    } catch (err: any) {
-      notify.error({ title: 'Error', message: err?.message || 'Failed to submit payment.' })
+    } catch (err: unknown) {
+      notify.error({ title: 'Error', message: err instanceof Error ? err.message : 'Failed to submit payment.' })
     } finally {
       setSubmitting(false)
     }

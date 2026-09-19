@@ -5,7 +5,6 @@ import { supabase } from '../lib/supabase'
 
 interface AnalyticsData {
   totalSessions: number
-  avgSessionDuration: number
   lastActive: string
   loginCount: number
 }
@@ -36,7 +35,6 @@ export function Analytics() {
 
         setAnalytics({
           totalSessions: activityCount || 0,
-          avgSessionDuration: Math.floor(Math.random() * 15) + 5,
           lastActive: lastActivity?.created_at || user.created_at,
           loginCount: activityCount || 0
         })
@@ -58,8 +56,8 @@ export function Analytics() {
       color: 'purple'
     },
     {
-      label: 'Avg. Session',
-      value: `${analytics?.avgSessionDuration || 0}m`,
+      label: 'Logins',
+      value: analytics?.loginCount || 0,
       icon: 'M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z',
       color: 'cyan'
     },
@@ -168,11 +166,11 @@ export function Analytics() {
               </div>
               <div className="flex justify-between items-center p-3 rounded-xl bg-gray-50 dark:bg-white/[0.02]">
                 <span className="text-gray-500">Auth Provider</span>
-                <span className="text-gray-900 dark:text-white font-medium">Google OAuth</span>
+                <span className="text-gray-900 dark:text-white font-medium">{user?.app_metadata?.provider || 'Email'}</span>
               </div>
               <div className="flex justify-between items-center p-3 rounded-xl bg-gray-50 dark:bg-white/[0.02]">
-                <span className="text-gray-500">Storage Used</span>
-                <span className="text-gray-900 dark:text-white font-medium">0 MB</span>
+                <span className="text-gray-500">Email</span>
+                <span className="text-gray-900 dark:text-white font-medium truncate max-w-[200px]">{user?.email || 'N/A'}</span>
               </div>
             </div>
           </div>
@@ -182,15 +180,15 @@ export function Analytics() {
             <div className="space-y-4">
               <div className="flex justify-between items-center p-3 rounded-xl bg-gray-50 dark:bg-white/[0.02]">
                 <span className="text-gray-500">Two-Factor Auth</span>
-                <span className="text-amber-500 dark:text-amber-400 font-medium">Not Enabled</span>
+                <span className="text-amber-500 dark:text-amber-400 font-medium">{user?.factors?.length ? 'Enabled' : 'Not Enabled'}</span>
               </div>
               <div className="flex justify-between items-center p-3 rounded-xl bg-gray-50 dark:bg-white/[0.02]">
-                <span className="text-gray-500">Last Password Change</span>
-                <span className="text-gray-900 dark:text-white font-medium">N/A</span>
+                <span className="text-gray-500">Last Active</span>
+                <span className="text-gray-900 dark:text-white font-medium">{analytics?.lastActive ? new Date(analytics.lastActive).toLocaleString() : 'N/A'}</span>
               </div>
               <div className="flex justify-between items-center p-3 rounded-xl bg-gray-50 dark:bg-white/[0.02]">
-                <span className="text-gray-500">Sessions</span>
-                <span className="text-gray-900 dark:text-white font-medium">1 Active</span>
+                <span className="text-gray-500">Member Since</span>
+                <span className="text-gray-900 dark:text-white font-medium">{user?.created_at ? new Date(user.created_at).toLocaleDateString() : 'N/A'}</span>
               </div>
             </div>
           </div>

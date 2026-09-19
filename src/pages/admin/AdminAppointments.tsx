@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useAuthStore } from '../../store/authStore'
 import { supabase } from '../../lib/supabase'
+import { logAdminActivity } from '../../lib/activityLog'
+import { useNotificationStore } from '../../store/notificationStore'
 
 interface Appointment {
   id: string
@@ -44,6 +46,7 @@ function fmtTime(t: string) {
 
 export default function AdminAppointments() {
   const user = useAuthStore(s => s.user)
+  const addNotification = useNotificationStore(s => s.addNotification)
   const [appointments, setAppointments] = useState<Appointment[]>([])
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState('all')
@@ -96,11 +99,15 @@ export default function AdminAppointments() {
       handled_by: user?.id,
       updated_at: new Date().toISOString(),
     }).eq('id', id)
-    if (!error) {
-      setDetail(null)
-      setNotes('')
-      load()
+    if (error) {
+      addNotification({ type: 'error', title: 'Failed to update appointment', message: error.message })
+      return
     }
+    await logAdminActivity(status, 'appointment', id)
+    addNotification({ type: 'success', title: `Appointment ${status}` })
+    setDetail(null)
+    setNotes('')
+    load()
   }
 
   return (

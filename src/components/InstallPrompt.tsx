@@ -26,7 +26,8 @@ export default function InstallPrompt() {
     window.addEventListener('beforeinstallprompt', handler)
     window.addEventListener('appinstalled', installedHandler)
 
-    if (window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone === true) {
+    const iOSStandalone = Boolean((window.navigator as Navigator & { standalone?: boolean }).standalone)
+    if (window.matchMedia('(display-mode: standalone)').matches || iOSStandalone) {
       setIsInstalled(true)
     }
 

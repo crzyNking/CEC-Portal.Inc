@@ -61,10 +61,10 @@ export function Reports() {
         }
 
         const reports: Report[] = (activities || []).map((a, i) => ({
-          id: String(i + 1),
+          id: `${i + 1}-${a.created_at}`,
           title: a.action.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase()),
           description: `Activity logged at ${new Date(a.created_at).toLocaleString()}`,
-          status: i < 3 ? 'completed' : i < 6 ? 'pending' : 'scheduled',
+          status: 'completed',
           date: new Date(a.created_at).toLocaleDateString(),
           type: typeMap[a.action] || 'usage',
         }))

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 
-interface Log { id: string; user_id: string | null; action: string; entity_type: string; entity_id: string | null; details: any; created_at: string }
+interface Log { id: string; user_id: string | null; action: string; entity_type: string; entity_id: string | null; details: Record<string, unknown> | null; created_at: string }
 
 export default function AdminLogs() {
   const [logs, setLogs] = useState<Log[]>([])

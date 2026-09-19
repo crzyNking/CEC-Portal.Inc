@@ -244,7 +244,7 @@ export default function ElementaryEnrollment() {
                 { key: 'incomingGrade', 'label': 'Incoming Grade Level Verification' },
               ].map((req) => (
                 <label key={req.key} className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer transition">
-                  <input type="checkbox" name={req.key} checked={(formData.requirements as any)[req.key]} onChange={handleCheckbox}
+                  <input type="checkbox" name={req.key} checked={(formData.requirements as Record<string, boolean>)[req.key]} onChange={handleCheckbox}
                     className="w-4 h-4 rounded border-gray-300 text-[#1E4E8C] focus:ring-[#1E4E8C]" />
                   <span className="text-sm text-gray-700">{req.label}</span>
                 </label>

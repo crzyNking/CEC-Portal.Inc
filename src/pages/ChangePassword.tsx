@@ -48,6 +48,14 @@ export default function ChangePassword() {
 
     setSaving(true)
     try {
+      const userEmail = (await supabase.auth.getUser()).data.user?.email
+      if (!userEmail) throw new Error('Not authenticated.')
+      const { error: verifyErr } = await supabase.auth.signInWithPassword({ email: userEmail, password: currentPassword })
+      if (verifyErr) {
+        setError('Current password is incorrect.')
+        setSaving(false)
+        return
+      }
       const { error: err } = await supabase.auth.updateUser({ password: newPassword })
       if (err) throw err
       notify.success({ title: 'Password updated', message: 'Your portal password has been changed successfully.' })
@@ -55,8 +63,8 @@ export default function ChangePassword() {
       setNewPassword('')
       setConfirmPassword('')
       setTimeout(() => navigate('/profile'), 1200)
-    } catch (err: any) {
-      setError(err?.message || 'Failed to update password.')
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Failed to update password.')
     } finally {
       setSaving(false)
     }

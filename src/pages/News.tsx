@@ -36,6 +36,8 @@ interface EventItem {
 }
 
 type FeedItem = NewsItem | EventItem
+type NewsOmit = Omit<NewsItem, 'type'>
+type EventOmit = Omit<EventItem, 'type'>
 
 export default function News() {
   usePageTitle('News & Events')
@@ -53,8 +55,8 @@ export default function News() {
         console.error('Fetch error:', newsRes.error || eventsRes.error)
         setError('Failed to load content.')
       }
-      const newsItems = (newsRes.data || []).map((n: any) => ({ ...n, type: 'news' as const }))
-      const eventItems = (eventsRes.data || []).map((e: any) => ({ ...e, type: 'event' as const }))
+      const newsItems = (newsRes.data || []).map((n: NewsOmit) => ({ ...n, type: 'news' as const }))
+      const eventItems = (eventsRes.data || []).map((e: EventOmit) => ({ ...e, type: 'event' as const }))
       const combined = [...newsItems, ...eventItems].sort((a, b) => {
         const dateA = a.type === 'news' ? (a.published_at || a.created_at) : (a.event_date || a.created_at)
         const dateB = b.type === 'news' ? (b.published_at || b.created_at) : (b.event_date || b.created_at)

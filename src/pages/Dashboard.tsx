@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
 import { useNotification } from '../hooks/useNotification'
 import { supabase } from '../lib/supabase'
@@ -53,6 +53,7 @@ export function Dashboard() {
   const isAdmin = ['admin', 'super_admin', 'registrar', 'edp', 'accounting', 'faculty', 'other_admin'].includes(profile?.role || '')
   const notify = useNotification()
   const location = useLocation()
+  const navigate = useNavigate()
 
   const [billing, setBilling] = useState<BillingRecord[]>([])
   const [grades, setGrades] = useState<GradeRecord[]>([])
@@ -122,7 +123,7 @@ export function Dashboard() {
 
           <div className="text-[11.5px] text-[#9AA1B5] font-semibold mb-2.5">Quick Links</div>
           <div className="flex flex-col sm:flex-row gap-3.5 mb-[18px]">
-            <button onClick={() => document.getElementById('tracks')?.scrollIntoView({ behavior: 'smooth' })}
+            <button onClick={() => navigate('/classes')}
               className="flex-1 flex items-center gap-2.5 border border-[#E6E8EE] rounded-[9px] px-3.5 py-3 text-left hover:border-[#C7D2EE] hover:bg-[#FAFBFF] transition-colors">
               <div className="w-8 h-8 rounded-lg bg-[#EAF0FF] flex items-center justify-center text-[#2F5DD4] shrink-0">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -162,9 +163,6 @@ export function Dashboard() {
           <div className="text-[11.5px] text-[#9AA1B5] font-semibold mb-1">Financial Overview</div>
           <div className="flex justify-between py-2 text-[12.8px] text-[#4A5066] border-b border-[#F0F1F6]">
             <span className="text-[#7A8299]">Back Balance</span><span>{fmt(finances.backBalance)}</span>
-          </div>
-          <div className="flex justify-between py-2 text-[12.8px] text-[#4A5066] border-b border-[#F0F1F6]">
-            <span className="text-[#7A8299]">Forwarded</span><span>0.00</span>
           </div>
           <div className="flex justify-between py-2 text-[12.8px] font-bold">
             <span className="text-[#7A8299]">Total Due Today</span><span>{fmt(finances.totalDueToday)}</span>

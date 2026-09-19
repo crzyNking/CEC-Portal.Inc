@@ -40,26 +40,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     getInitialSession()
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setSession(session)
-        setUser(session?.user ?? null)
-        if (session?.user) {
-          await Promise.all([
-            fetchProfile(session.user.id),
-            fetchPreferences(session.user.id),
-          ])
-          if (event === 'SIGNED_IN') {
-            await logActivity(session.user.id, 'sign_in')
-          }
-        } else {
-          useAuthStore.getState().setProfile(null)
-          usePreferencesStore.getState().clearPreferences()
-        }
-        setLoading(false)
-      }
-    )
-
     // Realtime: when the logged-in user's profile row changes (e.g. role toggled
     // to admin by an admin), refetch it so the Admin button appears instantly.
     const setupProfileRealtime = () => {
@@ -87,8 +67,34 @@ export function AuthProvider({ children }: AuthProviderProps) {
         })
     }
 
-    const profileTimeout = setTimeout(setupProfileRealtime, 1000)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        setSession(session)
+        setUser(session?.user ?? null)
+        if (session?.user) {
+          await Promise.all([
+            fetchProfile(session.user.id),
+            fetchPreferences(session.user.id),
+          ])
+          if (event === 'SIGNED_IN') {
+            await logActivity(session.user.id, 'sign_in')
+          }
+          if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION') {
+            setupProfileRealtime()
+          }
+        } else {
+          if (profileChannel) {
+            supabase.removeChannel(profileChannel)
+            profileChannel = null
+          }
+          useAuthStore.getState().setProfile(null)
+          usePreferencesStore.getState().clearPreferences()
+        }
+        setLoading(false)
+      }
+    )
 
+    const profileTimeout = setTimeout(setupProfileRealtime, 1000)
     // Backup: refetch profile on focus / visibility / periodically, so role
     // changes still propagate even if realtime is unavailable.
     const refreshProfile = () => {
