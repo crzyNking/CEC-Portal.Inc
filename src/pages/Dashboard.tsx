@@ -122,7 +122,11 @@ export function Dashboard() {
 
   const finances = useMemo(() => {
     const current = billing[0]
-    const backBalance = billing.slice(1).reduce((s, b) => s + (b.balance || 0), 0)
+    // Back balance: balances from older school years than the current billing's
+    const currentSy = current?.school_year
+    const backBalance = billing
+      .filter(b => b.school_year !== currentSy)
+      .reduce((s, b) => s + (b.balance || 0), 0)
     const totalDueToday = current ? (current.balance && current.balance > 0 ? current.balance : (current.total_due || 0)) : 0
     const netTotal = billing.reduce((s, b) => s + (b.total_due || 0), 0)
     return { backBalance, totalDueToday, netTotal }

@@ -151,6 +151,7 @@ export function Classes() {
           .from('class_rosters')
           .select('student_id')
           .in('class_id', classIds)
+          .eq('status', 'enrolled')
         const sids = [...new Set((rosterData || []).map(r => r.student_id).filter(sid => sid !== user.id))]
         if (sids.length) {
           const { data: profiles } = await supabase

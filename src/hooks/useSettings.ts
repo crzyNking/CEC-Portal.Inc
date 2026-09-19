@@ -124,7 +124,8 @@ export function useSettings() {
   }, [])
 
   useEffect(() => {
-    if (globalSettings.school !== null || globalSettings.error) return
+    if (globalSettings.school !== null) return
+    if (globalSettings.error) loadingPromise = null
     if (!loadingPromise) {
       loadingPromise = loadSettings()
     }

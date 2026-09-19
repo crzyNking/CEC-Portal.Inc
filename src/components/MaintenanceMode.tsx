@@ -6,7 +6,7 @@ export default function MaintenanceMode({ children }: { children: React.ReactNod
   const { website, loading } = useSettings()
   const { user, profile } = useAuthStore()
   const location = useLocation()
-  const isAdmin = profile?.role === 'admin'
+  const isAdmin = ['admin', 'super_admin', 'registrar', 'edp', 'accounting', 'faculty', 'other_admin'].includes(profile?.role || '')
 
   if (loading) return null
 

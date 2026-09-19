@@ -4,6 +4,7 @@ import { logAdminActivity } from '../../lib/activityLog'
 import { useNotificationStore } from '../../store/notificationStore'
 import { useAuthStore } from '../../store/authStore'
 import ConfirmModal from '../../components/ConfirmModal'
+import Pagination from '../../components/Pagination'
 
 interface Role { id: string; label: string; description: string | null; sort_order: number | null }
 interface Permission { id: string; label: string; description: string | null }
@@ -152,6 +153,10 @@ export default function AdminSuper() {
     e.preventDefault()
     setCreating(true)
     try {
+      // Capture the admin's current session — signUp can replace it with the
+      // new user's session when email confirmation is disabled.
+      const adminSession = (await supabase.auth.getSession()).data.session
+
       const { data, error } = await supabase.auth.signUp({
         email: email.trim(),
         password,
@@ -160,6 +165,16 @@ export default function AdminSuper() {
       if (error) throw error
       if (!data.user) throw new Error('Failed to create account')
       if (data.user.identities?.length === 0) throw new Error('An account with this email already exists')
+
+      // Restore the admin's session if signUp switched us to the new account
+      const currentSession = (await supabase.auth.getSession()).data.session
+      if (adminSession && currentSession?.user?.id !== adminSession.user.id) {
+        await supabase.auth.setSession({
+          access_token: adminSession.access_token,
+          refresh_token: adminSession.refresh_token,
+        })
+        await useAuthStore.getState().fetchProfile(adminSession.user.id)
+      }
 
       const { error: updErr } = await supabase.from('profiles').update({ role: newRole }).eq('id', data.user.id)
       if (updErr) throw updErr
@@ -182,6 +197,12 @@ export default function AdminSuper() {
     const q = search.toLowerCase()
     return !q || u.email?.toLowerCase().includes(q) || u.full_name?.toLowerCase().includes(q)
   })
+
+  const [userPage, setUserPage] = useState(1)
+  const PAGE_SIZE = 25
+  const userTotalPages = Math.max(1, Math.ceil(filteredUsers.length / PAGE_SIZE))
+  const userSafePage = Math.min(userPage, userTotalPages)
+  const pagedUsers = filteredUsers.slice((userSafePage - 1) * PAGE_SIZE, userSafePage * PAGE_SIZE)
 
   const enrollmentFor = (userId: string) => enrollments.find((e) => e.student_id === userId)
   const extraRolesFor = (userId: string) => userRoles.filter((ur) => ur.user_id === userId && ur.role_id !== users.find((u) => u.id === userId)?.role)
@@ -254,7 +275,9 @@ export default function AdminSuper() {
                 </tr>
               </thead>
               <tbody>
-                {filteredUsers.map((u) => {
+                {pagedUsers.length === 0 ? (
+                  <tr><td colSpan={5} className="px-4 py-12 text-center text-gray-400">No users found.</td></tr>
+                ) : pagedUsers.map((u) => {
                   const enr = enrollmentFor(u.id)
                   const extras = extraRolesFor(u.id)
                   return (
@@ -300,6 +323,7 @@ export default function AdminSuper() {
                 })}
               </tbody>
             </table>
+            <Pagination page={userSafePage} totalPages={userTotalPages} totalItems={filteredUsers.length} itemLabel="users" onPageChange={setUserPage} />
           </div>
         </div>
       )}

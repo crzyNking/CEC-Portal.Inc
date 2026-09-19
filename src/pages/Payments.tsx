@@ -88,7 +88,12 @@ export default function Payments() {
   }, [billing, payments])
 
   const tiers = useMemo(() => {
-    const targetMonths = ['November 2025', 'December 2025']
+    // Compute the next target months from today instead of hardcoded dates
+    const now = new Date()
+    const targetMonths = [0, 1].map(offset => {
+      const d = new Date(now.getFullYear(), now.getMonth() + 2 + offset, 1)
+      return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+    })
     return TIER_NAMES.map((name, i) => {
       let status: 'received' | 'due' | 'upcoming' = 'upcoming'
       if (i < stats.paidTiers) status = 'received'

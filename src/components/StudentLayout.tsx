@@ -82,7 +82,7 @@ export default function StudentLayout({ children, title = 'Student Campus Portal
           <div className="text-[14.5px] font-medium text-[#F2F4FB] ml-1.5 pl-4 border-l border-white/[0.18] hidden md:block">{title}</div>
         </div>
         <div className="flex items-center gap-[18px]">
-          <button className="w-[30px] h-[30px] rounded-full flex items-center justify-center text-[#DFE4F5] hover:bg-white/[0.08] transition-colors" title="Search">
+          <button className="w-[30px] h-[30px] rounded-full flex items-center justify-center text-[#DFE4F5] hover:bg-white/[0.08] transition-colors" title="Search" aria-label="Search">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           </button>
           <div className="relative">
@@ -94,7 +94,7 @@ export default function StudentLayout({ children, title = 'Student Campus Portal
             </button>
           </div>
           <div className="relative">
-            <button onClick={() => setDropdownOpen(!dropdownOpen)} className="flex items-center gap-1.5 cursor-pointer">
+            <button onClick={() => setDropdownOpen(!dropdownOpen)} aria-label="Account menu" className="flex items-center gap-1.5 cursor-pointer">
               <div className="w-[30px] h-[30px] rounded-full overflow-hidden border-2 border-white/40 bg-gradient-to-br from-[#E0C49A] to-[#A97C50] flex items-center justify-center text-xs font-bold text-white">
                 {avatarUrl ? <img src={avatarUrl} alt="" className="w-full h-full object-cover" /> : initials}
               </div>

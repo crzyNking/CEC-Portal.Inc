@@ -4,6 +4,7 @@ import { useAuthStore } from '../store/authStore'
 import { supabase } from '../lib/supabase'
 
 const CHAT_API_URL = '/api/chat'
+const CHAT_MODEL = import.meta.env.VITE_CHAT_MODEL || 'z-ai/glm-5.2:free'
 
 const dotStyle1 = { animationDelay: '0ms' }
 const dotStyle2 = { animationDelay: '150ms' }
@@ -102,7 +103,7 @@ export function Chatbot() {
           ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
         },
         body: JSON.stringify({
-          model: 'z-ai/glm-5.2:free',
+          model: CHAT_MODEL,
           messages: conversationHistory,
         }),
         signal: controller.signal,

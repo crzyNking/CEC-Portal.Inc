@@ -3,6 +3,7 @@ import { supabase } from '../../lib/supabase'
 import { logAdminActivity } from '../../lib/activityLog'
 import { useNotificationStore } from '../../store/notificationStore'
 import ConfirmModal from '../../components/ConfirmModal'
+import Pagination from '../../components/Pagination'
 
 interface UserProfile { id: string; email: string | null; full_name: string | null; avatar_url: string | null; role: string; created_at: string }
 
@@ -104,17 +105,7 @@ export default function AdminUsers() {
         </div>
       )}
 
-      {totalPages > 1 && (
-        <div className="flex items-center justify-between px-4 py-3 border-t border-[rgba(11,31,58,0.08)]">
-          <span className="text-xs text-gray-500">Page {safePage} of {totalPages} · {filtered.length} users</span>
-          <div className="flex gap-2">
-            <button onClick={() => setPage(Math.max(1, safePage - 1))} disabled={safePage === 1}
-              className="px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-40">Prev</button>
-            <button onClick={() => setPage(Math.min(totalPages, safePage + 1))} disabled={safePage === totalPages}
-              className="px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-40">Next</button>
-          </div>
-        </div>
-      )}
+      <Pagination page={safePage} totalPages={totalPages} totalItems={filtered.length} itemLabel="users" onPageChange={setPage} />
 
       <ConfirmModal open={!!roleTarget} title="Change User Role"
         message={`Are you sure you want to change ${roleTarget?.full_name || roleTarget?.email || 'this user'}'s role to ${roleTarget?.role === 'admin' ? 'user' : 'admin'}?`}

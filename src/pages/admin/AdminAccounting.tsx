@@ -4,6 +4,7 @@ import { logAdminActivity } from '../../lib/activityLog'
 import { useNotificationStore } from '../../store/notificationStore'
 import { useAuthStore } from '../../store/authStore'
 import ConfirmModal from '../../components/ConfirmModal'
+import Pagination from '../../components/Pagination'
 
 interface BillingAccount {
   id: string; student_id: string | null; enrollment_id: string | null;
@@ -62,6 +63,16 @@ export default function AdminAccounting() {
     return (!q || b.student_name.toLowerCase().includes(q) || b.student_id?.includes(q)) &&
       (statusFilter === 'all' || b.status === statusFilter)
   })
+
+  const [billPage, setBillPage] = useState(1)
+  const PAGE_SIZE = 25
+  const billTotalPages = Math.max(1, Math.ceil(filteredBilling.length / PAGE_SIZE))
+  const billSafePage = Math.min(billPage, billTotalPages)
+  const pagedBilling = filteredBilling.slice((billSafePage - 1) * PAGE_SIZE, billSafePage * PAGE_SIZE)
+  const [payPage, setPayPage] = useState(1)
+  const payTotalPages = Math.max(1, Math.ceil(payments.length / PAGE_SIZE))
+  const paySafePage = Math.min(payPage, payTotalPages)
+  const pagedPayments = payments.slice((paySafePage - 1) * PAGE_SIZE, paySafePage * PAGE_SIZE)
 
   const getStudent = (id: string | null) => students.find(s => s.id === id)
 
@@ -195,7 +206,9 @@ export default function AdminAccounting() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredBilling.map((b) => {
+                  {pagedBilling.length === 0 ? (
+                    <tr><td colSpan={5} className="px-4 py-12 text-center text-gray-400">No billing accounts found.</td></tr>
+                  ) : pagedBilling.map((b) => {
                     const s = getStudent(b.student_id)
                     const statusColors: Record<string, string> = {
                       paid: 'bg-green-100 text-green-700',
@@ -221,6 +234,7 @@ export default function AdminAccounting() {
                 </tbody>
               </table>
             </div>
+            <Pagination page={billSafePage} totalPages={billTotalPages} totalItems={filteredBilling.length} itemLabel="accounts" onPageChange={setBillPage} />
           </div>
           <div>
             <h2 className="font-bold text-gray-800 mb-3">Create Billing Account</h2>
@@ -293,7 +307,9 @@ export default function AdminAccounting() {
                   </tr>
                 </thead>
                 <tbody>
-                  {payments.map((p) => {
+                  {pagedPayments.length === 0 ? (
+                    <tr><td colSpan={7} className="px-4 py-12 text-center text-gray-400">No payments found.</td></tr>
+                  ) : pagedPayments.map((p) => {
                     const bill = billing.find(b => b.id === p.billing_id)
                     const s = getStudent(bill?.student_id ?? null)
                     return (
@@ -321,6 +337,7 @@ export default function AdminAccounting() {
                 </tbody>
               </table>
             </div>
+            <Pagination page={paySafePage} totalPages={payTotalPages} totalItems={payments.length} itemLabel="payments" onPageChange={setPayPage} />
           </div>
           <div>
             <h2 className="font-bold text-gray-800 mb-3">Record Payment</h2>

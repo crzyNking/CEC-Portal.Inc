@@ -4,6 +4,7 @@ import { logAdminActivity } from '../../lib/activityLog'
 import { useNotificationStore } from '../../store/notificationStore'
 import { useAuthStore } from '../../store/authStore'
 import ConfirmModal from '../../components/ConfirmModal'
+import Pagination from '../../components/Pagination'
 
 interface EnrollmentRow {
   id: string; level: string; first_name: string; middle_name: string; last_name: string;
@@ -85,6 +86,13 @@ export default function AdminRegistrar() {
   const safePage = Math.min(page, totalPages)
   const pagedEnrollments = filteredEnrollments.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE)
   const resetPage = () => setPage(1)
+
+  const [acPage, setAcPage] = useState(1)
+  const acTotalPages = Math.max(1, Math.ceil(academic.length / PAGE_SIZE))
+  const acPaged = academic.slice((acPage - 1) * PAGE_SIZE, acPage * PAGE_SIZE)
+  const [docPage, setDocPage] = useState(1)
+  const docTotalPages = Math.max(1, Math.ceil(documents.length / PAGE_SIZE))
+  const docPaged = documents.slice((docPage - 1) * PAGE_SIZE, docPage * PAGE_SIZE)
 
   const [archiveTarget, setArchiveTarget] = useState<EnrollmentRow | null>(null)
 
@@ -324,17 +332,7 @@ export default function AdminRegistrar() {
               </tbody>
             </table>
           </div>
-          {totalPages > 1 && (
-            <div className="flex items-center justify-between px-4 py-3 border-t border-[rgba(11,31,58,0.08)]">
-              <span className="text-xs text-gray-500">Page {safePage} of {totalPages} · {filteredEnrollments.length} records</span>
-              <div className="flex gap-2">
-                <button onClick={() => setPage(Math.max(1, safePage - 1))} disabled={safePage === 1}
-                  className="px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-40">Prev</button>
-                <button onClick={() => setPage(Math.min(totalPages, safePage + 1))} disabled={safePage === totalPages}
-                  className="px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-40">Next</button>
-              </div>
-            </div>
-          )}
+          <Pagination page={safePage} totalPages={totalPages} totalItems={filteredEnrollments.length} itemLabel="records" onPageChange={setPage} />
         </div>
       )}
 
@@ -354,7 +352,7 @@ export default function AdminRegistrar() {
                   </tr>
                 </thead>
                 <tbody>
-                  {academic.map((a) => {
+                  {acPaged.map((a) => {
                     const s = students.find((st) => st.id === a.student_id)
                     return (
                       <tr key={a.id} className="border-b border-gray-50 hover:bg-gray-50/50">
@@ -369,6 +367,7 @@ export default function AdminRegistrar() {
                 </tbody>
               </table>
             </div>
+            <Pagination page={acPage} totalPages={acTotalPages} totalItems={academic.length} itemLabel="records" onPageChange={setAcPage} />
           </div>
           <div>
             <h2 className="font-bold text-gray-800 mb-3">Add Academic Record</h2>
@@ -442,7 +441,7 @@ export default function AdminRegistrar() {
                   </tr>
                 </thead>
                 <tbody>
-                  {documents.map((d) => {
+                  {docPaged.map((d) => {
                     const s = students.find((st) => st.id === d.student_id)
                     return (
                       <tr key={d.id} className="border-b border-gray-50 hover:bg-gray-50/50">
@@ -468,6 +467,7 @@ export default function AdminRegistrar() {
                 </tbody>
               </table>
             </div>
+            <Pagination page={docPage} totalPages={docTotalPages} totalItems={documents.length} itemLabel="requests" onPageChange={setDocPage} />
           </div>
           <div>
             <h2 className="font-bold text-gray-800 mb-3">New Document Request</h2>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
+import Pagination from '../../components/Pagination'
 
 interface Log { id: string; user_id: string | null; action: string; entity_type: string; entity_id: string | null; details: Record<string, unknown> | null; created_at: string }
 
@@ -62,17 +63,7 @@ export default function AdminLogs() {
         </div>
       )}
 
-      {totalPages > 1 && (
-        <div className="flex items-center justify-between px-4 py-3 border-t border-[rgba(11,31,58,0.08)]">
-          <span className="text-xs text-gray-500">Page {safePage} of {totalPages} · {logs.length} logs</span>
-          <div className="flex gap-2">
-            <button onClick={() => setPage(Math.max(1, safePage - 1))} disabled={safePage === 1}
-              className="px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-40">Prev</button>
-            <button onClick={() => setPage(Math.min(totalPages, safePage + 1))} disabled={safePage === totalPages}
-              className="px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-300 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-40">Next</button>
-          </div>
-        </div>
-      )}
+      <Pagination page={safePage} totalPages={totalPages} totalItems={logs.length} itemLabel="logs" onPageChange={setPage} />
     </div>
   )
 }

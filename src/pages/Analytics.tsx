@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
 import { supabase } from '../lib/supabase'
+import StudentLayout from '../components/StudentLayout'
 
 interface AnalyticsData {
   totalSessions: number
@@ -12,7 +12,6 @@ interface AnalyticsData {
 
 export function Analytics() {
   const { user } = useAuthStore()
-  const navigate = useNavigate()
   const [analytics, setAnalytics] = useState<AnalyticsData | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -105,41 +104,17 @@ export function Analytics() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0B1F3A] flex items-center justify-center transition-colors">
-        <div className="animate-spin h-8 w-8 border-2 border-[#1E4E8C] border-t-transparent rounded-full" />
-      </div>
+      <StudentLayout title="Analytics">
+        <div className="flex items-center justify-center py-16">
+          <div className="animate-spin h-8 w-8 border-2 border-[#1E4E8C] border-t-transparent rounded-full" />
+        </div>
+      </StudentLayout>
     )
   }
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0B1F3A] relative overflow-hidden transition-colors">
-      {/* Ambient background - only visible in dark mode */}
-      <div className="pointer-events-none absolute inset-0 dark:block hidden">
-        <div className="absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-purple-600/8 blur-[120px]"></div>
-        <div className="absolute top-1/3 -right-20 h-[400px] w-[400px] rounded-full bg-cyan-500/6 blur-[100px]"></div>
-      </div>
-
-      {/* Header */}
-      <header className="sticky top-0 z-40 border-b border-gray-200 dark:border-white/[0.06] bg-[#F8FAFC]/80 dark:bg-[#0B1F3A]/80 backdrop-blur-2xl transition-colors">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-4">
-            <button
-              onClick={() => navigate('/dashboard')}
-              className="flex items-center gap-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
-            >
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-              </svg>
-              Back
-            </button>
-            <h1 className="text-lg font-semibold text-gray-900 dark:text-white">Analytics</h1>
-            <div className="w-16"></div>
-          </div>
-        </div>
-      </header>
-
-      {/* Content */}
-      <main className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+    <StudentLayout title="Analytics">
+      <div className="max-w-7xl mx-auto">
         {/* Stats Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {stats.map((stat, i) => {
@@ -231,7 +206,7 @@ export function Analytics() {
             </div>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </StudentLayout>
   )
 }

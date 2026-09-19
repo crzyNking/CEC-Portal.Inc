@@ -79,7 +79,7 @@ export default function Header() {
   const openAuth = useAuthModalStore((s) => s.openAuth)
   const { school } = useSettings()
   const { profile } = useAuthStore()
-  const isAdmin = profile?.role === 'admin'
+  const isAdmin = ['admin', 'super_admin', 'registrar', 'edp', 'accounting', 'faculty', 'other_admin'].includes(profile?.role || '')
 
   const closeAll = useCallback(() => {
     setActiveDropdown(null)

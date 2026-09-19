@@ -120,7 +120,7 @@ export function AuthModal() {
       return
     }
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/settings`,
+      redirectTo: `${window.location.origin}/change-password`,
     })
     if (error) {
       setError(error.message)

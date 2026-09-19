@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
 import { supabase } from '../lib/supabase'
+import StudentLayout from '../components/StudentLayout'
 
 interface Report {
   id: string
@@ -38,7 +38,6 @@ const statusColors: Record<string, { bg: string; text: string }> = {
 
 export function Reports() {
   const user = useAuthStore((s) => s.user)
-  const navigate = useNavigate()
   const [reports, setReports] = useState<Report[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -86,38 +85,17 @@ export function Reports() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0B1F3A] flex items-center justify-center transition-colors">
-        <div className="animate-spin h-8 w-8 border-2 border-[#1E4E8C] border-t-transparent rounded-full" />
-      </div>
+      <StudentLayout title="Reports">
+        <div className="flex items-center justify-center py-16">
+          <div className="animate-spin h-8 w-8 border-2 border-[#1E4E8C] border-t-transparent rounded-full" />
+        </div>
+      </StudentLayout>
     )
   }
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0B1F3A] relative overflow-hidden transition-colors">
-      <div className="pointer-events-none absolute inset-0 dark:block hidden">
-        <div className="absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-purple-600/8 blur-[120px]" />
-        <div className="absolute top-1/3 -right-20 h-[400px] w-[400px] rounded-full bg-cyan-500/6 blur-[100px]" />
-      </div>
-
-      <header className="sticky top-0 z-40 border-b border-gray-200 dark:border-white/[0.06] bg-[#F8FAFC]/80 dark:bg-[#0B1F3A]/80 backdrop-blur-2xl transition-colors">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-4">
-            <button
-              onClick={() => navigate('/dashboard')}
-              className="flex items-center gap-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
-            >
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-              </svg>
-              Back
-            </button>
-            <h1 className="text-lg font-semibold text-gray-900 dark:text-white">Reports</h1>
-            <div className="w-16" />
-          </div>
-        </div>
-      </header>
-
-      <main className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+    <StudentLayout title="Reports">
+      <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
           <div className="rounded-2xl bg-white/90 backdrop-blur-sm border border-[rgba(11,31,58,0.08)] dark:bg-[#102A43]/80 dark:backdrop-blur-sm dark:border-white/[0.08] shadow-[0_4px_20px_rgba(11,31,58,0.06)] p-5 transition-colors">
             <div className="flex items-center gap-3">
@@ -198,7 +176,7 @@ export function Reports() {
             )}
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </StudentLayout>
   )
 }
